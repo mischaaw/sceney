@@ -7,13 +7,24 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ShieldCheck, Lock, CreditCard, ArrowLeft, CheckCircle2, Mail, Zap } from 'lucide-react';
+import { 
+  ShieldCheck, 
+  CreditCard, 
+  ArrowLeft, 
+  CheckCircle2, 
+  Mail, 
+  Zap,
+  Smartphone,
+  Globe
+} from 'lucide-react';
 import { showSuccess } from '@/utils/toast';
+import { cn } from '@/lib/utils';
 
 const Checkout = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
+  const [paymentMethod, setPaymentMethod] = useState<'card' | 'apple' | 'google'>('card');
 
   const handlePayment = (e: React.FormEvent) => {
     e.preventDefault();
@@ -96,45 +107,94 @@ const Checkout = () => {
           <div className="space-y-8">
             <h1 className="text-4xl font-black text-primary tracking-tighter">Secure Checkout</h1>
             
-            <form onSubmit={handlePayment} className="space-y-6">
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="card-name">Name on Card</Label>
-                  <Input id="card-name" placeholder="John Doe" required className="h-12 rounded-xl border-2" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="card-number">Card Number</Label>
-                  <div className="relative">
-                    <Input id="card-number" placeholder="0000 0000 0000 0000" required className="h-12 rounded-xl border-2 pl-12" />
-                    <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="expiry">Expiry Date</Label>
-                    <Input id="expiry" placeholder="MM/YY" required className="h-12 rounded-xl border-2" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="cvv">CVV</Label>
-                    <Input id="cvv" placeholder="123" required className="h-12 rounded-xl border-2" />
-                  </div>
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <Label className="font-black text-[10px] uppercase tracking-widest text-muted-foreground">Select Payment Method</Label>
+                <div className="grid grid-cols-3 gap-3">
+                  <button
+                    onClick={() => setPaymentMethod('card')}
+                    className={cn(
+                      "flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border-2 transition-all",
+                      paymentMethod === 'card' ? "border-primary bg-primary text-white shadow-lg" : "border-primary/5 bg-white text-primary/60 hover:border-primary/20"
+                    )}
+                  >
+                    <CreditCard size={20} />
+                    <span className="text-[10px] font-black uppercase tracking-widest">Card</span>
+                  </button>
+                  <button
+                    onClick={() => setPaymentMethod('apple')}
+                    className={cn(
+                      "flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border-2 transition-all",
+                      paymentMethod === 'apple' ? "border-primary bg-primary text-white shadow-lg" : "border-primary/5 bg-white text-primary/60 hover:border-primary/20"
+                    )}
+                  >
+                    <Smartphone size={20} />
+                    <span className="text-[10px] font-black uppercase tracking-widest">Apple Pay</span>
+                  </button>
+                  <button
+                    onClick={() => setPaymentMethod('google')}
+                    className={cn(
+                      "flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border-2 transition-all",
+                      paymentMethod === 'google' ? "border-primary bg-primary text-white shadow-lg" : "border-primary/5 bg-white text-primary/60 hover:border-primary/20"
+                    )}
+                  >
+                    <Globe size={20} />
+                    <span className="text-[10px] font-black uppercase tracking-widest">Google Pay</span>
+                  </button>
                 </div>
               </div>
 
-              <div className="bg-primary/5 p-6 rounded-2xl border-2 border-primary/10 space-y-4">
-                <div className="flex items-center gap-3 text-primary">
-                  <Zap size={18} className="text-accent" fill="currentColor" />
-                  <span className="font-black text-xs uppercase tracking-widest">Instant Delivery Enabled</span>
-                </div>
-                <p className="text-xs font-medium text-muted-foreground leading-relaxed">
-                  Tickets will be emailed immediately after payment. Your funds are protected by our escrow system.
-                </p>
-              </div>
+              <form onSubmit={handlePayment} className="space-y-6">
+                {paymentMethod === 'card' ? (
+                  <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                    <div className="space-y-2">
+                      <Label htmlFor="card-name">Name on Card</Label>
+                      <Input id="card-name" placeholder="John Doe" required className="h-12 rounded-xl border-2" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="card-number">Card Number</Label>
+                      <div className="relative">
+                        <Input id="card-number" placeholder="0000 0000 0000 0000" required className="h-12 rounded-xl border-2 pl-12" />
+                        <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="expiry">Expiry Date</Label>
+                        <Input id="expiry" placeholder="MM/YY" required className="h-12 rounded-xl border-2" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="cvv">CVV</Label>
+                        <Input id="cvv" placeholder="123" required className="h-12 rounded-xl border-2" />
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="p-8 bg-muted/20 rounded-[2rem] border-2 border-dashed border-primary/10 text-center space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                    <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm">
+                      {paymentMethod === 'apple' ? <Smartphone className="text-primary" /> : <Globe className="text-primary" />}
+                    </div>
+                    <p className="text-sm font-medium text-muted-foreground">
+                      You will be redirected to {paymentMethod === 'apple' ? 'Apple Pay' : 'Google Pay'} to complete your purchase securely.
+                    </p>
+                  </div>
+                )}
 
-              <Button type="submit" className="w-full h-16 text-lg font-black rounded-2xl shadow-xl shadow-primary/20">
-                Pay $126.00 Now
-              </Button>
-            </form>
+                <div className="bg-primary/5 p-6 rounded-2xl border-2 border-primary/10 space-y-4">
+                  <div className="flex items-center gap-3 text-primary">
+                    <Zap size={18} className="text-accent" fill="currentColor" />
+                    <span className="font-black text-xs uppercase tracking-widest">Instant Delivery Enabled</span>
+                  </div>
+                  <p className="text-xs font-medium text-muted-foreground leading-relaxed">
+                    Tickets will be emailed immediately after payment. Your funds are protected by our escrow system.
+                  </p>
+                </div>
+
+                <Button type="submit" className="w-full h-16 text-lg font-black rounded-2xl shadow-xl shadow-primary/20">
+                  {paymentMethod === 'card' ? 'Pay $126.00 Now' : `Pay with ${paymentMethod === 'apple' ? 'Apple Pay' : 'Google Pay'}`}
+                </Button>
+              </form>
+            </div>
           </div>
 
           <div className="space-y-8">
