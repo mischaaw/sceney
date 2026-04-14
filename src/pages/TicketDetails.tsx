@@ -40,12 +40,15 @@ const TicketDetails = () => {
     location: 'Old City Beer Garden',
     image: '/src/assets/beer-garden.png',
     category: 'Social',
-    description: 'Join us for an afternoon of craft brews, live music, and great company at the Old City Beer Garden. A perfect spring celebration for the Penn community.',
+    description: '21+ | Eden had rules. We just have a bar and a band.',
     priceHistory: [
-      { date: 'Jan', low: 35, high: 55 },
-      { date: 'Feb', low: 38, high: 60 },
-      { date: 'Mar', low: 40, high: 65 },
-      { date: 'Apr', low: 42, high: 70 },
+      { date: 'Mon', low: 40, high: 60 },
+      { date: 'Tue', low: 42, high: 62 },
+      { date: 'Wed', low: 38, high: 58 },
+      { date: 'Thu', low: 45, high: 65 },
+      { date: 'Fri', low: 48, high: 70 },
+      { date: 'Sat', low: 50, high: 75 },
+      { date: 'Sun', low: 52, high: 80 },
     ],
   };
 
@@ -80,9 +83,9 @@ const TicketDetails = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2 space-y-12">
-            <div className="relative aspect-[21/9] rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white">
-              <img src={event.image} alt={event.title} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+            <div className="relative aspect-video rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white bg-black">
+              <img src={event.image} alt={event.title} className="w-full h-full object-contain" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
               <Badge className="absolute top-8 left-8 bg-accent text-white px-6 py-2 rounded-full font-black text-[10px] uppercase tracking-[0.2em] border-none">
                 {event.category}
               </Badge>
@@ -97,7 +100,7 @@ const TicketDetails = () => {
 
             <div className="space-y-6">
               <h3 className="text-xs font-black text-primary uppercase tracking-[0.3em]">About the Event</h3>
-              <p className="text-xl text-muted-foreground leading-relaxed font-medium">
+              <p className="text-2xl text-primary leading-relaxed font-black italic">
                 {event.description}
               </p>
             </div>

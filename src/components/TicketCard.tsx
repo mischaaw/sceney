@@ -31,13 +31,13 @@ const TicketCard = ({ ticket }: { ticket: TicketProps }) => {
       className="cursor-pointer group"
     >
       <Card className="overflow-hidden border-2 shadow-lg bg-white rounded-[2.5rem] h-full flex flex-col transition-all hover:border-primary/20 hover:shadow-2xl">
-        <div className="relative h-64 overflow-hidden">
+        <div className="relative h-64 overflow-hidden bg-black">
           <img
             src={ticket.image}
             alt={ticket.title}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
           <Badge className="absolute top-6 right-6 bg-primary text-white border-none px-4 py-1.5 rounded-full font-black text-[10px] uppercase tracking-widest">
             {ticket.category}
           </Badge>
