@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -16,7 +17,8 @@ import {
   Heart,
   Bell,
   BellOff,
-  TrendingUp
+  TrendingUp,
+  ShieldAlert
 } from 'lucide-react';
 import PriceTrendChart from '@/components/PriceTrendChart';
 import { showSuccess } from '@/utils/toast';
@@ -66,7 +68,7 @@ const TicketDetails = () => {
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
       
-      <main className="container mx-auto px-4 py-12 max-w-6xl">
+      <main className="container mx-auto px-4 py-12 max-w-6xl flex-1">
         <Button 
           variant="ghost" 
           onClick={() => navigate('/')} 
@@ -203,7 +205,10 @@ const TicketDetails = () => {
 
             <Card className="border-2 shadow-2xl rounded-[3rem] overflow-hidden bg-primary text-white">
               <CardContent className="p-8 space-y-6">
-                <h4 className="text-xl font-black tracking-tight">Sceney Guarantee</h4>
+                <h4 className="text-xl font-black tracking-tight flex items-center gap-3">
+                  <ShieldAlert className="text-accent" size={24} />
+                  Sceney Guarantee
+                </h4>
                 <div className="space-y-4">
                   <div className="flex gap-4">
                     <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
@@ -229,6 +234,8 @@ const TicketDetails = () => {
           </div>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 };
