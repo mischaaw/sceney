@@ -7,9 +7,10 @@ import TicketCard from "@/components/TicketCard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import PriceTrendChart from "@/components/PriceTrendChart";
-import { TrendingUp, Zap, ShieldCheck, Search } from "lucide-react";
+import { TrendingUp, Zap, ShieldCheck, Search, FilterX } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { motion, AnimatePresence } from "framer-motion";
 
 const MOCK_TICKETS = [
   {
@@ -50,15 +51,18 @@ const MOCK_TICKETS = [
   }
 ];
 
+const CATEGORIES = ['All', 'Social', 'Music', 'Sports'];
+
 const Index = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
+  const [selectedCategory, setSelectedCategory] = React.useState("All");
 
-  const filteredTickets = searchQuery
-    ? MOCK_TICKETS.filter((ticket) =>
-        ticket.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        ticket.location.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : MOCK_TICKETS;
+  const filteredTickets = MOCK_TICKETS.filter((ticket) => {
+    const matchesSearch = ticket.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         ticket.location.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = selectedCategory === "All" || ticket.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -124,14 +128,15 @@ const Index = () => {
             <h2 className="text-4xl font-black text-primary tracking-tighter">Live Marketplace</h2>
             <p className="text-lg text-muted-foreground font-medium mt-2">Real-time listings from verified fans.</p>
           </div>
-          <div className="flex gap-2">
-            {['All', 'Social', 'Music', 'Sports'].map((cat) => (
+          <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
+            {CATEGORIES.map((cat) => (
               <Button 
                 key={cat}
-                variant={cat === 'All' ? 'default' : 'outline'} 
+                variant={selectedCategory === cat ? 'default' : 'outline'} 
+                onClick={() => setSelectedCategory(cat)}
                 className={cn(
-                  "rounded-full font-black text-[10px] uppercase tracking-widest px-6",
-                  cat !== 'All' && "border-2"
+                  "rounded-full font-black text-[10px] uppercase tracking-widest px-6 shrink-0 transition-all",
+                  selectedCategory === cat ? "shadow-lg shadow-primary/20" : "border-2 hover:bg-primary/5"
                 )}
               >
                 {cat}
@@ -140,10 +145,44 @@ const Index = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10">
-          {filteredTickets.map((ticket) => (
-            <TicketCard key={ticket.id} ticket={ticket} />
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 min-h-[400px]">
+          <AnimatePresence mode="popLayout">
+            {filteredTickets.length > 0 ? (
+              filteredTickets.map((ticket) => (
+                <motion.div
+                  key={ticket.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <TicketCard ticket={ticket} />
+                </motion.div>
+              ))
+            ) : (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="col-span-full flex flex-col items-center justify-center py-20 space-y-6 bg-white/50 rounded-[3rem] border-2 border-dashed border-primary/10"
+              >
+                <div className="w-20 h-20 bg-muted rounded-3xl flex items-center justify-center text-muted-foreground">
+                  <FilterX size={40} />
+                </div>
+                <div className="text-center">
+                  <h3 className="text-2xl font-black text-primary tracking-tight">No scenes found</h3>
+                  <p className="text-muted-foreground font-medium">Try adjusting your search or category filters.</p>
+                </div>
+                <Button 
+                  variant="outline" 
+                  className="rounded-full font-black text-[10px] uppercase tracking-widest px-8 border-2"
+                  onClick={() => { setSearchQuery(""); setSelectedCategory("All"); }}
+                >
+                  Clear All Filters
+                </Button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Market Insights */}

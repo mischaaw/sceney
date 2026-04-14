@@ -6,6 +6,7 @@ import { MessageSquare, ShieldCheck, PlusCircle, LayoutDashboard, UserCircle, In
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import Logo from './Logo';
+import NotificationsDropdown from './NotificationsDropdown';
 
 const Navbar = () => {
   const location = useLocation();
@@ -45,6 +46,7 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-3">
+          <NotificationsDropdown />
           <Link to="/admin">
             <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/5" title="Admin Monitor">
               <ShieldCheck className="w-5 h-5 text-primary/60" />
