@@ -10,6 +10,7 @@ import Sell from "./pages/Sell";
 import TicketDetails from "./pages/TicketDetails";
 import Checkout from "./pages/Checkout";
 import Messages from "./pages/Messages";
+import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/messages/chat" element={<Chat />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/sell" element={<Sell />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
