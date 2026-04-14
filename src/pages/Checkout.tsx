@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -33,7 +34,6 @@ const Checkout = () => {
     setStep(2);
     showSuccess("Payment successful! Check your email for receipt.");
     
-    // Placeholder email receipts for buyer and seller
     setTimeout(() => {
       showSuccess(`Receipt emailed to buyer (${email})`);
       showSuccess(`Receipt emailed to seller (seller@example.com)`);
@@ -94,14 +94,15 @@ const Checkout = () => {
             </div>
           </Card>
         </main>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
-      <main className="container mx-auto px-4 py-12 max-w-4xl">
+      <main className="container mx-auto px-4 py-12 max-w-4xl flex-1">
         <Button 
           variant="ghost" 
           onClick={() => navigate(-1)} 
@@ -257,6 +258,7 @@ const Checkout = () => {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 };

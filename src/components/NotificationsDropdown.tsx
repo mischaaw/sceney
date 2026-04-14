@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Bell, Check, Clock, Info, Zap } from 'lucide-react';
+import { Bell, Check, Clock, Info, Zap, Smartphone } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -57,11 +57,16 @@ const NotificationsDropdown = () => {
       <DropdownMenuContent align="end" className="w-80 rounded-[2rem] p-4 border-2 shadow-2xl">
         <DropdownMenuLabel className="flex items-center justify-between px-2 py-2">
           <span className="font-black text-xs uppercase tracking-widest">Notifications</span>
-          {unreadCount > 0 && (
-            <Badge className="bg-accent text-white text-[10px] font-black px-2 py-0 rounded-full">
-              {unreadCount} New
+          <div className="flex items-center gap-2">
+            <Badge className="bg-green-500 text-white text-[8px] font-black px-2 py-0 rounded-full flex items-center gap-1">
+              <Smartphone size={10} /> SMS ACTIVE
             </Badge>
-          )}
+            {unreadCount > 0 && (
+              <Badge className="bg-accent text-white text-[10px] font-black px-2 py-0 rounded-full">
+                {unreadCount} New
+              </Badge>
+            )}
+          </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="my-2" />
         <div className="space-y-1">

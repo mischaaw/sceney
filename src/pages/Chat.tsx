@@ -2,16 +2,12 @@
 
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import { Send, Shield, UserCircle, Lock, ShieldCheck, Smartphone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
-
-// Simple toast placeholder (replace with real toast implementation if needed)
-const showSuccess = (message: string) => {
-  console.log('Toast:', message);
-};
 
 const Chat = () => {
   const [messages, setMessages] = useState([
@@ -19,7 +15,6 @@ const Chat = () => {
     { id: 2, sender: 'Buyer', text: 'Yes, are they still available?', time: '10:32 AM' },
   ]);
   const [input, setInput] = useState('');
-  const [offers, setOffers] = useState<Record<string, number>>({}); // track offers per buyerId
 
   const handleSend = () => {
     if (!input.trim()) return;
@@ -33,31 +28,6 @@ const Chat = () => {
       },
     ]);
     setInput('');
-  };
-
-  // Handle making an offer to a buyer
-  const makeOffer = (buyerId: string) => {
-    const priceInput = prompt('Enter your offer price:');
-    if (!priceInput || isNaN(parseFloat(priceInput))) return;
-
-    const offerPrice = parseFloat(priceInput);
-
-    // Update offers map
-    setOffers(prev => ({ ...prev, [buyerId]: offerPrice }));
-
-    // Notify buyer about the price drop
-    setMessages(prev => [
-      ...prev,
-      {
-        id: Date.now() + 1,
-        sender: 'System',
-        text: `💰 Price dropped to $${offerPrice} for your ticket!`,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      },
-    ]);
-
-    // Show toast
-    showSuccess(`Offer of $${offerPrice} sent!`);
   };
 
   return (
@@ -154,6 +124,7 @@ const Chat = () => {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 };

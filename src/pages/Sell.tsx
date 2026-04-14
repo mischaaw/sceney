@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -27,7 +28,7 @@ const Sell = () => {
   const [price, setPrice] = useState<string>('');
   const [step, setStep] = useState(1);
   const [selectedEvent, setSelectedEvent] = useState<typeof MOCK_EVENTS[0] | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = setSearchQuery('');
 
   const commission = 0; // No commission deduction
   const payout = Number(price); // Full price is the payout
@@ -48,10 +49,10 @@ const Sell = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
       
-      <main className="container mx-auto px-4 py-12 max-w-3xl">
+      <main className="container mx-auto px-4 py-12 max-w-3xl flex-1">
         <div className="mb-10">
           <div className="flex items-center gap-4 mb-2">
             <h1 className="text-4xl font-black text-primary">List your tickets</h1>
@@ -111,18 +112,6 @@ const Sell = () => {
                         <Label htmlFor="description" className="font-black text-[10px] uppercase tracking-widest text-muted-foreground">Ticket Details</Label>
                         <Textarea id="description" placeholder="Section, Row, Seat details..." className="min-h-[100px] rounded-xl border-2 font-medium" required />
                       </div>
-                      <div className="pt-6 border-t space-y-4">
-                        <Label htmlFor="price" className="font-black text-[10px] uppercase tracking-widest text-primary-foreground/60">Your Asking Price ($)</Label>
-                        <Input 
-                          id="price" 
-                          type="number" 
-                          value={price}
-                          onChange={(e) => setPrice(e.target.value)}
-                          placeholder="0.00" 
-                          className="h-20 text-4xl font-black bg-white/10 border-white/20 text-white placeholder:text-white/20 rounded-2xl px-6" 
-                          required 
-                        />
-                      </div>
                     </div>
                   )}
                 </CardContent>
@@ -139,7 +128,8 @@ const Sell = () => {
                   <CardContent className="p-8 space-y-8">
                     <div className="space-y-2">
                       <Label htmlFor="price" className="font-black text-[10px] uppercase tracking-widest text-primary-foreground/60">Your Asking Price ($)</Label>
-                      <Input                         id="price" 
+                      <Input 
+                        id="price" 
                         type="number" 
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
@@ -203,6 +193,7 @@ const Sell = () => {
           )}
         </form>
       </main>
+      <Footer />
     </div>
   );
 };

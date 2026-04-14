@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import { ShieldCheck, Zap, Lock, MessageSquare, Phone, Mail, CheckCircle2 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -31,9 +32,9 @@ const HowItWorks = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
-      <main className="container mx-auto px-4 py-20 max-w-5xl">
+      <main className="container mx-auto px-4 py-20 max-w-5xl flex-1">
         <div className="text-center mb-20">
           <Badge className="mb-4 bg-accent text-white border-none px-4 py-1 rounded-full font-black text-[10px] uppercase tracking-[0.2em]">
             The Sceney Standard
@@ -79,6 +80,7 @@ const HowItWorks = () => {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 };

@@ -82,7 +82,7 @@ const Index = () => {
             </h1>
             
             <p className="text-xl md:text-2xl text-white/70 font-medium max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
-              The most secure, anonymous marketplace for verified event tickets. No scams, just scenes.
+              The most secure, anonymous Penn marketplace for verified event tickets. No scams, just scenes.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 animate-in fade-in slide-in-from-bottom-10 duration-700 delay-300">
@@ -105,15 +105,15 @@ const Index = () => {
 
             <div className="flex flex-wrap justify-center gap-8 pt-12 animate-in fade-in duration-1000 delay-500">
               <div className="flex items-center gap-3 text-white/40 font-black text-[10px] uppercase tracking-widest">
-                <ShieldCheck className="text-accent" size={18} />
+                <ShieldCheck className="text-[#fdf5e6]" size={18} />
                 Escrow Protected
               </div>
               <div className="flex items-center gap-3 text-white/40 font-black text-[10px] uppercase tracking-widest">
-                <Zap className="text-accent" size={18} />
+                <Zap className="text-[#fdf5e6]" size={18} />
                 Instant Delivery
               </div>
               <div className="flex items-center gap-3 text-white/40 font-black text-[10px] uppercase tracking-widest">
-                <TrendingUp className="text-accent" size={18} />
+                <TrendingUp className="text-[#fdf5e6]" size={18} />
                 Verified Only
               </div>
             </div>
@@ -126,7 +126,7 @@ const Index = () => {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
             <h2 className="text-4xl font-black text-primary tracking-tighter">Live Marketplace</h2>
-            <p className="text-lg text-muted-foreground font-medium mt-2">Real-time listings from verified fans.</p>
+            <p className="text-lg text-muted-foreground font-medium mt-2">Real-time listings from verified students.</p>
           </div>
           <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
             {CATEGORIES.map((cat) => (

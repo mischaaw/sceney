@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -52,51 +53,57 @@ const Profile = () => {
   // Block access if not both email and phone are verified
   if (!emailVerified || !phoneVerified) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <Card className="max-w-md w-full border-2 shadow-xl rounded-[2rem] p-8">
-          <CardHeader className="p-0">
-            <CardTitle className="text-2xl font-black text-primary">Verify Your Account</CardTitle>
-            <CardDescription className="text-muted-foreground">Please verify both your email and phone number to access your profile.</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Mail className="text-primary" size={24} />
-                <div>
-                  <p className="font-black text-primary">Email Verification</p>
-                  <p className="text-sm text-muted-foreground">alex@example.com</p>
+      <div className="min-h-screen bg-background flex flex-col">
+        <Navbar />
+        <main className="flex-1 flex items-center justify-center p-4">
+          <Card className="max-w-md w-full border-2 shadow-xl rounded-[2rem] p-8">
+            <CardHeader className="p-0">
+              <CardTitle className="text-2xl font-black text-primary">Verify Your Account</CardTitle>
+              <CardDescription className="text-muted-foreground">Please verify both your email and phone number to access your profile.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6 mt-6">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between p-4 bg-muted/20 rounded-2xl border-2 border-primary/5">
+                  <div className="flex items-center gap-3">
+                    <Mail className="text-primary" size={20} />
+                    <div>
+                      <p className="font-black text-xs text-primary uppercase tracking-widest">Email</p>
+                      <p className="text-xs text-muted-foreground">alex@example.com</p>
+                    </div>
+                  </div>
+                  {emailVerified ? (
+                    <Badge className="bg-green-100 text-green-700 border-none px-3 py-1 rounded-full font-black text-[8px] uppercase tracking-widest">Verified</Badge>
+                  ) : (
+                    <Button size="sm" className="rounded-full h-8 text-[10px] font-black uppercase" onClick={handleVerifyEmail}>Verify</Button>
+                  )}
+                </div>
+                <div className="flex items-center justify-between p-4 bg-muted/20 rounded-2xl border-2 border-primary/5">
+                  <div className="flex items-center gap-3">
+                    <Phone className="text-primary" size={20} />
+                    <div>
+                      <p className="font-black text-xs text-primary uppercase tracking-widest">Phone</p>
+                      <p className="text-xs text-muted-foreground">+1 (555) 123-4567</p>
+                    </div>
+                  </div>
+                  {phoneVerified ? (
+                    <Badge className="bg-green-100 text-green-700 border-none px-3 py-1 rounded-full font-black text-[8px] uppercase tracking-widest">Verified</Badge>
+                  ) : (
+                    <Button size="sm" className="rounded-full h-8 text-[10px] font-black uppercase" onClick={handleVerifyPhone}>Verify</Button>
+                  )}
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <Phone className="text-primary" size={24} />
-                <div>
-                  <p className="font-black text-primary">Phone Verification</p>
-                  <p className="text-sm text-muted-foreground">+1 (555) 123-4567</p>
-                </div>
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              {emailVerified ? (
-                <Badge className="bg-green-100 text-green-700 border-none px-3 py-1 rounded-full font-black text-[10px] uppercase tracking-widest">Verified</Badge>
-              ) : (
-                <Button onClick={handleVerifyEmail}>Verify Email</Button>
-              )}
-              {phoneVerified ? (
-                <Badge className="bg-green-100 text-green-700 border-none px-3 py-1 rounded-full font-black text-[10px] uppercase tracking-widest">Verified</Badge>
-              ) : (
-                <Button onClick={handleVerifyPhone}>Verify Phone</Button>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </main>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
-      <main className="container mx-auto px-4 py-12">
+      <main className="container mx-auto px-4 py-12 flex-1">
         <div className="flex items-center gap-6 mb-12">
           <div className="w-24 h-24 rounded-[2rem] bg-primary flex items-center justify-center text-white shadow-2xl">
             <UserCircle size={48} />
@@ -242,22 +249,29 @@ const Profile = () => {
                   <CardTitle className="text-2xl font-black tracking-tight">Notification Settings</CardTitle>
                   <CardDescription className="font-medium">Manage your notification preferences.</CardDescription>
                 </CardHeader>
-                <CardContent className="p-8 space-y-6">
-                  <div className="flex flex-col md:flex-row gap-4">
-                    <div>
-                      <h4 className="text-xl font-black">SMS Notifications</h4>
-                      <Switch defaultChecked className="mt-2" />
-                      <p className="text-sm text-muted-foreground">Receive chat messages via text.</p>
+                <CardContent className="p-8 space-y-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="p-6 bg-primary/5 rounded-[2rem] border-2 border-primary/5 space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <Smartphone className="text-accent" size={24} />
+                          <h4 className="text-xl font-black">SMS Alerts</h4>
+                        </div>
+                        <Switch defaultChecked />
+                      </div>
+                      <p className="text-sm text-muted-foreground font-medium">Receive instant chat messages and price drops via text.</p>
+                      <Badge className="bg-green-100 text-green-700 border-none px-3 py-1 rounded-full font-black text-[8px] uppercase tracking-widest">Verified Number</Badge>
                     </div>
-                    <div>
-                      <h4 className="text-xl font-black">Email Alerts</h4>
-                      <Switch defaultChecked className="mt-2" />
-                      <p className="text-sm text-muted-foreground">Get notified about sales and payouts.</p>
-                    </div>
-                    <div>
-                      <h4 className="text-xl font-black">Marketing</h4>
-                      <Switch className="mt-2" />
-                      <p className="text-sm text-muted-foreground">New events and platform updates.</p>
+
+                    <div className="p-6 bg-primary/5 rounded-[2rem] border-2 border-primary/5 space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <Mail className="text-primary" size={24} />
+                          <h4 className="text-xl font-black">Email Alerts</h4>
+                        </div>
+                        <Switch defaultChecked />
+                      </div>
+                      <p className="text-sm text-muted-foreground font-medium">Get notified about sales, payouts, and security updates.</p>
                     </div>
                   </div>
                 </CardContent>
@@ -266,6 +280,7 @@ const Profile = () => {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 };
