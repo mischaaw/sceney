@@ -42,6 +42,16 @@ const MOCK_TICKETS = [
     image: "/src/assets/magic.jpg",
     category: "Music",
     likes: 64,
+  },
+  {
+    id: "battleship-brunch",
+    title: "Battleship Brunch",
+    date: "Apr 17, 2026 • 1:00 PM",
+    location: "62 Battleship Pl Camden, NJ",
+    price: 55,
+    image: "/src/assets/battleship.png",
+    category: "Social",
+    likes: 89,
   }
 ];
 

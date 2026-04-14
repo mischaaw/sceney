@@ -90,6 +90,24 @@ const TicketDetails = () => {
         { date: 'Oct 23', low: 52, high: 75 },
         { date: 'Oct 24', low: 55, high: 80 },
       ],
+    },
+    "battleship-brunch": {
+      id: "battleship-brunch",
+      title: 'Battleship Brunch',
+      date: 'Apr 17, 2026 • 1:00 PM',
+      location: '62 Battleship Pl Camden, NJ',
+      image: '/src/assets/battleship.png',
+      category: 'Social',
+      description: 'Are you sinking or swimming? Join us for an exclusive brunch experience on the battleship.',
+      priceHistory: [
+        { date: 'Oct 18', low: 50, high: 65 },
+        { date: 'Oct 19', low: 52, high: 68 },
+        { date: 'Oct 20', low: 55, high: 70 },
+        { date: 'Oct 21', low: 58, high: 75 },
+        { date: 'Oct 22', low: 60, high: 80 },
+        { date: 'Oct 23', low: 62, high: 85 },
+        { date: 'Oct 24', low: 65, high: 90 },
+      ],
     }
   };
 

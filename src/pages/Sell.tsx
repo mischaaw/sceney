@@ -36,6 +36,14 @@ const MOCK_EVENTS = [
     location: '5142 Warren street',
     image: '/src/assets/magic.jpg',
     category: 'Music'
+  },
+  {
+    id: 'battleship-brunch',
+    title: 'Battleship Brunch',
+    date: 'Apr 17, 2026 • 1:00 PM',
+    location: '62 Battleship Pl Camden, NJ',
+    image: '/src/assets/battleship.png',
+    category: 'Social'
   }
 ];
 
