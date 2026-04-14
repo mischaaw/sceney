@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -8,6 +8,13 @@ import StarRating from '@/components/StarRating';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { 
   Calendar, 
   MapPin, 
@@ -21,7 +28,8 @@ import {
   TrendingUp,
   ShieldAlert,
   Lock,
-  Scale
+  Scale,
+  SlidersHorizontal
 } from 'lucide-react';
 import PriceTrendChart from '@/components/PriceTrendChart';
 import { showSuccess, showError } from '@/utils/toast';
@@ -30,12 +38,30 @@ import { cn } from '@/lib/utils';
 const TicketDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [sortBy, setSortBy] = useState<string>("rating-desc");
 
   const [listings, setListings] = useState([
     { id: 'L1', seller: 'BrewMaster', price: 45, section: 'General Admission', verified: true, instant: true, likes: 42, notified: false, userLiked: false, rating: 4.8, ratingCount: 12 },
     { id: 'L2', seller: 'SunnyDays', price: 42, section: 'General Admission', verified: true, instant: true, likes: 18, notified: false, userLiked: false, rating: 4.5, ratingCount: 21 },
     { id: 'L3', seller: 'PennFan2024', price: 48, section: 'VIP Deck', verified: true, instant: true, likes: 5, notified: false, userLiked: false, rating: 5.0, ratingCount: 3 },
   ]);
+
+  const sortedListings = useMemo(() => {
+    return [...listings].sort((a, b) => {
+      switch (sortBy) {
+        case "rating-desc":
+          return b.rating - a.rating;
+        case "rating-asc":
+          return a.rating - b.rating;
+        case "price-desc":
+          return b.price - a.price;
+        case "price-asc":
+          return a.price - b.price;
+        default:
+          return 0;
+      }
+    });
+  }, [listings, sortBy]);
 
   const events: Record<string, any> = {
     "1": {
@@ -175,15 +201,26 @@ const TicketDetails = () => {
             </div>
 
             <div className="space-y-8">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <h3 className="text-xs font-black text-primary uppercase tracking-[0.3em]">Available Listings</h3>
-                <Badge variant="outline" className="border-2 font-black text-[10px] uppercase tracking-widest px-4 py-1 rounded-full">
-                  {listings.length} Sellers
-                </Badge>
+                <div className="flex items-center gap-3">
+                  <SlidersHorizontal size={14} className="text-muted-foreground" />
+                  <Select value={sortBy} onValueChange={setSortBy}>
+                    <SelectTrigger className="w-[180px] rounded-xl border-2 font-bold h-10 bg-white">
+                      <SelectValue placeholder="Sort by" />
+                    </SelectTrigger>
+                    <SelectContent className="rounded-xl border-2">
+                      <SelectItem value="rating-desc" className="font-bold">Highest Rating</SelectItem>
+                      <SelectItem value="rating-asc" className="font-bold">Lowest Rating</SelectItem>
+                      <SelectItem value="price-desc" className="font-bold">Highest Price</SelectItem>
+                      <SelectItem value="price-asc" className="font-bold">Lowest Price</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
               
               <div className="grid gap-6">
-                {listings.map((listing) => (
+                {sortedListings.map((listing) => (
                   <Card 
                     key={listing.id} 
                     className="border-2 border-primary/5 hover:border-primary/20 transition-all rounded-[2.5rem] overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-1"
