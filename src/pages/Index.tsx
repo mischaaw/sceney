@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import TicketCard from "@/components/TicketCard";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Filter } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const MOCK_TICKETS = [
   {
@@ -18,9 +19,47 @@ const MOCK_TICKETS = [
     category: "Social",
     likes: 124,
   },
+  {
+    id: "2",
+    title: "Penn vs. Princeton",
+    date: "May 02, 2026 • 2:00 PM",
+    location: "Franklin Field",
+    price: 25,
+    image: "https://images.unsplash.com/photo-1504450758481-7338eba7524a?auto=format&fit=crop&q=80&w=800",
+    category: "Sports",
+    likes: 89,
+  },
+  {
+    id: "3",
+    title: "Spring Arts Showcase",
+    date: "May 10, 2026 • 7:00 PM",
+    location: "Annenberg Center",
+    price: 15,
+    image: "https://images.unsplash.com/photo-1460666819451-7410f5ef139a?auto=format&fit=crop&q=80&w=800",
+    category: "Arts",
+    likes: 56,
+  },
+  {
+    id: "4",
+    title: "Ivy League Gala",
+    date: "Jun 15, 2026 • 8:00 PM",
+    location: "The Bellevue Hotel",
+    price: 150,
+    image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=800",
+    category: "Social",
+    likes: 210,
+  }
 ];
 
+const CATEGORIES = ["All", "Social", "Sports", "Arts", "Professional"];
+
 const Index = () => {
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const filteredTickets = selectedCategory === "All" 
+    ? MOCK_TICKETS 
+    : MOCK_TICKETS.filter(t => t.category === selectedCategory);
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
@@ -57,7 +96,7 @@ const Index = () => {
       </section>
 
       <main id="marketplace" className="container mx-auto px-4 py-20 max-w-5xl flex flex-col">
-        <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div>
             <div className="flex items-center gap-3 mb-2">
               <div className="h-3 w-12 bg-accent rounded-full" />
@@ -65,12 +104,36 @@ const Index = () => {
             </div>
             <p className="text-lg text-muted-foreground font-medium">Verified tickets available right now.</p>
           </div>
+
+          <div className="flex flex-wrap gap-2">
+            {CATEGORIES.map((cat) => (
+              <Button
+                key={cat}
+                variant={selectedCategory === cat ? "default" : "outline"}
+                onClick={() => setSelectedCategory(cat)}
+                className={cn(
+                  "rounded-full font-black text-[10px] uppercase tracking-widest px-6 h-10 border-2",
+                  selectedCategory === cat ? "bg-primary text-white border-primary" : "border-primary/10 text-primary/60 hover:border-primary/30"
+                )}
+              >
+                {cat}
+              </Button>
+            ))}
+          </div>
         </div>
 
         <div className="grid grid-cols-1 gap-8">
-          {MOCK_TICKETS.map((ticket) => (
-            <TicketCard key={ticket.id} ticket={ticket} />
-          ))}
+          {filteredTickets.length > 0 ? (
+            filteredTickets.map((ticket) => (
+              <TicketCard key={ticket.id} ticket={ticket} />
+            ))
+          ) : (
+            <div className="py-20 text-center bg-muted/20 rounded-[3rem] border-2 border-dashed border-primary/10">
+              <Filter className="mx-auto text-muted-foreground mb-4" size={48} />
+              <h3 className="text-2xl font-black text-primary">No listings found</h3>
+              <p className="text-muted-foreground font-medium">Try selecting a different category.</p>
+            </div>
+          )}
         </div>
       </main>
 
