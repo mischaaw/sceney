@@ -6,7 +6,7 @@ import { Calendar, MapPin, Heart, ArrowRight } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input'; // Imported Input
+import { Input } from '@/components/ui/input';
 import { motion } from 'framer-motion';
 
 interface TicketProps {
@@ -23,13 +23,11 @@ interface TicketProps {
 const TicketCard = ({ ticket }: { ticket: TicketProps }) => {
   const navigate = useNavigate();
   const [isEditingPrice, setIsEditingPrice] = useState(false);
-  const [likeCount, setLikeCount] = useState(ticket.likes || 0);
   const [showPriceInput, setShowPriceInput] = useState(false);
   const [newPrice, setNewPrice] = useState(ticket.price.toString());
 
-  const handleLike = () => {
-    setLikeCount(prev => prev + 1);
-  };
+  // Likes are now read‑only; no click handler
+  const likeCount = ticket.likes ?? 0;
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewPrice(e.target.value);
@@ -67,7 +65,8 @@ const TicketCard = ({ ticket }: { ticket: TicketProps }) => {
           <div>
             <h3 className="text-xl font-black leading-tight text-primary">{ticket.title}</h3>
             <div className="flex items-center gap-2">
-              <Heart size={20} className="text-red-500" onClick={handleLike} />
+              {/* Heart icon kept for visual cue but disabled */}
+              <Heart size={20} className="text-red-500 cursor-default" />
               <Badge variant="default" className="text-[9px] font-bold">
                 {likeCount}
               </Badge>
