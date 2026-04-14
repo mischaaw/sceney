@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Ticket, ShoppingBag, Clock, CheckCircle2, ExternalLink, MessageSquare } from 'lucide-react';
+import { Ticket, ShoppingBag, Clock, CheckCircle2, ExternalLink, MessageSquare, ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
@@ -18,6 +18,7 @@ const Dashboard = () => {
       event: 'Midnight Jazz Festival',
       date: 'Oct 24, 2024',
       status: 'In Escrow',
+      subStatus: 'Awaiting Transfer',
       price: 126.00,
       seller: 'User_4821'
     }
@@ -81,11 +82,14 @@ const Dashboard = () => {
 
                     <div className="flex flex-wrap items-center gap-6">
                       <div className="text-center md:text-right">
-                        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Status</p>
-                        <Badge className="bg-accent text-white px-4 py-1 rounded-full font-bold text-[10px] uppercase tracking-widest flex items-center gap-2">
-                          <Clock size={12} />
-                          {item.status}
-                        </Badge>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Escrow Status</p>
+                        <div className="flex flex-col items-center md:items-end gap-1">
+                          <Badge className="bg-accent text-white px-4 py-1 rounded-full font-bold text-[10px] uppercase tracking-widest flex items-center gap-2">
+                            <Clock size={12} />
+                            {item.status}
+                          </Badge>
+                          <span className="text-[9px] font-black text-accent uppercase tracking-tighter">{item.subStatus}</span>
+                        </div>
                       </div>
                       <div className="text-center md:text-right">
                         <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Total Paid</p>
@@ -102,6 +106,15 @@ const Dashboard = () => {
                       </div>
                     </div>
                   </CardContent>
+                  <div className="bg-muted/20 px-8 py-4 border-t flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <ShieldCheck size={14} className="text-accent" />
+                      <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Funds secured in Sceney Escrow</span>
+                    </div>
+                    <Button variant="link" className="h-auto p-0 text-[10px] font-black uppercase tracking-widest text-accent" onClick={() => navigate('/messages/chat')}>
+                      Confirm Receipt of Ticket
+                    </Button>
+                  </div>
                 </Card>
               ))
             ) : (
