@@ -3,12 +3,13 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import StarRating from "@/components/StarRating";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
-import { UserCircle, ShieldCheck, CreditCard, Bell, LogOut, ChevronRight, Phone, Mail, Smartphone } from "lucide-react";
+import { UserCircle, ShieldCheck, CreditCard, Bell, LogOut, ChevronRight, Phone, Mail, Smartphone, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { showSuccess } from "@/utils/toast";
@@ -110,7 +111,10 @@ const Profile = () => {
           </div>
           <div>
             <h1 className="text-5xl font-black text-primary tracking-tighter">Profile</h1>
-            <p className="text-lg text-muted-foreground font-medium">Manage your account and settings.</p>
+            <div className="flex items-center gap-3 mt-1">
+              <StarRating rating={4.9} size={16} />
+              <span className="text-sm font-black text-accent">4.9 Seller Rating</span>
+            </div>
           </div>
         </div>
 

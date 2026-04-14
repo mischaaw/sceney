@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import StarRating from '@/components/StarRating';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -31,9 +32,9 @@ const TicketDetails = () => {
   const navigate = useNavigate();
 
   const [listings, setListings] = useState([
-    { id: 'L1', seller: 'BrewMaster', price: 45, section: 'General Admission', verified: true, instant: true, likes: 42, notified: false, userLiked: false },
-    { id: 'L2', seller: 'SunnyDays', price: 42, section: 'General Admission', verified: true, instant: true, likes: 18, notified: false, userLiked: false },
-    { id: 'L3', seller: 'PennFan2024', price: 48, section: 'VIP Deck', verified: true, instant: true, likes: 5, notified: false, userLiked: false },
+    { id: 'L1', seller: 'BrewMaster', price: 45, section: 'General Admission', verified: true, instant: true, likes: 42, notified: false, userLiked: false, rating: 4.8 },
+    { id: 'L2', seller: 'SunnyDays', price: 42, section: 'General Admission', verified: true, instant: true, likes: 18, notified: false, userLiked: false, rating: 4.5 },
+    { id: 'L3', seller: 'PennFan2024', price: 48, section: 'VIP Deck', verified: true, instant: true, likes: 5, notified: false, userLiked: false, rating: 5.0 },
   ]);
 
   const events: Record<string, any> = {
@@ -203,6 +204,10 @@ const TicketDetails = () => {
                         <div className="space-y-2">
                           <div className="flex items-center gap-3">
                             <h4 className="text-2xl font-black text-primary tracking-tight">{listing.seller}</h4>
+                            <div className="flex items-center gap-2">
+                              <StarRating rating={listing.rating} size={12} />
+                              <span className="text-[10px] font-black text-accent">{listing.rating}</span>
+                            </div>
                             <button 
                               onClick={() => toggleLike(listing.id)}
                               className={cn(

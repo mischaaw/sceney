@@ -3,41 +3,38 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import StarRating from '@/components/StarRating';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { 
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { 
   Ticket, 
   ShoppingBag, 
   Clock, 
   MessageSquare, 
   DollarSign, 
-  TrendingUp, 
   AlertCircle,
-  ChevronRight,
-  LineChart,
   Banknote,
-  ExternalLink
+  ExternalLink,
+  Star
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { LineChart as RechartsLineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { showSuccess } from '@/utils/toast';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [priceData, setPriceData] = useState<any[]>([]);
-
-  useEffect(() => {
-    const mockData = [
-      { date: 'Oct 18', low: 40, high: 65 },
-      { date: 'Oct 19', low: 42, high: 70 },
-      { date: 'Oct 20', low: 38, high: 68 },
-      { date: 'Oct 21', low: 45, high: 75 },
-      { date: 'Oct 22', low: 48, high: 80 },
-      { date: 'Oct 23', low: 52, high: 85 },
-    ];
-    setPriceData(mockData);
-  }, []);
+  const [isRatingOpen, setIsRatingOpen] = useState(false);
+  const [selectedPurchase, setSelectedPurchase] = useState<any>(null);
+  const [userRating, setUserRating] = useState(0);
 
   const stats = {
     totalSales: 1240.50,
@@ -45,11 +42,6 @@ const Dashboard = () => {
     pendingPayouts: 450.00,
     totalPurchases: 1
   };
-
-  const payouts = [
-    { id: 'PD-001', amount: 120.00, date: 'Oct 10, 2024', status: 'Paid', method: 'Bank Transfer' },
-    { id: 'PD-002', amount: 330.00, date: 'Oct 22, 2024', status: 'Pending', method: 'PayPal' }
-  ];
 
   const purchases = [
     {
@@ -59,7 +51,8 @@ const Dashboard = () => {
       status: 'In Escrow',
       price: 126.00,
       seller: 'User_4821',
-      image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png'
+      image: '/src/assets/beer-garden-sign.png',
+      rated: false
     }
   ];
 
@@ -71,9 +64,20 @@ const Dashboard = () => {
       status: 'Active',
       price: 450.00,
       views: 124,
-      image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png'
+      image: '/src/assets/beer-garden-sign.png'
     }
   ];
+
+  const handleRateSeller = (purchase: any) => {
+    setSelectedPurchase(purchase);
+    setIsRatingOpen(true);
+  };
+
+  const submitRating = () => {
+    showSuccess(`Rating of ${userRating} stars submitted for ${selectedPurchase.seller}!`);
+    setIsRatingOpen(false);
+    setUserRating(0);
+  };
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -148,49 +152,6 @@ const Dashboard = () => {
             </CardContent>
           </Card>
         </div>
-
-        <Card className="border-2 shadow-xl rounded-[2rem] mb-12 bg-primary/5">
-          <CardHeader className="p-6 border-b bg-muted/10">
-            <CardTitle className="text-2xl font-black text-primary flex items-center gap-2">
-              <Banknote size={24} className="text-accent" />
-              Payout Details
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-6 space-y-6">
-            <div className="flex items-center justify-between">
-              <div className="text-sm font-black uppercase text-muted-foreground">Total Earned</div>
-              <div className="text-2xl font-black text-primary">${stats.totalSales.toFixed(2)}</div>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="text-sm font-black uppercase text-muted-foreground">Pending Payouts</div>
-              <div className="text-2xl font-black text-accent">${stats.pendingPayouts.toFixed(2)}</div>
-            </div>
-
-            <div className="border-t pt-4">
-              <h3 className="text-lg font-black text-primary mb-4">Recent Payouts</h3>
-              {payouts.map((p) => (
-                <div key={p.id} className="flex items-center justify-between py-2 border-b last:border-b-0">
-                  <div className="flex flex-col">
-                    <span className="font-black text-primary">{p.id}</span>
-                    <span className="text-xs text-muted-foreground">{p.date} • {p.method}</span>
-                  </div>
-                  <Badge variant={p.status === 'Paid' ? 'default' : 'outline'} className="font-black uppercase">
-                    {p.status}
-                  </Badge>
-                  <span className="font-black text-primary">${p.amount.toFixed(2)}</span>
-                </div>
-              ))}
-            </div>
-
-            <Button
-              variant="outline"
-              className="w-full rounded-2xl font-black text-primary"
-              onClick={() => navigate('/payouts')}
-            >
-              View All Payouts
-            </Button>
-          </CardContent>
-        </Card>
 
         <Tabs defaultValue="selling" className="space-y-8">
           <div className="flex items-center justify-between border-b-2 border-primary/5 pb-4">
@@ -269,6 +230,14 @@ const Dashboard = () => {
                       <p className="text-2xl font-black text-primary">${item.price.toFixed(2)}</p>
                     </div>
                     <div className="flex gap-2">
+                      <Button 
+                        variant="outline" 
+                        className="rounded-xl border-2 font-black h-12 px-6 gap-2 text-accent hover:bg-accent hover:text-white"
+                        onClick={() => handleRateSeller(item)}
+                      >
+                        <Star size={16} />
+                        Rate Seller
+                      </Button>
                       <Button variant="outline" size="icon" className="rounded-xl border-2 w-12 h-12" onClick={() => navigate('/messages/chat')}>
                         <MessageSquare size={20} />
                       </Button>
@@ -283,6 +252,44 @@ const Dashboard = () => {
             ))}
           </TabsContent>
         </Tabs>
+
+        <Dialog open={isRatingOpen} onOpenChange={setIsRatingOpen}>
+          <DialogContent className="rounded-[2.5rem] border-2 p-8 max-w-md">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-black tracking-tight">Rate your experience</DialogTitle>
+              <DialogDescription className="font-medium">
+                How was your transaction with <span className="text-primary font-bold">{selectedPurchase?.seller}</span>?
+              </DialogDescription>
+            </DialogHeader>
+            
+            <div className="py-10 flex flex-col items-center gap-6">
+              <StarRating 
+                rating={userRating} 
+                onRate={setUserRating} 
+                interactive 
+                size={48} 
+              />
+              <p className="text-sm font-black uppercase tracking-widest text-muted-foreground">
+                {userRating === 0 ? "Select a rating" : 
+                 userRating === 1 ? "Terrible" : 
+                 userRating === 2 ? "Poor" : 
+                 userRating === 3 ? "Average" : 
+                 userRating === 4 ? "Great" : "Excellent!"}
+              </p>
+            </div>
+
+            <DialogFooter className="gap-3">
+              <Button variant="outline" onClick={() => setIsRatingOpen(false)} className="rounded-xl font-bold">Cancel</Button>
+              <Button 
+                onClick={submitRating} 
+                disabled={userRating === 0}
+                className="rounded-xl font-black px-8 shadow-lg shadow-primary/20"
+              >
+                Submit Rating
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
 
         <div className="mt-16 bg-accent/5 border-2 border-dashed border-accent/20 rounded-[3rem] p-10 flex flex-col md:flex-row items-center gap-8">
           <div className="w-16 h-16 bg-accent text-white rounded-2xl flex items-center justify-center shrink-0 shadow-xl shadow-accent/20">
