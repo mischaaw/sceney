@@ -22,7 +22,8 @@ const MOCK_TICKETS = [
     image: "/src/assets/beer-garden-sign.png",
     category: "Social",
     likes: 42,
-    rating: 4.8
+    rating: 4.8,
+    ratingCount: 12
   },
   {
     id: "tropics",
@@ -33,7 +34,8 @@ const MOCK_TICKETS = [
     image: "/src/assets/tropics.png",
     category: "Social",
     likes: 128,
-    rating: 4.9
+    rating: 4.9,
+    ratingCount: 45
   },
   {
     id: "magic-gardens",
@@ -44,7 +46,8 @@ const MOCK_TICKETS = [
     image: "/src/assets/magic.jpg",
     category: "Music",
     likes: 64,
-    rating: 4.7
+    rating: 4.7,
+    ratingCount: 8
   },
   {
     id: "battleship-brunch",
@@ -55,7 +58,8 @@ const MOCK_TICKETS = [
     image: "/src/assets/battleship.png",
     category: "Social",
     likes: 89,
-    rating: 4.5
+    rating: 4.5,
+    ratingCount: 21
   }
 ];
 

@@ -20,6 +20,7 @@ interface TicketProps {
   category: string;
   likes?: number;
   rating?: number;
+  ratingCount?: number;
 }
 
 const TicketCard = ({ ticket }: { ticket: TicketProps }) => {
@@ -30,6 +31,7 @@ const TicketCard = ({ ticket }: { ticket: TicketProps }) => {
 
   const likeCount = ticket.likes ?? 0;
   const rating = ticket.rating ?? 5.0;
+  const ratingCount = ticket.ratingCount ?? 1;
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewPrice(e.target.value);
@@ -69,7 +71,9 @@ const TicketCard = ({ ticket }: { ticket: TicketProps }) => {
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-1">
                 <StarRating rating={rating} size={12} />
-                <span className="text-[10px] font-black text-accent">{rating.toFixed(1)}</span>
+                <span className="text-[10px] font-black text-accent">
+                  {rating.toFixed(1)} <span className="text-muted-foreground/60 font-bold">({ratingCount})</span>
+                </span>
               </div>
               <div className="flex items-center gap-1">
                 <Heart size={14} className="text-red-500 fill-red-500" />

@@ -32,9 +32,9 @@ const TicketDetails = () => {
   const navigate = useNavigate();
 
   const [listings, setListings] = useState([
-    { id: 'L1', seller: 'BrewMaster', price: 45, section: 'General Admission', verified: true, instant: true, likes: 42, notified: false, userLiked: false, rating: 4.8 },
-    { id: 'L2', seller: 'SunnyDays', price: 42, section: 'General Admission', verified: true, instant: true, likes: 18, notified: false, userLiked: false, rating: 4.5 },
-    { id: 'L3', seller: 'PennFan2024', price: 48, section: 'VIP Deck', verified: true, instant: true, likes: 5, notified: false, userLiked: false, rating: 5.0 },
+    { id: 'L1', seller: 'BrewMaster', price: 45, section: 'General Admission', verified: true, instant: true, likes: 42, notified: false, userLiked: false, rating: 4.8, ratingCount: 12 },
+    { id: 'L2', seller: 'SunnyDays', price: 42, section: 'General Admission', verified: true, instant: true, likes: 18, notified: false, userLiked: false, rating: 4.5, ratingCount: 21 },
+    { id: 'L3', seller: 'PennFan2024', price: 48, section: 'VIP Deck', verified: true, instant: true, likes: 5, notified: false, userLiked: false, rating: 5.0, ratingCount: 3 },
   ]);
 
   const events: Record<string, any> = {
@@ -206,7 +206,9 @@ const TicketDetails = () => {
                             <h4 className="text-2xl font-black text-primary tracking-tight">{listing.seller}</h4>
                             <div className="flex items-center gap-2">
                               <StarRating rating={listing.rating} size={12} />
-                              <span className="text-[10px] font-black text-accent">{listing.rating}</span>
+                              <span className="text-[10px] font-black text-accent">
+                                {listing.rating.toFixed(1)} <span className="text-muted-foreground/60 font-bold">({listing.ratingCount})</span>
+                              </span>
                             </div>
                             <button 
                               onClick={() => toggleLike(listing.id)}
