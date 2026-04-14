@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import PriceTrendChart from "@/components/PriceTrendChart";
 import { TrendingUp, Zap, ShieldCheck, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
 const MOCK_TICKETS = [
   {
