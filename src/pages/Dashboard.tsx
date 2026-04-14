@@ -17,7 +17,10 @@ import {
   AlertCircle,
   ChevronRight,
   LineChart,
-  TrendingDown
+  TrendingDown,
+  Banknote,
+  Receipt,
+  CalendarCheck
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { LineChart as RechartsLineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -46,6 +49,24 @@ const Dashboard = () => {
     pendingPayouts: 450.00,
     totalPurchases: 1
   };
+
+  // New mock payout data
+  const payouts = [
+    {
+      id: 'PD-001',
+      amount: 120.00,
+      date: 'Oct 10, 2024',
+      status: 'Paid',
+      method: 'Bank Transfer'
+    },
+    {
+      id: 'PD-002',
+      amount: 330.00,
+      date: 'Oct 22, 2024',
+      status: 'Pending',
+      method: 'PayPal'
+    }
+  ];
 
   const purchases = [
     {
@@ -155,6 +176,50 @@ const Dashboard = () => {
             </CardContent>
           </Card>
         </div>
+
+        {/* New Payout Details Card */}
+        <Card className="border-2 shadow-xl rounded-[2rem] mb-12 bg-primary/5">
+          <CardHeader className="p-6 border-b bg-muted/10">
+            <CardTitle className="text-2xl font-black text-primary flex items-center gap-2">
+              <Banknote size={24} className="text-accent" />
+              Payout Details
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-6 space-y-6">
+            <div className="flex items-center justify-between">
+              <div className="text-sm font-black uppercase text-muted-foreground">Total Earned</div>
+              <div className="text-2xl font-black text-primary">${stats.totalSales.toFixed(2)}</div>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="text-sm font-black uppercase text-muted-foreground">Pending Payouts</div>
+              <div className="text-2xl font-black text-accent">${stats.pendingPayouts.toFixed(2)}</div>
+            </div>
+
+            <div className="border-t pt-4">
+              <h3 className="text-lg font-black text-primary mb-4">Recent Payouts</h3>
+              {payouts.map((p) => (
+                <div key={p.id} className="flex items-center justify-between py-2 border-b last:border-b-0">
+                  <div className="flex flex-col">
+                    <span className="font-black text-primary">{p.id}</span>
+                    <span className="text-xs text-muted-foreground">{p.date} • {p.method}</span>
+                  </div>
+                  <Badge variant={p.status === 'Paid' ? 'default' : 'outline'} className="font-black uppercase">
+                    {p.status}
+                  </Badge>
+                  <span className="font-black text-primary">${p.amount.toFixed(2)}</span>
+                </div>
+              ))}
+            </div>
+
+            <Button
+              variant="outline"
+              className="w-full rounded-2xl font-black text-primary"
+              onClick={() => navigate('/dashboard/payouts')}
+            >
+              View All Payouts
+            </Button>
+          </CardContent>
+        </Card>
 
         {/* Price Tracking Chart */}
         <Card className="border-2 shadow-xl rounded-[2rem] overflow-hidden mb-12">
