@@ -46,8 +46,7 @@ const MOCK_TICKETS = [
     price: 120,
     image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&q=80&w=200',
     category: 'Sports',
-    likes: 0
-  },
+    likes: 0  },
   {
     id: '4',
     title: 'Art Exhibition',
@@ -71,8 +70,7 @@ const Index = () => {
   const filteredTickets = useMemo(() => {
     let result = MOCK_TICKETS.filter(ticket => {
       const matchesCategory = activeCategory === 'All' || ticket.category === activeCategory;
-      const matchesSearch = ticket.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                           ticket.location.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesSearch = ticket.title.toLowerCase().includes(searchQuery.toLowerCase()) ||                            ticket.location.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCategory && matchesSearch;
     });
 
@@ -125,8 +123,7 @@ const Index = () => {
             <div className="relative flex-1">
               <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5" />
               <Input 
-                placeholder="Search events, artists, or venues..." 
-                value={searchQuery}
+                placeholder="Search events, artists, or venues..."                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-14 h-16 rounded-[1.5rem] border-2 focus-visible:ring-primary text-lg font-medium shadow-sm"
               />
@@ -150,8 +147,7 @@ const Index = () => {
 
           <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
             {CATEGORIES.map(cat => (
-              <button
-                key={cat}
+              <button                key={cat}
                 onClick={() => setActiveCategory(cat)}
                 className={`px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap border-2 ${
                   activeCategory === cat 
@@ -171,7 +167,6 @@ const Index = () => {
             {filteredTickets.map(ticket => (
               <TicketCard                 key={ticket.id} 
                 ticket={ticket} 
-                onLike={() => handleLike(ticket.id)}
               />
             ))}
           </div>

@@ -8,6 +8,11 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
 
+// Move showSuccess to top so it's available in makeOffer
+const showSuccess = (message: string) => {
+  console.log("Toast: " + message);
+};
+
 const Chat = () => {
   const [messages, setMessages] = useState([
     { id: 1, sender: 'Seller', text: "Hi! I saw you're interested in the Beer Garden tickets.", time: '10:30 AM' },
@@ -30,9 +35,10 @@ const Chat = () => {
 
   // New: handle making an offer
   const makeOffer = (buyerId: string) => {
-    const newPrice = prompt('Enter your offer price:');
-    if (!newPrice || isNaN(parseFloat(newPrice))) return;
-        const offerPrice = parseFloat(newPrice);
+    const newPriceInput = prompt('Enter your offer price:');
+    if (!newPriceInput || isNaN(parseFloat(newPriceInput))) return;
+    
+    const offerPrice = parseFloat(newPriceInput);
     
     // Update offers state with proper object return
     setOffers(prev => ({ ...prev, [buyerId]: offerPrice }));
@@ -131,11 +137,6 @@ const Chat = () => {
       </main>
     </div>
   );
-};
-
-// Mock toast function for demonstration
-const showSuccess = (message: string) => {
-  console.log("Toast: " + message);
 };
 
 export default Chat;
