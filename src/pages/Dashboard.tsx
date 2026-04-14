@@ -10,8 +10,7 @@ import {
   Ticket, 
   ShoppingBag, 
   Clock, 
-  CheckCircle2, 
-  ExternalLink, 
+  CheckCircle2,   ExternalLink, 
   MessageSquare, 
   DollarSign, 
   TrendingUp, 
@@ -28,8 +27,7 @@ const Dashboard = () => {
   const [priceData, setPriceData] = useState<any[]>([]);
 
   useEffect(() => {
-    // Mock price data for chart
-    const mockData = [
+    // Mock price data for chart    const mockData = [
       { date: 'Jan', low: 40, high: 65 },
       { date: 'Feb', low: 42, high: 70 },
       { date: 'Mar', low: 38, high: 68 },
@@ -40,8 +38,7 @@ const Dashboard = () => {
     setPriceData(mockData);
   }, []);
 
-  // Mock data for the dashboard
-  const stats = {
+  // Mock data for the dashboard  const stats = {
     totalSales: 1240.50,
     activeListings: 3,
     pendingPayouts: 450.00,
@@ -149,7 +146,7 @@ const Dashboard = () => {
                 <div className="p-2 bg-green-50 rounded-xl">
                   <ShoppingBag size={20} className="text-green-600" />
                 </div>
-                <Badge className="bg-green-50 text-green-700 border-none text-[9px] font-black uppercase tracking-widest">Bought</Badge>
+                <Badge className="bg-green-50 text-green-700 border-none text-[9px] font-black uppercase tracking-widest">Purchased</Badge>
               </div>
               <p className="text-3xl font-black tracking-tighter text-primary">{stats.totalPurchases}</p>
               <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mt-1">Total Purchases</p>
@@ -198,8 +195,7 @@ const Dashboard = () => {
           <div className="flex items-center justify-between border-b-2 border-primary/5 pb-4">
             <TabsList className="bg-muted/50 p-1 rounded-2xl border-2 border-primary/5">
               <TabsTrigger value="selling" className="rounded-xl px-8 font-bold data-[state=active]:bg-primary data-[state=active]:text-white">
-                Selling
-              </TabsTrigger>
+                Selling              </TabsTrigger>
               <TabsTrigger value="buying" className="rounded-xl px-8 font-bold data-[state=active]:bg-primary data-[state=active]:text-white">
                 Buying
               </TabsTrigger>
@@ -271,7 +267,7 @@ const Dashboard = () => {
                         <Clock size={12} />
                         {item.date}
                       </p>
-                      <p className="mt-2 text-[10px] font-black text-muted-foreground uppercase tracking-widest">Seller: {item.seller}</p>
+                      <p className="mt-2 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Seller: {item.seller}</p>
                     </div>
                   </div>
 

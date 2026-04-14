@@ -25,7 +25,8 @@ const MOCK_TICKETS = [
     location: 'The Emerald Terrace',
     price: 45,
     image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png',
-    category: 'Social'
+    category: 'Social',
+    likes: 0
   },
   {
     id: '2',
@@ -34,7 +35,8 @@ const MOCK_TICKETS = [
     location: 'Blue Note Club',
     price: 65,
     image: 'https://images.unsplash.com/photo-1514525253361-bee8718a7439?auto=format&fit=crop&q=80&w=200',
-    category: 'Music'
+    category: 'Music',
+    likes: 0
   },
   {
     id: '3',
@@ -43,7 +45,8 @@ const MOCK_TICKETS = [
     location: 'Penn Palestra',
     price: 120,
     image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&q=80&w=200',
-    category: 'Sports'
+    category: 'Sports',
+    likes: 0
   },
   {
     id: '4',
@@ -52,7 +55,8 @@ const MOCK_TICKETS = [
     location: 'ICA Philadelphia',
     price: 25,
     image: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&q=80&w=200',
-    category: 'Arts'
+    category: 'Arts',
+    likes: 0
   }
 ];
 
@@ -62,6 +66,7 @@ const Index = () => {
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('recency');
+  const [likes, setLikes] = useState({});
 
   const filteredTickets = useMemo(() => {
     let result = MOCK_TICKETS.filter(ticket => {
@@ -81,6 +86,15 @@ const Index = () => {
     
     return result;
   }, [activeCategory, searchQuery, sortBy]);
+
+  const handleLike = (id: string) => {
+    setLikes(prev => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
+    // Check if ticket becomes trending (more than 10 likes)
+    const updatedLikes = { ...likes, [id]: (likes[id] || 0) + 1 };
+    if (updatedLikes[id] > 10) {
+      alert(`${MOCK_TICKETS.find(t => t.id === id)!.title} is now trending!`);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -155,7 +169,10 @@ const Index = () => {
         {filteredTickets.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-24">
             {filteredTickets.map(ticket => (
-              <TicketCard key={ticket.id} ticket={ticket} />
+              <TicketCard                 key={ticket.id} 
+                ticket={ticket} 
+                onLike={() => handleLike(ticket.id)}
+              />
             ))}
           </div>
         ) : (
@@ -168,8 +185,7 @@ const Index = () => {
               className="mt-4 font-black text-accent uppercase tracking-widest text-xs"
               onClick={() => {setSearchQuery(''); setActiveCategory('All'); setSortBy('recency');}}
             >
-              Clear all filters
-            </Button>
+              Clear all filters            </Button>
           </div>
         )}
 

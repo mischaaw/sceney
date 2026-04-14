@@ -1,8 +1,8 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, MapPin, ArrowRight } from 'lucide-react';
+import { Calendar, MapPin, Heart, ArrowRight } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -20,8 +20,28 @@ interface TicketProps {
 
 const TicketCard = ({ ticket }: { ticket: TicketProps }) => {
   const navigate = useNavigate();
-  const commission = ticket.price * 0.05;
-  const totalPrice = ticket.price + commission;
+  const [isEditingPrice, setIsEditingPrice] = useState(false);
+  const [likeCount, setLikeCount] = useState(ticket.likes || 0);
+  const [showPriceInput, setShowPriceInput] = useState(false);
+  const [newPrice, setNewPrice] = useState(ticket.price.toString());
+
+  const handleLike = () => {
+    setLikeCount(prev => prev + 1);
+  };
+
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewPrice(e.target.value);
+  };
+
+  const savePrice = () => {
+    const newPriceNum = parseFloat(newPrice);
+    if (!isNaN(newPriceNum) && newPriceNum > 0) {
+      // In a real app, this would update the backend
+      console.log(`Price updated to $${newPriceNum}`);
+    }
+    setIsEditingPrice(false);
+    setShowPriceInput(false);
+  };
 
   return (
     <motion.div
@@ -41,8 +61,37 @@ const TicketCard = ({ ticket }: { ticket: TicketProps }) => {
             {ticket.category}
           </Badge>
         </div>
-        <CardHeader className="p-5 pb-2">
-          <h3 className="text-xl font-black leading-tight text-primary">{ticket.title}</h3>
+        <CardHeader className="p-5 pb-2 flex items-center justify-between">
+          <div>
+            <h3 className="text-xl font-black leading-tight text-primary">{ticket.title}</h3>
+            <div className="flex items-center gap-2">
+              <Heart 
+                size={20} 
+                className="text-red-500" 
+                onClick={handleLike}
+              />
+              <Badge variant="default" className="text-[9px] font-bold">
+                {likeCount}
+              </Badge>
+            </div>
+          </div>
+          {showPriceInput && (
+            <div className="mt-1 flex items-center gap-2">
+              <Input 
+                type="number" 
+                placeholder="New price" 
+                value={newPrice} 
+                onChange={handlePriceChange}
+                className="w-20 rounded-md border-2 text-center font-medium px-2"
+              />
+              <Button                 variant="ghost" 
+                className="rounded-md px-2 py-1 text-sm font-medium" 
+                onClick={savePrice}
+              >
+                Save
+              </Button>
+            </div>
+          )}
         </CardHeader>
         <CardContent className="p-5 pt-0 space-y-3 flex-1">
           <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
@@ -56,13 +105,26 @@ const TicketCard = ({ ticket }: { ticket: TicketProps }) => {
         </CardContent>
         <CardFooter className="p-5 pt-0 flex items-center justify-between border-t border-muted mt-2">
           <div>
-            <p className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground mb-1">Total Price</p>
-            <p className="text-xl font-black text-primary">${totalPrice.toFixed(2)}</p>
+            <p className="text-[10px] uppercase tracking-widest font-bold text-primary">Price</p>
+            <p className="text-xl font-black text-primary">${ticket.price.toFixed(2)}</p>
           </div>
-          <Button size="sm" className="rounded-full group px-5 font-bold">
-            Details
-            <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-          </Button>
+          <div className="flex gap-2">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="rounded-full font-bold text-[10px] px-3 py-1"
+              onClick={() => setIsEditingPrice(true)}
+            >
+              Edit Price
+            </Button>
+            <Button               variant="outline" 
+              size="sm" 
+              className="rounded-full font-bold text-[10px] px-3 py-1"
+              onClick={() => navigate(`/ticket/${ticket.id}`)}
+            >
+              Details
+            </Button>
+          </div>
         </CardFooter>
       </Card>
     </motion.div>

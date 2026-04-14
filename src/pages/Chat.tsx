@@ -14,6 +14,8 @@ const Chat = () => {
     { id: 2, sender: 'Buyer', text: "Yes, are they still available?", time: '10:32 AM' },
   ]);
   const [input, setInput] = useState('');
+  const [isSeller, setIsSeller] = useState(false); // New: track if current user is seller
+  const [offers, setOffers] = useState({}); // New: track offers made by seller
 
   const handleSend = () => {
     if (!input.trim()) return;
@@ -24,6 +26,29 @@ const Chat = () => {
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }]);
     setInput('');
+  };
+
+  // New: handle making an offer
+  const makeOffer = (buyerId: string) => {
+    const newPrice = prompt('Enter your offer price:');
+    if (!newPrice || isNaN(parseFloat(newPrice))) return;
+    
+    // In a real app, this would update the listing price
+    const offerPrice = parseFloat(newPrice);
+    setOffers(prev => { ...prev, [buyerId]: offerPrice });
+    
+    // Notify buyer about price drop    setMessages(prev => [
+      ...prev,
+      {
+        id: Date.now() + 1,
+        sender: 'System',
+        text: `💰 Price dropped to $${offerPrice} for your ticket!`,
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      }
+    ]);
+    
+    // Show toast notification
+    showSuccess(`Offer of $${offerPrice} sent!`);
   };
 
   return (
@@ -42,7 +67,7 @@ const Chat = () => {
                 <p className="text-xs font-bold opacity-70 uppercase tracking-widest">Beer Garden • 2 Tickets</p>
               </div>
             </div>
-            <Badge variant="outline" className="text-white border-white/30 bg-white/10 px-4 py-1.5 rounded-full flex gap-2 items-center font-bold text-[10px] uppercase tracking-widest">
+            <Badge variant="outline" className="text-white border-white/30 bg-white/10 px-4 py-1.5 rounded-full font-black text-[10px] uppercase tracking-widest">
               <Smartphone size={14} className="text-accent" />
               SMS Connected
             </Badge>
@@ -55,7 +80,7 @@ const Chat = () => {
               </div>
               <div>
                 <p className="text-[10px] font-black uppercase tracking-widest text-primary">Escrow Status</p>
-                <p className="text-xs font-bold text-accent">Payment Secured • Awaiting Transfer</p>
+                <p className="text-xs font-bold text-primary">Payment Secured • Awaiting Transfer</p>
               </div>
             </div>
           </div>
@@ -73,15 +98,10 @@ const Chat = () => {
               
               {messages.map((msg) => (
                 <div 
-                  key={msg.id} 
-                  className={`flex ${msg.sender === 'Buyer' ? 'justify-end' : 'justify-start'}`}
+                  key={msg.id}                   className={`flex ${msg.sender === 'Buyer' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <div className={`max-w-[75%] space-y-2`}>
-                    <div className={`p-5 rounded-[1.5rem] text-sm font-medium leading-relaxed shadow-sm ${
-                      msg.sender === 'Buyer' 
-                        ? 'bg-primary text-primary-foreground rounded-tr-none' 
-                        : 'bg-secondary/50 text-primary rounded-tl-none border border-primary/5'
-                    }`}>
+                  <div className="flex-1 min-w-0 space-y-2">
+                    <div className={`p-5 rounded-[1.5rem] text-sm font-medium leading-relaxed shadow-sm ${msg.sender === 'Buyer' ? 'bg-primary text-primary-foreground rounded-tr-none' : 'bg-secondary/50 text-primary rounded-tl-none border border-primary/5'}`}>
                       {msg.text}
                     </div>
                     <p className={`text-[10px] font-bold text-muted-foreground uppercase tracking-tighter ${msg.sender === 'Buyer' ? 'text-right' : 'text-left'}`}>
@@ -111,6 +131,11 @@ const Chat = () => {
       </main>
     </div>
   );
+};
+
+// Mock toast function for demonstration
+const showSuccess = (message: string) => {
+  console.log("Toast: " + message);
 };
 
 export default Chat;
