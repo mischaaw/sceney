@@ -5,32 +5,52 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, MapPin, ShieldCheck, User, ArrowLeft, ChevronRight, Zap } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { 
+  Calendar, 
+  MapPin, 
+  ShieldCheck, 
+  User, 
+  ArrowLeft, 
+  ChevronRight, 
+  Zap,
+  Smartphone,
+  Globe,
+  Send
+} from 'lucide-react';
+import { showSuccess } from '@/utils/toast';
+import { cn } from '@/lib/utils';
+import PriceTrendChart from '@/components/PriceTrendChart';
 
 const TicketDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // Mock event data updated to Beer Garden with new image
-  const event = {
+  // Mock event data updated to Beer Garden with new image  const event = {
     id: id,
     title: 'Beer Garden',
     date: 'Apr 25, 2026 • 2:00 PM',
     location: 'The Emerald Terrace',
     image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png',
     category: 'Social',
-    description: 'Join us for an afternoon of craft brews, live music, and great company at the Emerald Terrace. A perfect spring celebration.'
+    description: 'Join us for an afternoon of craft brews, live music, and great company at the Emerald Terrace. A perfect spring celebration.',
+    priceHistory: [
+      { date: 'Jan', low: 40, high: 65 },
+      { date: 'Feb', low: 42, high: 70 },
+      { date: 'Mar', low: 38, high: 68 },
+      { date: 'Apr', low: 45, high: 75 },
+      { date: 'May', low: 48, high: 80 },
+      { date: 'Jun', low: 52, high: 85 },
+    ],
   };
 
-  // Mock listings for this event
-  const listings = [
+  // Mock listings for this event  const listings = [
     { id: 'L1', seller: 'BrewMaster', price: 45, section: 'General Admission', verified: true, instant: true },
     { id: 'L2', seller: 'SunnyDays', price: 42, section: 'General Admission', verified: true, instant: true },
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
       
       <main className="container mx-auto px-4 py-12">
@@ -54,7 +74,7 @@ const TicketDetails = () => {
 
             <div className="space-y-6">
               <div>
-                <h1 className="text-5xl font-black text-primary tracking-tighter leading-none mb-4">
+                <h1 className="text-5xl font-black text-primary tracking-tighter mb-4">
                   {event.title}
                 </h1>
                 <div className="flex flex-wrap gap-6">
@@ -79,7 +99,13 @@ const TicketDetails = () => {
                 <h3 className="text-xl font-black text-primary uppercase tracking-widest text-xs">Available Tickets</h3>
                 <div className="grid gap-4">
                   {listings.map((listing) => (
-                    <Card key={listing.id} className="border-2 hover:border-primary/20 transition-all rounded-[1.5rem] overflow-hidden group">
+                    <Card 
+                      key={listing.id} 
+                      className={`border-2 transition-all cursor-pointer hover:shadow-xl hover:-translate-y-1 rounded-[2rem] overflow-hidden ${
+                        listing.verified ? 'border-primary shadow-lg' : 'border-primary/5'
+                      }`}
+                      onClick={() => navigate('/dashboard')}
+                    >
                       <CardContent className="p-6 flex items-center justify-between gap-6">
                         <div className="flex items-center gap-4">
                           <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center">
@@ -106,7 +132,7 @@ const TicketDetails = () => {
                             <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">+ 5% Sceney Fee</p>
                           </div>
                           <Button 
-                            onClick={() => navigate(`/checkout/${listing.id}`)}
+                            onClick={() => navigate('/checkout/' + listing.id)}
                             className="rounded-full px-6 font-black group-hover:bg-accent group-hover:text-white transition-colors"
                           >
                             Buy Now
@@ -126,7 +152,7 @@ const TicketDetails = () => {
               <CardContent className="p-8 space-y-6">
                 <div className="space-y-2">
                   <h4 className="text-xl font-black tracking-tight">Why buy on Sceney?</h4>
-                  <p className="text-sm opacity-80 font-medium leading-relaxed">
+                  <p className="text-sm text-muted-foreground font-medium leading-relaxed">
                     We ensure every ticket is verified and delivered instantly to your inbox.
                   </p>
                 </div>
@@ -168,6 +194,13 @@ const TicketDetails = () => {
               </CardContent>
             </Card>
           </div>
+        </div>
+
+        {/* Price Trend Chart */}
+        <div className="mt-12 bg-white/50 p-6 rounded-2xl border-2 border-primary/10 text-center">
+          <PriceTrendChart 
+            data={event.priceHistory}             category={event.title} 
+          />
         </div>
       </main>
     </div>
