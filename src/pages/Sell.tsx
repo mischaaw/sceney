@@ -18,7 +18,15 @@ const MOCK_EVENTS = [
     title: 'Beer Garden',
     date: 'Apr 25, 2026 • 2:00 PM',
     location: 'The Emerald Terrace',
-    image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png',
+    image: '/src/assets/beer-garden-sign.png',
+    category: 'Social'
+  },
+  {
+    id: 'tropics',
+    title: 'Tropics',
+    date: 'May 08, 2026 • 2:30 PM',
+    location: 'Funtown Beach',
+    image: '/src/assets/tropics.png',
     category: 'Social'
   }
 ];

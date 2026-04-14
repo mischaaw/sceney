@@ -42,7 +42,7 @@ const TicketDetails = () => {
       title: 'Old City Beer Garden',
       date: 'Apr 25, 2026 • 12:00 PM',
       location: 'Old City Beer Garden',
-      image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png',
+      image: '/src/assets/beer-garden-sign.png',
       category: 'Social',
       description: '21+ | Eden had rules. We just have a bar and a band.',
       priceHistory: [
@@ -60,7 +60,7 @@ const TicketDetails = () => {
       title: 'Tropics',
       date: 'May 08, 2026 • 2:30 PM',
       location: 'Funtown Beach',
-      image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png',
+      image: '/src/assets/tropics.png',
       category: 'Social',
       description: 'Dive deep with us to an evening in paradise, where the isle dances aflame and laughter echoes throughout the ocean breeze. Get ready to dance the night away with infectious tunes and unforgettable company, but don’t let the tide sweep you away… Join us for TROPICS - a celebration to cap off an incredible year and begin the summer. Introducing a live band for the first time, your ticket will also include transportation to and from the beach and an open bar. 18+ to enter and 21+ to drink at our open bar. Invite only-- ticket approval is required, and no ticket transfers will be accepted.',
       priceHistory: [

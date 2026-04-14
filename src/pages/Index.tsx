@@ -29,7 +29,7 @@ const MOCK_TICKETS = [
     date: "May 08, 2026 • 2:30 PM",
     location: "Funtown Beach",
     price: 80,
-    image: "dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png",
+    image: "/src/assets/tropics.png",
     category: "Social",
     likes: 128,
   }
