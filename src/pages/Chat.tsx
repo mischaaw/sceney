@@ -3,21 +3,31 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
-import { Send, Shield, UserCircle, Lock, ShieldCheck, Smartphone, DollarSign, Check, X } from 'lucide-react';
+import { Send, UserCircle, Lock, ShieldCheck, Smartphone, DollarSign, Check, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
 import { showSuccess } from '@/utils/toast';
 
+interface Message {
+  id: number;
+  sender: string;
+  text: string;
+  time: string;
+  type: 'text' | 'offer';
+  price?: number;
+  status?: 'pending' | 'accepted' | 'declined';
+}
+
 const Chat = () => {
   const navigate = useNavigate();
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<Message[]>([
     { id: 1, sender: 'Seller', text: "Hi! I saw you're interested in the Beer Garden tickets.", time: '10:30 AM', type: 'text' },
     { id: 2, sender: 'Buyer', text: 'Yes, are they still available? Would you take $40?', time: '10:32 AM', type: 'text' },
   ]);
   const [input, setInput] = useState('');
-  const [isSeller] = useState(true); // Simulating seller view for demo
+  const [isSeller] = useState(true);
 
   const handleSend = () => {
     if (!input.trim()) return;
