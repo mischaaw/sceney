@@ -35,7 +35,7 @@ const TicketCard = ({ ticket }: { ticket: TicketProps }) => {
           <img
             src={ticket.image}
             alt={ticket.title}
-            className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
           <Badge className="absolute top-6 right-6 bg-primary text-white border-none px-4 py-1.5 rounded-full font-black text-[10px] uppercase tracking-widest">

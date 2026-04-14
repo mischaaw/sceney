@@ -84,7 +84,7 @@ const TicketDetails = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2 space-y-12">
             <div className="relative aspect-video rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white bg-black">
-              <img src={event.image} alt={event.title} className="w-full h-full object-contain" />
+              <img src={event.image} alt={event.title} className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
               <Badge className="absolute top-8 left-8 bg-accent text-white px-6 py-2 rounded-full font-black text-[10px] uppercase tracking-[0.2em] border-none">
                 {event.category}
