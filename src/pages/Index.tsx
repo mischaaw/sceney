@@ -31,7 +31,7 @@ const Index = () => {
         </div>
 
         <div className="container mx-auto max-w-4xl text-center relative z-10">
-          <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 px-4 py-2 rounded-full mb-8 animate-bounce">
+          <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 px-4 py-2 rounded-full mb-8">
             <Sparkles size={16} className="text-accent" />
             <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">The Scene is Waiting</span>
           </div>
