@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { motion } from 'framer-motion';
+import StarRating from './StarRating';
 
 interface TicketProps {
   id: string;
@@ -17,7 +18,8 @@ interface TicketProps {
   price: number;
   image: string;
   category: string;
-  likes?: number; // optional likes
+  likes?: number;
+  rating?: number;
 }
 
 const TicketCard = ({ ticket }: { ticket: TicketProps }) => {
@@ -26,8 +28,8 @@ const TicketCard = ({ ticket }: { ticket: TicketProps }) => {
   const [showPriceInput, setShowPriceInput] = useState(false);
   const [newPrice, setNewPrice] = useState(ticket.price.toString());
 
-  // Likes are now read‑only; no click handler
   const likeCount = ticket.likes ?? 0;
+  const rating = ticket.rating ?? 5.0;
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewPrice(e.target.value);
@@ -62,14 +64,17 @@ const TicketCard = ({ ticket }: { ticket: TicketProps }) => {
         </div>
 
         <CardHeader className="p-5 pb-2 flex items-center justify-between">
-          <div>
+          <div className="space-y-1">
             <h3 className="text-xl font-black leading-tight text-primary">{ticket.title}</h3>
-            <div className="flex items-center gap-2">
-              {/* Heart icon kept for visual cue but disabled */}
-              <Heart size={20} className="text-red-500 cursor-default" />
-              <Badge variant="default" className="text-[9px] font-bold">
-                {likeCount}
-              </Badge>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1">
+                <StarRating rating={rating} size={12} />
+                <span className="text-[10px] font-black text-accent">{rating.toFixed(1)}</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <Heart size={14} className="text-red-500 fill-red-500" />
+                <span className="text-[10px] font-black text-muted-foreground">{likeCount}</span>
+              </div>
             </div>
           </div>
 
@@ -114,7 +119,10 @@ const TicketCard = ({ ticket }: { ticket: TicketProps }) => {
               variant="outline"
               size="sm"
               className="rounded-full font-bold text-[10px] px-3 py-1"
-              onClick={() => setIsEditingPrice(true)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsEditingPrice(true);
+              }}
             >
               Edit Price
             </Button>
