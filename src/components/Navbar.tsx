@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { MessageSquare, ShieldCheck, PlusCircle, LayoutDashboard, UserCircle } from 'lucide-react';
+import { MessageSquare, ShieldCheck, PlusCircle, LayoutDashboard, UserCircle, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import Logo from './Logo';
@@ -13,6 +13,7 @@ const Navbar = () => {
   
   const navLinks = [
     { name: 'Marketplace', path: '/' },
+    { name: 'How it Works', path: '/how-it-works', icon: Info },
     { name: 'Sell', path: '/sell', icon: PlusCircle },
     { name: 'Inbox', path: '/messages', icon: MessageSquare },
     { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
@@ -25,7 +26,7 @@ const Navbar = () => {
           <Logo />
         </Link>
 
-        <div className="hidden lg:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-4">
           {navLinks.map((link) => (
             <Link 
               key={link.path}

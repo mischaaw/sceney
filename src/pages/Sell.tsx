@@ -8,22 +8,40 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Info, DollarSign, ShieldCheck, UploadCloud, CheckCircle2 } from 'lucide-react';
+import { Info, DollarSign, ShieldCheck, UploadCloud, CheckCircle2, Search, Calendar, MapPin } from 'lucide-react';
 import { showSuccess } from '@/utils/toast';
+
+const MOCK_EVENTS = [
+  {
+    id: '1',
+    title: 'Beer Garden',
+    date: 'Apr 25, 2026 • 2:00 PM',
+    location: 'The Emerald Terrace',
+    image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/3632faf7816b80941677a14be7c7913a.png',
+    category: 'Social'
+  }
+];
 
 const Sell = () => {
   const navigate = useNavigate();
   const [price, setPrice] = useState<string>('');
   const [step, setStep] = useState(1);
+  const [selectedEvent, setSelectedEvent] = useState<typeof MOCK_EVENTS[0] | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+
   const commission = Number(price) * 0.05;
   const payout = Number(price) - commission;
 
+  const filteredEvents = MOCK_EVENTS.filter(e => 
+    e.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (step === 1) {
+    if (step === 1 && selectedEvent) {
       setStep(2);
       window.scrollTo(0, 0);
-    } else {
+    } else if (step === 2) {
       showSuccess("Listing submitted for verification!");
       navigate('/sell/success');
     }
@@ -43,7 +61,7 @@ const Sell = () => {
               ))}
             </div>
           </div>
-          <p className="text-muted-foreground">Secure, anonymous, and guaranteed payouts.</p>
+          <p className="text-muted-foreground">Select an event and set your price.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-8">
@@ -51,78 +69,94 @@ const Sell = () => {
             <>
               <Card className="border-2 shadow-xl rounded-[2rem] overflow-hidden">
                 <CardHeader className="p-8 border-b bg-muted/10">
-                  <CardTitle className="text-2xl font-black tracking-tight">Event Details</CardTitle>
-                  <CardDescription className="font-medium">Provide accurate information about the event.</CardDescription>
+                  <CardTitle className="text-2xl font-black tracking-tight">1. Select Event</CardTitle>
+                  <CardDescription className="font-medium">Only verified events are available for listing.</CardDescription>
                 </CardHeader>
                 <CardContent className="p-8 space-y-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="title" className="font-black text-[10px] uppercase tracking-widest text-muted-foreground">Event Name</Label>
-                    <Input id="title" placeholder="e.g. Taylor Swift | The Eras Tour" required className="h-14 rounded-xl border-2 font-bold" />
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="date" className="font-black text-[10px] uppercase tracking-widest text-muted-foreground">Date & Time</Label>
-                      <Input id="date" type="datetime-local" required className="h-14 rounded-xl border-2 font-bold" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="location" className="font-black text-[10px] uppercase tracking-widest text-muted-foreground">Venue / Location</Label>
-                      <Input id="location" placeholder="e.g. Wembley Stadium" required className="h-14 rounded-xl border-2 font-bold" />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="description" className="font-black text-[10px] uppercase tracking-widest text-muted-foreground">Additional Info</Label>
-                    <Textarea id="description" placeholder="Section, Row, Seat details..." className="min-h-[120px] rounded-xl border-2 font-medium" />
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-2 shadow-xl bg-primary text-primary-foreground rounded-[2rem] overflow-hidden">
-                <CardHeader className="p-8 border-b border-white/10 bg-white/5">
-                  <CardTitle className="text-2xl font-black tracking-tight flex items-center gap-3">
-                    <DollarSign className="text-accent" />
-                    Pricing & Commission
-                  </CardTitle>
-                  <CardDescription className="text-primary-foreground/70 font-medium">
-                    Sceney takes a flat 5% commission to ensure secure transactions.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="p-8 space-y-8">
-                  <div className="space-y-2">
-                    <Label htmlFor="price" className="font-black text-[10px] uppercase tracking-widest text-primary-foreground/60">Your Asking Price ($)</Label>
+                  <div className="relative">
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
                     <Input 
-                      id="price" 
-                      type="number" 
-                      value={price}
-                      onChange={(e) => setPrice(e.target.value)}
-                      placeholder="0.00" 
-                      className="h-20 text-4xl font-black bg-white/10 border-white/20 text-white placeholder:text-white/20 rounded-2xl px-6" 
-                      required 
+                      placeholder="Search for an event..." 
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="pl-12 h-14 rounded-xl border-2 font-bold"
                     />
                   </div>
 
-                  <div className="grid grid-cols-2 gap-8 pt-8 border-t border-white/10">
-                    <div>
-                      <p className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-2">Sceney Fee (5%)</p>
-                      <p className="text-3xl font-black text-accent">-${commission.toFixed(2)}</p>
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-2">Your Payout</p>
-                      <p className="text-3xl font-black text-green-400">${payout > 0 ? payout.toFixed(2) : '0.00'}</p>
-                    </div>
+                  <div className="space-y-3">
+                    {filteredEvents.map(event => (
+                      <div 
+                        key={event.id}
+                        onClick={() => setSelectedEvent(event)}
+                        className={`p-4 rounded-2xl border-2 cursor-pointer transition-all flex items-center gap-4 ${
+                          selectedEvent?.id === event.id ? 'border-primary bg-primary/5 shadow-md' : 'border-primary/5 hover:border-primary/20'
+                        }`}
+                      >
+                        <img src={event.image} className="w-16 h-16 rounded-xl object-cover" alt="" />
+                        <div className="flex-1">
+                          <h4 className="font-black text-primary">{event.title}</h4>
+                          <div className="flex items-center gap-3 text-[10px] font-bold text-muted-foreground uppercase tracking-widest mt-1">
+                            <span className="flex items-center gap-1"><Calendar size={12} /> {event.date}</span>
+                            <span className="flex items-center gap-1"><MapPin size={12} /> {event.location}</span>
+                          </div>
+                        </div>
+                        {selectedEvent?.id === event.id && <CheckCircle2 className="text-primary" size={24} />}
+                      </div>
+                    ))}
                   </div>
 
-                  <div className="bg-white/5 p-6 rounded-2xl flex gap-4 items-start border border-white/10">
-                    <ShieldCheck className="text-accent shrink-0 mt-1" size={24} />
-                    <p className="text-sm leading-relaxed opacity-80 font-medium">
-                      Payouts are held in escrow and released to your account once the buyer confirms entry or 24 hours after the event ends.
-                    </p>
-                  </div>
+                  {selectedEvent && (
+                    <div className="pt-6 border-t space-y-4 animate-in fade-in slide-in-from-top-2">
+                      <div className="space-y-2">
+                        <Label htmlFor="description" className="font-black text-[10px] uppercase tracking-widest text-muted-foreground">Ticket Details</Label>
+                        <Textarea id="description" placeholder="Section, Row, Seat details..." className="min-h-[100px] rounded-xl border-2 font-medium" required />
+                      </div>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
 
-              <Button type="submit" className="w-full h-20 text-xl font-black rounded-[2rem] shadow-2xl shadow-primary/30">
+              {selectedEvent && (
+                <Card className="border-2 shadow-xl bg-primary text-primary-foreground rounded-[2rem] overflow-hidden">
+                  <CardHeader className="p-8 border-b border-white/10 bg-white/5">
+                    <CardTitle className="text-2xl font-black tracking-tight flex items-center gap-3">
+                      <DollarSign className="text-accent" />
+                      Pricing
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-8 space-y-8">
+                    <div className="space-y-2">
+                      <Label htmlFor="price" className="font-black text-[10px] uppercase tracking-widest text-primary-foreground/60">Your Asking Price ($)</Label>
+                      <Input 
+                        id="price" 
+                        type="number" 
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                        placeholder="0.00" 
+                        className="h-20 text-4xl font-black bg-white/10 border-white/20 text-white placeholder:text-white/20 rounded-2xl px-6" 
+                        required 
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-8 pt-8 border-t border-white/10">
+                      <div>
+                        <p className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-2">Sceney Fee (5%)</p>
+                        <p className="text-3xl font-black text-accent">-${commission.toFixed(2)}</p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-2">Your Payout</p>
+                        <p className="text-3xl font-black text-green-400">${payout > 0 ? payout.toFixed(2) : '0.00'}</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
+              <Button 
+                type="submit" 
+                disabled={!selectedEvent || !price}
+                className="w-full h-20 text-xl font-black rounded-[2rem] shadow-2xl shadow-primary/30"
+              >
                 Continue to Verification
               </Button>
             </>
@@ -135,7 +169,7 @@ const Sell = () => {
                 <div className="space-y-2">
                   <CardTitle className="text-3xl font-black tracking-tight">Verify Authenticity</CardTitle>
                   <CardDescription className="text-lg font-medium">
-                    Upload your ticket file or a screenshot of the confirmation.
+                    Upload your ticket file or a screenshot.
                   </CardDescription>
                 </div>
               </CardHeader>
@@ -143,15 +177,6 @@ const Sell = () => {
                 <div className="border-4 border-dashed border-primary/5 rounded-[2rem] p-12 text-center space-y-4 hover:border-accent/20 transition-colors cursor-pointer bg-muted/5">
                   <p className="font-black text-primary uppercase tracking-widest text-xs">Drag and drop or click to upload</p>
                   <p className="text-sm text-muted-foreground font-medium">PDF, JPG, or PNG (Max 10MB)</p>
-                </div>
-
-                <div className="space-y-4">
-                  <div className="flex items-start gap-4 p-6 bg-green-50 rounded-2xl border-2 border-green-100">
-                    <CheckCircle2 className="text-green-600 shrink-0 mt-1" size={20} />
-                    <p className="text-sm font-bold text-green-800 leading-relaxed">
-                      Verified listings sell 4x faster and build immediate trust with buyers.
-                    </p>
-                  </div>
                 </div>
 
                 <div className="flex gap-4">

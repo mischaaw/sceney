@@ -2,18 +2,16 @@
 
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
-import { Send, Shield, UserCircle, Lock, ShieldCheck, Info } from 'lucide-react';
+import { Send, Shield, UserCircle, Lock, ShieldCheck, Info, Smartphone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const Chat = () => {
   const [messages, setMessages] = useState([
-    { id: 1, sender: 'Seller', text: "Hi! I saw you're interested in the Jazz Festival tickets.", time: '10:30 AM' },
-    { id: 2, sender: 'Buyer', text: "Yes, are they still available? And are they digital or physical?", time: '10:32 AM' },
-    { id: 3, sender: 'Seller', text: "They are digital. I can transfer them via the official app once the payment is confirmed by Sceney.", time: '10:33 AM' },
+    { id: 1, sender: 'Seller', text: "Hi! I saw you're interested in the Beer Garden tickets.", time: '10:30 AM' },
+    { id: 2, sender: 'Buyer', text: "Yes, are they still available?", time: '10:32 AM' },
   ]);
   const [input, setInput] = useState('');
 
@@ -34,7 +32,6 @@ const Chat = () => {
       
       <main className="flex-1 container mx-auto px-4 py-8 flex flex-col max-w-4xl">
         <div className="bg-white rounded-[2rem] shadow-2xl border-2 border-primary/5 flex-1 flex flex-col overflow-hidden">
-          {/* Chat Header */}
           <div className="p-6 border-b bg-primary text-primary-foreground flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-2xl bg-accent flex items-center justify-center shadow-inner">
@@ -42,16 +39,15 @@ const Chat = () => {
               </div>
               <div>
                 <h2 className="font-black text-lg tracking-tight">Anonymous Seller #4821</h2>
-                <p className="text-xs font-bold opacity-70 uppercase tracking-widest">Midnight Jazz Festival • 2 Tickets</p>
+                <p className="text-xs font-bold opacity-70 uppercase tracking-widest">Beer Garden • 2 Tickets</p>
               </div>
             </div>
             <Badge variant="outline" className="text-white border-white/30 bg-white/10 px-4 py-1.5 rounded-full flex gap-2 items-center font-bold text-[10px] uppercase tracking-widest">
-              <Shield size={14} className="text-accent" />
-              Monitored
+              <Smartphone size={14} className="text-accent" />
+              SMS Connected
             </Badge>
           </div>
 
-          {/* Escrow Status Banner */}
           <div className="px-8 py-4 bg-accent/5 border-b flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center">
@@ -59,23 +55,18 @@ const Chat = () => {
               </div>
               <div>
                 <p className="text-[10px] font-black uppercase tracking-widest text-primary">Escrow Status</p>
-                <p className="text-xs font-bold text-accent">Payment Secured • Awaiting Ticket Transfer</p>
+                <p className="text-xs font-bold text-accent">Payment Secured • Awaiting Transfer</p>
               </div>
             </div>
-            <Button variant="ghost" size="sm" className="text-[10px] font-black uppercase tracking-widest gap-2">
-              <Info size={14} />
-              How it works
-            </Button>
           </div>
 
-          {/* Messages Area */}
           <ScrollArea className="flex-1 p-8">
             <div className="space-y-8">
               <div className="flex justify-center">
                 <div className="flex items-center gap-2 bg-muted px-4 py-1.5 rounded-full">
                   <Lock size={12} className="text-muted-foreground" />
                   <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">
-                    End-to-end encrypted for users
+                    End-to-end encrypted & SMS Forwarded
                   </span>
                 </div>
               </div>
@@ -102,7 +93,6 @@ const Chat = () => {
             </div>
           </ScrollArea>
 
-          {/* Input Area */}
           <div className="p-6 border-t bg-muted/20">
             <div className="flex gap-3">
               <Input 
@@ -115,12 +105,6 @@ const Chat = () => {
               <Button onClick={handleSend} className="rounded-2xl w-14 h-14 p-0 shadow-lg shadow-primary/20">
                 <Send className="w-6 h-6" />
               </Button>
-            </div>
-            <div className="flex items-center justify-center gap-2 mt-4">
-              <Shield size={12} className="text-accent" />
-              <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                Sceney Protection Active: Never share personal info
-              </p>
             </div>
           </div>
         </div>
