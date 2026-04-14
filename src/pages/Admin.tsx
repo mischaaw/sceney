@@ -1,8 +1,8 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
-import { ShieldAlert, Eye, CheckCircle2, Clock, TrendingUp, Users, MessageSquare } from 'lucide-react';
+import { ShieldAlert, Eye, CheckCircle2, Clock, TrendingUp, Users, MessageSquare, ArrowRight, ExternalLink } from 'lucide-react';
 import { 
   Table, 
   TableBody, 
@@ -16,11 +16,38 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const Admin = () => {
+  const [selectedChat, setSelectedChat] = useState<any>(null);
+  
   const transactions = [
     { id: 'TX-901', buyer: 'User_88', seller: 'User_12', amount: 126.00, commission: 6.00, status: 'Escrow' },
     { id: 'TX-902', buyer: 'User_45', seller: 'User_09', amount: 472.50, commission: 22.50, status: 'Completed' },
     { id: 'TX-903', buyer: 'User_21', seller: 'User_33', amount: 89.25, commission: 4.25, status: 'Pending Verification' },
   ];
+
+  const chats = [
+    {
+      id: 'Chat-8821',
+      buyer: 'User_88',
+      seller: 'User_12',
+      event: 'Beer Garden',
+      lastMessage: "They are digital. I can transfer them via the official app...",
+      time: '2m ago',
+      status: 'Active'
+    },
+    {
+      id: 'Chat-8822',
+      buyer: 'User_45',
+      seller: 'User_09',
+      event: 'Tech Vision Summit',
+      lastMessage: "Is the price negotiable for 3 tickets?",
+      time: '1h ago',
+      status: 'Active'
+    }
+  ];
+
+  const handleMonitorChat = (chatId: string) => {
+    setSelectedChat(chats.find(chat => chat.id === chatId));
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -114,18 +141,26 @@ const Admin = () => {
                 <Badge className="bg-primary text-white rounded-full px-2 py-0.5 text-[10px]">3</Badge>
               </div>
               <div className="divide-y-2 divide-muted/10">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="p-6 hover:bg-muted/5 transition-colors cursor-pointer group">
+                {chats.map((chat) => (
+                  <div key={chat.id} className="p-6 hover:bg-muted/5 transition-colors cursor-pointer group">
                     <div className="flex justify-between items-start mb-2">
-                      <span className="text-[10px] font-black text-primary uppercase tracking-widest">Chat #882{i}</span>
-                      <span className="text-[10px] font-bold text-muted-foreground">2m ago</span>
+                      <span className="text-[10px] font-black text-primary uppercase tracking-widest">{chat.event}</span>
+                      <span className="text-[10px] font-bold text-muted-foreground">{chat.time}</span>
                     </div>
                     <p className="text-sm font-medium text-muted-foreground line-clamp-2 leading-relaxed">
-                      "I can transfer them via the official app once the payment is confirmed..."
+                      "{chat.lastMessage}"
                     </p>
-                    <div className="mt-4 flex justify-end opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
-                      <Button size="sm" variant="outline" className="h-8 text-[10px] font-black uppercase tracking-widest gap-2 rounded-full border-2">
-                        <Eye size={14} /> Monitor Conversation
+                    <div className="mt-4 flex justify-between items-center">
+                      <div className="text-xs font-bold text-muted-foreground">
+                        {chat.buyer} ↔ {chat.seller}
+                      </div>
+                      <Button 
+                        size="sm" 
+                        variant="outline" 
+                        className="h-8 text-[10px] font-black uppercase tracking-widest gap-2 rounded-full border-2"
+                        onClick={() => handleMonitorChat(chat.id)}
+                      >
+                        <Eye size={14} /> Monitor
                       </Button>
                     </div>
                   </div>
@@ -133,7 +168,40 @@ const Admin = () => {
               </div>
             </section>
 
-            <Card className="border-2 shadow-xl bg-accent text-white rounded-[2rem]">
+            {selectedChat && (
+              <Card className="border-2 shadow-xl bg-accent text-white rounded-[2rem]">
+                <CardHeader>
+                  <CardTitle className="text-lg font-black tracking-tight flex items-center gap-2">
+                    <ShieldAlert size={20} />
+                    Monitoring: {selectedChat.event}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm font-medium opacity-90 leading-relaxed mb-4">
+                    Chat between {selectedChat.buyer} and {selectedChat.seller}
+                  </p>
+                  <div className="space-y-3">
+                    <div className="bg-white/10 p-3 rounded-xl">
+                      <p className="text-xs font-bold mb-1">{selectedChat.buyer}</p>
+                      <p className="text-sm">"Is the price negotiable?"</p>
+                    </div>
+                    <div className="bg-white/10 p-3 rounded-xl">
+                      <p className="text-xs font-bold mb-1">{selectedChat.seller}</p>
+                      <p className="text-sm">"They are digital. I can transfer them via the official app..."</p>
+                    </div>
+                  </div>
+                  <Button 
+                    className="w-full mt-4 rounded-2xl font-black"
+                    onClick={() => window.location.href = `/messages/chat`}
+                  >
+                    Enter Conversation
+                    <ArrowRight size={16} className="ml-2" />
+                  </Button>
+                </CardContent>
+              </Card>
+            )}
+
+            <Card className="border-2 shadow-xl bg-primary text-white rounded-[2rem]">
               <CardHeader>
                 <CardTitle className="text-lg font-black tracking-tight flex items-center gap-2">
                   <ShieldAlert size={20} />

@@ -15,7 +15,8 @@ import {
   Mail, 
   Zap,
   Smartphone,
-  Globe
+  Globe,
+  Send
 } from 'lucide-react';
 import { showSuccess } from '@/utils/toast';
 import { cn } from '@/lib/utils';
@@ -25,11 +26,17 @@ const Checkout = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'apple' | 'google'>('card');
+  const [email, setEmail] = useState('alex@example.com');
 
   const handlePayment = (e: React.FormEvent) => {
     e.preventDefault();
     setStep(2);
-    showSuccess("Payment successful! Check your email.");
+    showSuccess("Payment successful! Check your email for receipt.");
+    
+    // Simulate sending receipts
+    setTimeout(() => {
+      showSuccess("Receipt sent to buyer and seller!");
+    }, 2000);
   };
 
   if (step === 2) {
@@ -50,7 +57,7 @@ const Checkout = () => {
             <div className="space-y-2">
               <h1 className="text-4xl font-black text-primary tracking-tighter">Tickets Sent!</h1>
               <p className="text-muted-foreground font-medium">
-                We've just emailed your tickets to <span className="text-primary font-bold">alex@example.com</span>.
+                We've just emailed your tickets to <span className="text-primary font-bold">{email}</span>.
               </p>
             </div>
 
@@ -105,7 +112,7 @@ const Checkout = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div className="space-y-8">
-            <h1 className="text-4xl font-black text-primary tracking-tighter">Secure Checkout</h1>
+            <h1 className="text-4xl font-black text-primary tracking-tight">Secure Checkout</h1>
             
             <div className="space-y-6">
               <div className="space-y-3">
@@ -205,10 +212,10 @@ const Checkout = () => {
               <CardContent className="p-6 space-y-6">
                 <div className="flex gap-4">
                   <div className="w-20 h-20 rounded-xl overflow-hidden shrink-0">
-                    <img src="https://images.unsplash.com/photo-1514525253361-bee8718a7439?auto=format&fit=crop&q=80&w=200" className="w-full h-full object-cover" />
+                    <img src="dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png" className="w-full h-full object-cover" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-primary">Midnight Jazz Festival</h3>
+                    <h3 className="font-bold text-primary">Beer Garden</h3>
                     <p className="text-xs text-muted-foreground font-medium">Oct 24, 2024 • 1 Ticket</p>
                     <p className="text-[10px] font-black text-accent uppercase tracking-widest mt-1">Seller: JazzLover99</p>
                   </div>
@@ -226,6 +233,22 @@ const Checkout = () => {
                   <div className="flex justify-between items-center pt-3 border-t">
                     <span className="font-black text-primary uppercase tracking-widest text-xs">Total</span>
                     <span className="font-black text-2xl text-primary tracking-tighter">$126.00</span>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t space-y-3">
+                  <Label className="font-black text-[10px] uppercase tracking-widest text-muted-foreground">Receipt Email</Label>
+                  <div className="flex gap-2">
+                    <Input 
+                      type="email" 
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="flex-1 h-12 rounded-xl border-2 font-bold"
+                      required
+                    />
+                    <Button type="button" size="icon" className="rounded-xl h-12">
+                      <Send size={20} />
+                    </Button>
                   </div>
                 </div>
               </CardContent>

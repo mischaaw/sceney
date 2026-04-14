@@ -26,10 +26,37 @@ const MOCK_TICKETS = [
     price: 45,
     image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png',
     category: 'Social'
+  },
+  {
+    id: '2',
+    title: 'Jazz Night',
+    date: 'May 15, 2026 • 8:00 PM',
+    location: 'Blue Note Club',
+    price: 65,
+    image: 'https://images.unsplash.com/photo-1514525253361-bee8718a7439?auto=format&fit=crop&q=80&w=200',
+    category: 'Music'
+  },
+  {
+    id: '3',
+    title: 'Basketball Championship',
+    date: 'Jun 10, 2026 • 7:00 PM',
+    location: 'Penn Palestra',
+    price: 120,
+    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&q=80&w=200',
+    category: 'Sports'
+  },
+  {
+    id: '4',
+    title: 'Art Exhibition',
+    date: 'Jul 5, 2026 • 6:00 PM',
+    location: 'ICA Philadelphia',
+    price: 25,
+    image: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&q=80&w=200',
+    category: 'Arts'
   }
 ];
 
-const CATEGORIES = ['All', 'Social', 'Music', 'Sports', 'Conference', 'Exhibition', 'Theater'];
+const CATEGORIES = ['All', 'Social', 'Music', 'Sports', 'Arts', 'Conference', 'Theater'];
 
 const Index = () => {
   const [activeCategory, setActiveCategory] = useState('All');

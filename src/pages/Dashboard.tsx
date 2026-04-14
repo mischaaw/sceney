@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -16,16 +16,33 @@ import {
   DollarSign, 
   TrendingUp, 
   AlertCircle,
-  ChevronRight
+  ChevronRight,
+  LineChart,
+  TrendingDown
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { LineChart as RechartsLineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [priceData, setPriceData] = useState<any[]>([]);
+
+  useEffect(() => {
+    // Mock price data for chart
+    const mockData = [
+      { date: 'Jan', low: 40, high: 65 },
+      { date: 'Feb', low: 42, high: 70 },
+      { date: 'Mar', low: 38, high: 68 },
+      { date: 'Apr', low: 45, high: 75 },
+      { date: 'May', low: 48, high: 80 },
+      { date: 'Jun', low: 52, high: 85 },
+    ];
+    setPriceData(mockData);
+  }, []);
 
   // Mock data for the dashboard
   const stats = {
-    totalEarnings: 1240.50,
+    totalSales: 1240.50,
     activeListings: 3,
     pendingPayouts: 450.00,
     totalPurchases: 1
@@ -34,33 +51,33 @@ const Dashboard = () => {
   const purchases = [
     {
       id: 'PUR-901',
-      event: 'Midnight Jazz Festival',
+      event: 'Beer Garden',
       date: 'Oct 24, 2024',
       status: 'In Escrow',
       price: 126.00,
       seller: 'User_4821',
-      image: 'https://images.unsplash.com/photo-1514525253361-bee8718a7439?auto=format&fit=crop&q=80&w=200'
+      image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png'
     }
   ];
 
   const listings = [
     {
       id: 'LST-101',
-      event: 'Tech Vision Summit 2024',
+      event: 'Beer Garden',
       date: 'Nov 12, 2024',
       status: 'Active',
       price: 450.00,
       views: 124,
-      image: 'https://images.unsplash.com/photo-1540575861501-7cf05a4b125a?auto=format&fit=crop&q=80&w=200'
+      image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png'
     },
     {
       id: 'LST-102',
-      event: 'Championship Finals',
+      event: 'Tech Vision Summit',
       date: 'Dec 05, 2024',
       status: 'Sold',
       price: 299.00,
       views: 89,
-      image: 'https://images.unsplash.com/photo-1504450758481-7338eba7524a?auto=format&fit=crop&q=80&w=200'
+      image: 'https://images.unsplash.com/photo-1540575861501-7338eba7524a?auto=format&fit=crop&q=80&w=200'
     }
   ];
 
@@ -92,10 +109,10 @@ const Dashboard = () => {
                 <div className="p-2 bg-white/10 rounded-xl">
                   <DollarSign size={20} className="text-accent" />
                 </div>
-                <Badge className="bg-accent text-white border-none text-[9px] font-black uppercase tracking-widest">Total Made</Badge>
+                <Badge className="bg-accent text-white border-none px-3 py-1 rounded-full font-bold text-[10px] uppercase tracking-widest">Total Sales</Badge>
               </div>
-              <p className="text-3xl font-black tracking-tighter">${stats.totalEarnings.toFixed(2)}</p>
-              <p className="text-[10px] font-bold opacity-60 uppercase tracking-widest mt-1">Lifetime Earnings</p>
+              <p className="text-3xl font-black tracking-tighter">${stats.totalSales.toFixed(2)}</p>
+              <p className="text-[10px] font-bold opacity-60 uppercase tracking-widest mt-1">Lifetime Sales</p>
             </CardContent>
             <div className="absolute bottom-0 right-0 w-16 h-16 bg-white/5 -mb-4 -mr-4 rounded-full" />
           </Card>
@@ -139,6 +156,43 @@ const Dashboard = () => {
             </CardContent>
           </Card>
         </div>
+
+        {/* Price Tracking Chart */}
+        <Card className="border-2 shadow-xl rounded-[2rem] overflow-hidden mb-12">
+          <CardHeader className="p-8 border-b bg-muted/10">
+            <CardTitle className="text-2xl font-black tracking-tight flex items-center gap-3">
+              <LineChart className="text-accent" size={24} />
+              Price Trends
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-8">
+            <div className="h-80">
+              <ResponsiveContainer width="100%" height="100%">
+                <RechartsLineChart data={priceData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                  <XAxis dataKey="date" stroke="hsl(var(--muted-foreground))" />
+                  <YAxis stroke="hsl(var(--muted-foreground))" />
+                  <Tooltip 
+                    contentStyle={{ backgroundColor: 'hsl(var(--card))', borderColor: 'hsl(var(--border))', borderRadius: '1rem' }}
+                    labelStyle={{ color: 'hsl(var(--primary))', fontWeight: 'bold' }}
+                  />
+                  <Line type="monotone" dataKey="high" stroke="hsl(var(--accent))" strokeWidth={3} dot={{ fill: 'hsl(var(--accent))' }} />
+                  <Line type="monotone" dataKey="low" stroke="hsl(var(--primary))" strokeWidth={3} dot={{ fill: 'hsl(var(--primary))' }} />
+                </RechartsLineChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="flex justify-center gap-8 mt-6">
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-accent rounded-full"></div>
+                <span className="text-sm font-bold text-primary">High Price</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-primary rounded-full"></div>
+                <span className="text-sm font-bold text-primary">Low Price</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         <Tabs defaultValue="selling" className="space-y-8">
           <div className="flex items-center justify-between border-b-2 border-primary/5 pb-4">

@@ -29,7 +29,7 @@ const Profile = () => {
           </div>
           <div>
             <h1 className="text-5xl font-black text-primary tracking-tighter">Profile</h1>
-            <p className="text-lg text-muted-foreground font-medium">Manage your account and verification.</p>
+            <p className="text-lg text-muted-foreground font-medium">Manage your account and settings.</p>
           </div>
         </div>
 
@@ -38,9 +38,8 @@ const Profile = () => {
             <nav className="space-y-2">
               {[
                 { icon: UserCircle, label: 'General' },
-                { icon: Smartphone, label: 'Verification' },
-                { icon: Bell, label: 'Notifications' },
                 { icon: CreditCard, label: 'Payouts' },
+                { icon: Bell, label: 'Notifications' },
               ].map((item) => (
                 <button
                   key={item.label}
@@ -71,6 +70,7 @@ const Profile = () => {
               <Card className="border-2 shadow-xl rounded-[2.5rem] overflow-hidden">
                 <CardHeader className="p-8 border-b bg-muted/10">
                   <CardTitle className="text-2xl font-black tracking-tight">Account Information</CardTitle>
+                  <CardDescription className="font-medium">Update your personal details and contact information.</CardDescription>
                 </CardHeader>
                 <CardContent className="p-8">
                   <form onSubmit={handleSave} className="space-y-6">
@@ -84,6 +84,17 @@ const Profile = () => {
                         <Input defaultValue="Rivers" className="h-12 rounded-xl border-2 font-bold" />
                       </div>
                     </div>
+                    
+                    <div className="space-y-2">
+                      <Label className="font-black text-[10px] uppercase tracking-widest text-muted-foreground">Email Address</Label>
+                      <Input defaultValue="alex@example.com" className="h-12 rounded-xl border-2 font-bold" />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label className="font-black text-[10px] uppercase tracking-widest text-muted-foreground">Phone Number</Label>
+                      <Input defaultValue="+1 (555) 123-4567" className="h-12 rounded-xl border-2 font-bold" />
+                    </div>
+                    
                     <Button type="submit" className="w-full h-14 rounded-2xl font-black text-lg shadow-xl shadow-primary/20">
                       Save Changes
                     </Button>
@@ -92,54 +103,58 @@ const Profile = () => {
               </Card>
             )}
 
-            {activeTab === 'Verification' && (
-              <div className="space-y-6">
-                <Card className="border-2 shadow-xl rounded-[2.5rem] overflow-hidden">
-                  <CardHeader className="p-8 border-b bg-muted/10">
-                    <CardTitle className="text-2xl font-black tracking-tight">Trust & Safety</CardTitle>
-                    <CardDescription className="font-medium">Verify your identity to enable SMS-linked messaging.</CardDescription>
-                  </CardHeader>
-                  <CardContent className="p-8 space-y-6">
+            {activeTab === 'Payouts' && (
+              <Card className="border-2 shadow-xl rounded-[2.5rem] overflow-hidden">
+                <CardHeader className="p-8 border-b bg-muted/10">
+                  <CardTitle className="text-2xl font-black tracking-tight">Payout Settings</CardTitle>
+                  <CardDescription className="font-medium">Manage how you receive your earnings from ticket sales.</CardDescription>
+                </CardHeader>
+                <CardContent className="p-8 space-y-6">
+                  <div className="space-y-4">
                     <div className="flex items-center justify-between p-6 bg-green-50 rounded-2xl border-2 border-green-100">
                       <div className="flex items-center gap-4">
                         <div className="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center">
-                          <Mail size={24} />
+                          <CreditCard size={24} />
                         </div>
                         <div>
-                          <p className="font-black text-primary">Email Address</p>
-                          <p className="text-xs text-muted-foreground font-medium">alex@example.com</p>
+                          <p className="font-black text-primary">Payment Method</p>
+                          <p className="text-xs text-muted-foreground font-medium">•••• •••• •••• 4242</p>
                         </div>
                       </div>
-                      <Badge className="bg-green-600 text-white px-3 py-1 rounded-full font-black text-[10px] uppercase tracking-widest">Verified</Badge>
+                      <Button size="sm" className="rounded-full font-black text-[10px] uppercase tracking-widest px-4">Update</Button>
                     </div>
 
-                    <div className="flex items-center justify-between p-6 bg-white rounded-2xl border-2 border-primary/5">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-primary/5 text-primary rounded-xl flex items-center justify-center">
-                          <Phone size={24} />
-                        </div>
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center">
                         <div>
-                          <p className="font-black text-primary">Phone Number</p>
-                          <p className="text-xs text-muted-foreground font-medium">Not verified yet</p>
+                          <p className="font-black text-primary">Available Balance</p>
+                          <p className="text-xs text-muted-foreground font-medium">Ready for withdrawal</p>
                         </div>
+                        <p className="text-2xl font-black text-primary">$450.00</p>
                       </div>
-                      <Button size="sm" className="rounded-full font-black text-[10px] uppercase tracking-widest px-4">Verify Now</Button>
                     </div>
-                  </CardContent>
-                </Card>
 
-                <Card className="border-2 shadow-xl bg-accent text-white rounded-[2.5rem] overflow-hidden">
-                  <CardContent className="p-8 flex items-center gap-6">
-                    <ShieldCheck size={40} />
-                    <div>
-                      <h3 className="text-xl font-black tracking-tight">SMS Integration</h3>
-                      <p className="text-sm font-medium opacity-80 leading-relaxed">
-                        Once your phone is verified, all anonymous chats will be forwarded to your SMS for instant replies.
-                      </p>
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <p className="font-black text-primary">Pending Payouts</p>
+                          <p className="text-xs text-muted-foreground font-medium">In escrow</p>
+                        </div>
+                        <p className="text-2xl font-black text-accent">$124.50</p>
+                      </div>
                     </div>
-                  </CardContent>
-                </Card>
-              </div>
+                  </div>
+
+                  <div className="pt-6 border-t space-y-4">
+                    <Button className="w-full h-14 rounded-2xl font-black text-lg shadow-xl shadow-primary/20">
+                      Withdraw Funds
+                    </Button>
+                    <p className="text-xs text-muted-foreground text-center">
+                      Funds are available 24 hours after the event ends
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
             )}
 
             {activeTab === 'Notifications' && (
