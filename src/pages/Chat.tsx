@@ -2,67 +2,70 @@
 
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
-import { Send, Shield, UserCircle, Lock, ShieldCheck, Info, Smartphone } from 'lucide-react';
+import { Send, Shield, UserCircle, Lock, ShieldCheck, Smartphone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
 
-// Move showSuccess to top so it's available in makeOffer
+// Simple toast placeholder (replace with real toast implementation if needed)
 const showSuccess = (message: string) => {
-  console.log("Toast: " + message);
+  console.log('Toast:', message);
 };
 
 const Chat = () => {
   const [messages, setMessages] = useState([
     { id: 1, sender: 'Seller', text: "Hi! I saw you're interested in the Beer Garden tickets.", time: '10:30 AM' },
-    { id: 2, sender: 'Buyer', text: "Yes, are they still available?", time: '10:32 AM' },
+    { id: 2, sender: 'Buyer', text: 'Yes, are they still available?', time: '10:32 AM' },
   ]);
   const [input, setInput] = useState('');
-  const [isSeller, setIsSeller] = useState(false); // New: track if current user is seller
-  const [offers, setOffers] = useState({}); // New: track offers made by seller
+  const [offers, setOffers] = useState<Record<string, number>>({}); // track offers per buyerId
 
   const handleSend = () => {
     if (!input.trim()) return;
-    setMessages([...messages, {
-      id: Date.now(),
-      sender: 'Buyer',
-      text: input,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    }]);
+    setMessages(prev => [
+      ...prev,
+      {
+        id: Date.now(),
+        sender: 'Buyer',
+        text: input,
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      },
+    ]);
     setInput('');
   };
 
-  // New: handle making an offer
+  // Handle making an offer to a buyer
   const makeOffer = (buyerId: string) => {
-    const newPriceInput = prompt('Enter your offer price:');
-    if (!newPriceInput || isNaN(parseFloat(newPriceInput))) return;
-    
-    const offerPrice = parseFloat(newPriceInput);
-    
-    // Update offers state with proper object return
+    const priceInput = prompt('Enter your offer price:');
+    if (!priceInput || isNaN(parseFloat(priceInput))) return;
+
+    const offerPrice = parseFloat(priceInput);
+
+    // Update offers map
     setOffers(prev => ({ ...prev, [buyerId]: offerPrice }));
-    
-    // Notify buyer about price drop    setMessages(prev => [
+
+    // Notify buyer about the price drop
+    setMessages(prev => [
       ...prev,
       {
         id: Date.now() + 1,
         sender: 'System',
         text: `💰 Price dropped to $${offerPrice} for your ticket!`,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      }
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      },
     ]);
-    
-    // Show toast notification
+
+    // Show toast
     showSuccess(`Offer of $${offerPrice} sent!`);
   };
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
-      
       <main className="flex-1 container mx-auto px-4 py-8 flex flex-col max-w-4xl">
         <div className="bg-white rounded-[2rem] shadow-2xl border-2 border-primary/5 flex-1 flex flex-col overflow-hidden">
+          {/* Header */}
           <div className="p-6 border-b bg-primary text-primary-foreground flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-2xl bg-accent flex items-center justify-center shadow-inner">
@@ -70,7 +73,9 @@ const Chat = () => {
               </div>
               <div>
                 <h2 className="font-black text-lg tracking-tight">Anonymous Seller #4821</h2>
-                <p className="text-xs font-bold opacity-70 uppercase tracking-widest">Beer Garden • 2 Tickets</p>
+                <p className="text-xs font-bold opacity-70 uppercase tracking-widest">
+                  Beer Garden • 2 Tickets
+                </p>
               </div>
             </div>
             <Badge variant="outline" className="text-white border-white/30 bg-white/10 px-4 py-1.5 rounded-full font-black text-[10px] uppercase tracking-widest">
@@ -79,6 +84,7 @@ const Chat = () => {
             </Badge>
           </div>
 
+          {/* Escrow status */}
           <div className="px-8 py-4 bg-accent/5 border-b flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center">
@@ -91,6 +97,7 @@ const Chat = () => {
             </div>
           </div>
 
+          {/* Message list */}
           <ScrollArea className="flex-1 p-8">
             <div className="space-y-8">
               <div className="flex justify-center">
@@ -101,16 +108,27 @@ const Chat = () => {
                   </span>
                 </div>
               </div>
-              
-              {messages.map((msg) => (
-                <div 
-                  key={msg.id}                   className={`flex ${msg.sender === 'Buyer' ? 'justify-end' : 'justify-start'}`}
+
+              {messages.map(msg => (
+                <div
+                  key={msg.id}
+                  className={`flex ${msg.sender === 'Buyer' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div className="flex-1 min-w-0 space-y-2">
-                    <div className={`p-5 rounded-[1.5rem] text-sm font-medium leading-relaxed shadow-sm ${msg.sender === 'Buyer' ? 'bg-primary text-primary-foreground rounded-tr-none' : 'bg-secondary/50 text-primary rounded-tl-none border border-primary/5'}`}>
+                    <div
+                      className={`p-5 rounded-[1.5rem] text-sm font-medium leading-relaxed shadow-sm ${
+                        msg.sender === 'Buyer'
+                          ? 'bg-primary text-primary-foreground rounded-tr-none'
+                          : 'bg-secondary/50 text-primary rounded-tl-none border border-primary/5'
+                      }`}
+                    >
                       {msg.text}
                     </div>
-                    <p className={`text-[10px] font-bold text-muted-foreground uppercase tracking-tighter ${msg.sender === 'Buyer' ? 'text-right' : 'text-left'}`}>
+                    <p
+                      className={`text-[10px] font-bold text-muted-foreground uppercase tracking-tighter ${
+                        msg.sender === 'Buyer' ? 'text-right' : 'text-left'
+                      }`}
+                    >
                       {msg.time}
                     </p>
                   </div>
@@ -119,13 +137,14 @@ const Chat = () => {
             </div>
           </ScrollArea>
 
+          {/* Input area */}
           <div className="p-6 border-t bg-muted/20">
             <div className="flex gap-3">
-              <Input 
-                placeholder="Type your message..." 
+              <Input
+                placeholder="Type your message..."
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+                onChange={e => setInput(e.target.value)}
+                onKeyPress={e => e.key === 'Enter' && handleSend()}
                 className="rounded-2xl h-14 border-2 border-primary/10 focus-visible:ring-primary bg-white text-lg px-6"
               />
               <Button onClick={handleSend} className="rounded-2xl w-14 h-14 p-0 shadow-lg shadow-primary/20">
