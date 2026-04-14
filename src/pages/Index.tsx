@@ -4,8 +4,7 @@ import React from "react";
 import Navbar from "@/components/Navbar";
 import TicketCard from "@/components/TicketCard";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import PriceTrendChart from "@/components/PriceTrendChart";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 const MOCK_TICKETS = [
   {
@@ -16,81 +15,62 @@ const MOCK_TICKETS = [
     price: 45,
     image: "dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png",
     category: "Social",
-    likes: 0,
-    priceHistory: [
-      { date: "Jan", low: 40, high: 65 },
-      { date: "Feb", low: 42, high: 70 },
-      { date: "Mar", low: 38, high: 68 },
-      { date: "Apr", low: 45, high: 75 },
-      { date: "May", low: 48, high: 80 },
-      { date: "Jun", low: 52, high: 85 },
-    ],
+    likes: 124,
   },
 ];
 
 const Index = () => {
-  const [searchQuery] = React.useState("");
-
-  const filteredTickets = searchQuery
-    ? MOCK_TICKETS.filter((ticket) =>
-        ticket.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        ticket.location.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : MOCK_TICKETS;
-
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
       
-      <section className="flex-1 bg-gradient-to-br from-primary/10 to-accent/10 min-h-[60vh] flex items-center justify-center px-4">
-        <div className="max-w-2xl text-center">
-          <h1 className="text-6xl font-black text-primary tracking-tighter mb-2">
-            Welcome to Sceney
+      <section className="relative overflow-hidden bg-primary py-24 px-4">
+        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-accent rounded-full blur-[120px]" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-accent rounded-full blur-[120px]" />
+        </div>
+
+        <div className="container mx-auto max-w-4xl text-center relative z-10">
+          <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 px-4 py-2 rounded-full mb-8 animate-bounce">
+            <Sparkles size={16} className="text-accent" />
+            <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">The Scene is Waiting</span>
+          </div>
+          
+          <h1 className="text-7xl md:text-8xl font-black text-white tracking-tighter mb-6 leading-[0.9]">
+            GET IN THE <span className="text-accent italic">SCENE.</span>
           </h1>
-          <p className="text-3xl text-muted-foreground mb-6">
-            Discover, buy, and sell verified tickets for the events you love.
+          
+          <p className="text-xl md:text-2xl text-white/70 mb-10 font-medium max-w-2xl mx-auto leading-relaxed">
+            The most secure, anonymous marketplace for verified event tickets. No scams, just vibes.
           </p>
-          <div className="flex gap-4 justify-center">
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
-              variant="default"
-              className="rounded-full font-black text-lg px-8 py-3 shadow-lg shadow-primary/20"
-              onClick={() => window.location.href = "/marketplace"}
+              className="rounded-full font-black text-xl px-10 h-20 shadow-2xl shadow-accent/20 bg-accent hover:bg-accent/90 text-white border-none"
+              onClick={() => document.getElementById('marketplace')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              Browse Events
+              Browse Marketplace
+              <ArrowRight className="ml-2" size={24} />
             </Button>
-            <Badge className="bg-white/20 text-primary border-primary/30 px-4 py-1.5 rounded-full font-black text-[10px] uppercase tracking-widest">
-              Free Trial
-            </Badge>
           </div>
         </div>
       </section>
 
-      <main className="container mx-auto px-4 py-12 max-w-5xl flex flex-col">
-        <div className="mb-10">
-          <div className="flex items-center gap-4 mb-2">
-            <h1 className="text-4xl font-black text-primary">Marketplace</h1>
-            <div className="flex gap-1">
-              {[1, 2].map((i) => (
-                <div key={i} className={`h-2 w-8 rounded-full transition-colors ${i === 1 ? 'bg-accent' : 'bg-primary/10'}`} />
-              ))}
+      <main id="marketplace" className="container mx-auto px-4 py-20 max-w-5xl flex flex-col">
+        <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="h-3 w-12 bg-accent rounded-full" />
+              <h2 className="text-4xl font-black text-primary tracking-tight">Live Listings</h2>
             </div>
+            <p className="text-lg text-muted-foreground font-medium">Verified tickets available right now.</p>
           </div>
-          <p className="text-lg text-muted-foreground">Browse events by category or search.</p>
         </div>
 
-        <div className="space-y-8">
-          {filteredTickets.map((ticket) => (
+        <div className="grid grid-cols-1 gap-8">
+          {MOCK_TICKETS.map((ticket) => (
             <TicketCard key={ticket.id} ticket={ticket} />
           ))}
-
-          {filteredTickets.length > 0 && (
-            <div className="bg-white/50 p-6 rounded-2xl border-2 border-primary/10 text-center">
-              <PriceTrendChart 
-                data={filteredTickets[0].priceHistory} 
-                category="Price Trend" 
-              />
-            </div>
-          )}
         </div>
       </main>
     </div>
