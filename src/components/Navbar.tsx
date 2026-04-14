@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { MessageSquare, ShieldCheck, PlusCircle, LayoutDashboard, UserCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import Logo from './Logo';
 
 const Navbar = () => {
   const location = useLocation();
@@ -20,15 +21,8 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md">
       <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-3 group">
-          <div className="bg-primary p-1 rounded-xl transition-transform group-hover:scale-105">
-            <img 
-              src="/sceney.png" 
-              alt="Sceney Logo" 
-              className="w-10 h-10 object-contain"
-            />
-          </div>
-          <span className="text-2xl font-black tracking-tighter text-primary">sceney</span>
+        <Link to="/">
+          <Logo />
         </Link>
 
         <div className="hidden lg:flex items-center gap-8">

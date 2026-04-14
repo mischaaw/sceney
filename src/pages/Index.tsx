@@ -8,6 +8,7 @@ import { Search, Filter, ShieldCheck, Zap, Lock, MessageSquare } from 'lucide-re
 import { MadeWithDyad } from "@/components/made-with-dyad";
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import Logo from '@/components/Logo';
 
 const MOCK_TICKETS = [
   {
@@ -204,11 +205,8 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
             <div className="col-span-1 md:col-span-2">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="bg-primary p-1 rounded-lg">
-                  <img src="/sceney.png" alt="Sceney" className="w-8 h-8" />
-                </div>
-                <span className="text-2xl font-black text-primary tracking-tighter">sceney</span>
+              <div className="mb-6">
+                <Logo />
               </div>
               <p className="text-muted-foreground max-w-xs mb-6 font-medium">
                 Redefining the ticket resale experience with security, transparency, and anonymity at its core.
