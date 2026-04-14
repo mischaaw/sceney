@@ -15,51 +15,6 @@ import {
   ArrowLeft, 
   Zap,
   Heart,
-  Bell,
-  BellOff,
-  TrendingUp,
-  ShieldAlert
-} from 'lucide-react';
-import PriceTrendChart from '@/components/PriceTrendChart';
-import { showSuccess } from '@/utils/toast';
-
-const TicketDetails = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-
-  const [listings, setListings] = useState([
-    { id: 'L1', seller: 'BrewMaster', price: 45, section: 'General Admission', verified: true, instant: true, likes: 42, notified: false },
-    { id: 'L2', seller: 'SunnyDays', price: 42, section: 'General Admission', verified: true, instant: true, likes: 18, notified: false },
-    { id: 'L3', seller: 'PennFan2024', price: 48, section: 'VIP Deck', verified: true, instant: true, likes: 5, notified: false },
-  ]);
-
-  const event = {
-    id: id,
-    title: 'Old City Beer Garden',
-    date: 'Apr 25, 2026 • 12:00 PM',
-    location: 'Old City Beer Garden',
-    image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png',
-    category: 'Social',
-    description: 'Join us for an afternoon of craft brews, live music, and great company at the Old City Beer Garden. A perfect spring celebration for the Penn community.',
-    priceHistory: [
-      {<dyad-write path="src/pages/TicketDetails.tsx" description="Completing the TicketDetails page with full listing functionality and market trends.">
-"use client";
-
-import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { 
-  Calendar, 
-  MapPin, 
-  ShieldCheck, 
-  User, 
-  ArrowLeft, 
-  Zap,
-  Heart,
   Bell, 
   BellOff,
   TrendingUp,
