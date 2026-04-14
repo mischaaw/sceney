@@ -2,12 +2,11 @@
 
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
-import { Send, Shield, UserCircle, Lock, Info, CheckCircle2, Clock } from 'lucide-react';
+import { Send, Shield, UserCircle, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
-import { showSuccess } from '@/utils/toast';
 
 const Chat = () => {
   const [messages, setMessages] = useState([
@@ -16,7 +15,6 @@ const Chat = () => {
     { id: 3, sender: 'Seller', text: "They are digital. I can transfer them via the official app once the payment is confirmed by Sceney.", time: '10:33 AM' },
   ]);
   const [input, setInput] = useState('');
-  const [escrowStatus, setEscrowStatus] = useState('Payment Secured');
 
   const handleSend = () => {
     if (!input.trim()) return;
@@ -29,46 +27,10 @@ const Chat = () => {
     setInput('');
   };
 
-  const handleConfirmTransfer = () => {
-    setEscrowStatus('Ticket Transferred');
-    showSuccess("Transfer confirmed! Funds will be released after the event.");
-  };
-
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
       
-      {/* Escrow Status Bar */}
-      <div className="bg-accent text-white py-3 px-4">
-        <div className="container mx-auto max-w-4xl flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-              <Clock size={16} className="animate-pulse" />
-            </div>
-            <div>
-              <p className="text-[10px] font-black uppercase tracking-widest opacity-80">Escrow Status</p>
-              <p className="text-sm font-black tracking-tight">{escrowStatus}</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="hidden md:flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest opacity-70">
-              <Shield size={12} />
-              Funds held: $126.00
-            </div>
-            {escrowStatus === 'Payment Secured' && (
-              <Button 
-                size="sm" 
-                variant="secondary" 
-                className="rounded-full font-black text-[10px] uppercase tracking-widest h-8 px-4"
-                onClick={handleConfirmTransfer}
-              >
-                Confirm Ticket Received
-              </Button>
-            )}
-          </div>
-        </div>
-      </div>
-
       <main className="flex-1 container mx-auto px-4 py-8 flex flex-col max-w-4xl">
         <div className="bg-white rounded-[2rem] shadow-2xl border-2 border-primary/5 flex-1 flex flex-col overflow-hidden">
           {/* Chat Header */}
@@ -119,17 +81,6 @@ const Chat = () => {
                   </div>
                 </div>
               ))}
-
-              {escrowStatus === 'Ticket Transferred' && (
-                <div className="flex justify-center">
-                  <div className="bg-green-50 border-2 border-green-100 rounded-2xl p-4 flex items-center gap-3 max-w-md">
-                    <CheckCircle2 className="text-green-600 shrink-0" size={20} />
-                    <p className="text-xs font-bold text-green-800 leading-relaxed">
-                      Buyer has confirmed receipt of the tickets. Funds will be released to the seller 24 hours after the event ends.
-                    </p>
-                  </div>
-                </div>
-              )}
             </div>
           </ScrollArea>
 
