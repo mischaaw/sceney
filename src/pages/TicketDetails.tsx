@@ -23,16 +23,16 @@ import {
   Scale
 } from 'lucide-react';
 import PriceTrendChart from '@/components/PriceTrendChart';
-import { showSuccess } from '@/utils/toast';
+import { showSuccess, showError } from '@/utils/toast';
 
 const TicketDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [listings, setListings] = useState([
-    { id: 'L1', seller: 'BrewMaster', price: 45, section: 'General Admission', verified: true, instant: true, likes: 42, notified: false },
-    { id: 'L2', seller: 'SunnyDays', price: 42, section: 'General Admission', verified: true, instant: true, likes: 18, notified: false },
-    { id: 'L3', seller: 'PennFan2024', price: 48, section: 'VIP Deck', verified: true, instant: true, likes: 5, notified: false },
+    { id: 'L1', seller: 'BrewMaster', price: 45, section: 'General Admission', verified: true, instant: true, likes: 42, notified: false, userLiked: false },
+    { id: 'L2', seller: 'SunnyDays', price: 42, section: 'General Admission', verified: true, instant: true, likes: 18, notified: false, userLiked: false },
+    { id: 'L3', seller: 'PennFan2024', price: 48, section: 'VIP Deck', verified: true, instant: true, likes: 5, notified: false, userLiked: false },
   ]);
 
   const events: Record<string, any> = {
@@ -77,10 +77,17 @@ const TicketDetails = () => {
   const event = events[id || "1"] || events["1"];
 
   const toggleLike = (listingId: string) => {
-    setListings(prev => prev.map(l => 
-      l.id === listingId ? { ...l, likes: l.likes + 1 } : l
-    ));
-    showSuccess("Seller liked!");
+    setListings(prev => prev.map(l => {
+      if (l.id === listingId) {
+        if (l.userLiked) {
+          showError("You've already liked this listing!");
+          return l;
+        }
+        showSuccess("Seller liked!");
+        return { ...l, likes: l.likes + 1, userLiked: true };
+      }
+      return l;
+    }));
   };
 
   const toggleNotify = (listingId: string) => {
@@ -161,9 +168,12 @@ const TicketDetails = () => {
                             <h4 className="text-2xl font-black text-primary tracking-tight">{listing.seller}</h4>
                             <button 
                               onClick={() => toggleLike(listing.id)}
-                              className="flex items-center gap-1.5 bg-red-50 text-red-500 px-3 py-1 rounded-full hover:bg-red-100 transition-colors"
+                              className={cn(
+                                "flex items-center gap-1.5 px-3 py-1 rounded-full transition-colors",
+                                listing.userLiked ? "bg-red-500 text-white" : "bg-red-50 text-red-500 hover:bg-red-100"
+                              )}
                             >
-                              <Heart size={14} fill="currentColor" />
+                              <Heart size={14} fill={listing.userLiked ? "white" : "currentColor"} />
                               <span className="text-[10px] font-black">{listing.likes}</span>
                             </button>
                           </div>

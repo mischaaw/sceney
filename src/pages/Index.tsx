@@ -6,7 +6,6 @@ import Footer from "@/components/Footer";
 import TicketCard from "@/components/TicketCard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import PriceTrendChart from "@/components/PriceTrendChart";
 import { TrendingUp, Zap, ShieldCheck, Search, FilterX } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -22,14 +21,6 @@ const MOCK_TICKETS = [
     image: "/src/assets/beer-garden-sign.png",
     category: "Social",
     likes: 42,
-    priceHistory: [
-      { date: "Jan", low: 40, high: 65 },
-      { date: "Feb", low: 42, high: 70 },
-      { date: "Mar", low: 38, high: 68 },
-      { date: "Apr", low: 45, high: 75 },
-      { date: "May", low: 48, high: 80 },
-      { date: "Jun", low: 52, high: 85 },
-    ],
   },
   {
     id: "tropics",
@@ -40,14 +31,6 @@ const MOCK_TICKETS = [
     image: "dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png",
     category: "Social",
     likes: 128,
-    priceHistory: [
-      { date: "Jan", low: 60, high: 80 },
-      { date: "Feb", low: 62, high: 85 },
-      { date: "Mar", low: 65, high: 90 },
-      { date: "Apr", low: 70, high: 100 },
-      { date: "May", low: 75, high: 110 },
-      { date: "Jun", low: 80, high: 120 },
-    ],
   }
 ];
 
@@ -68,7 +51,6 @@ const Index = () => {
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
       
-      {/* Hero Section */}
       <section className="relative pt-24 pb-36 overflow-hidden bg-primary text-white">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,107,0,0.1),transparent_50%)]" />
         <div className="container mx-auto px-4 relative z-10">
@@ -121,7 +103,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Marketplace Section */}
       <main id="marketplace" className="container mx-auto px-4 py-20 max-w-6xl flex flex-col">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
@@ -185,38 +166,16 @@ const Index = () => {
           </AnimatePresence>
         </div>
 
-        {/* Market Insights */}
-        <div className="mt-32 grid grid-cols-1 lg:grid-cols-3 gap-10">
-          <div className="lg:col-span-2 bg-white rounded-[3rem] p-10 border-2 border-primary/5 shadow-xl">
-            <div className="flex items-center justify-between mb-8">
-              <h3 className="text-2xl font-black text-primary tracking-tight flex items-center gap-3">
-                <TrendingUp className="text-accent" size={28} />
-                Market Price Trends
-              </h3>
-              <Badge variant="outline" className="border-2 font-black text-[10px] uppercase tracking-widest px-4 py-1 rounded-full">
-                Last 30 Days
-              </Badge>
-            </div>
-            <PriceTrendChart 
-              data={MOCK_TICKETS[0].priceHistory} 
-              category="Average Market Price" 
-            />
+        <div className="mt-32 bg-primary text-white rounded-[3rem] p-10 flex flex-col justify-center space-y-6 shadow-2xl shadow-primary/20 max-w-2xl mx-auto text-center">
+          <div className="w-16 h-16 bg-accent rounded-2xl flex items-center justify-center shadow-lg mx-auto">
+            <ShieldCheck size={32} className="text-white" />
           </div>
-
-          <div className="bg-primary text-white rounded-[3rem] p-10 flex flex-col justify-center space-y-6 shadow-2xl shadow-primary/20">
-            <div className="w-16 h-16 bg-accent rounded-2xl flex items-center justify-center shadow-lg">
-              <ShieldCheck size={32} className="text-white" />
-            </div>
-            <h3 className="text-3xl font-black tracking-tighter leading-tight">
-              Buy with total <span className="text-accent italic">confidence.</span>
-            </h3>
-            <p className="text-white/70 font-medium leading-relaxed">
-              Every transaction is held in escrow. Sellers only get paid after you've successfully entered the event.
-            </p>
-            <Button variant="outline" className="w-full h-14 rounded-2xl font-black border-white/20 hover:bg-white hover:text-primary transition-all">
-              Learn About Safety
-            </Button>
-          </div>
+          <h3 className="text-3xl font-black tracking-tighter leading-tight">
+            Buy with total <span className="text-accent italic">confidence.</span>
+          </h3>
+          <p className="text-white/70 font-medium leading-relaxed">
+            Every transaction is held in escrow. Sellers only get paid after you've successfully entered the event.
+          </p>
         </div>
       </main>
 

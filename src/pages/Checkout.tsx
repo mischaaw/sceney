@@ -17,7 +17,8 @@ import {
   Zap,
   Smartphone,
   Globe,
-  Send
+  Send,
+  Lock
 } from 'lucide-react';
 import { showSuccess } from '@/utils/toast';
 import { cn } from '@/lib/utils';
@@ -156,26 +157,38 @@ const Checkout = () => {
               <form onSubmit={handlePayment} className="space-y-6">
                 {paymentMethod === 'card' ? (
                   <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
-                    <div className="space-y-2">
-                      <Label htmlFor="card-name">Name on Card</Label>
-                      <Input id="card-name" placeholder="John Doe" required className="h-12 rounded-xl border-2" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="card-number">Card Number</Label>
-                      <div className="relative">
-                        <Input id="card-number" placeholder="0000 0000 0000 0000" required className="h-12 rounded-xl border-2 pl-12" />
-                        <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="expiry">Expiry Date</Label>
-                        <Input id="expiry" placeholder="MM/YY" required className="h-12 rounded-xl border-2" />
+                    <div className="p-6 bg-white border-2 rounded-2xl space-y-4 shadow-sm">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs font-black uppercase tracking-widest text-muted-foreground">Stripe Secure Payment</span>
+                        <div className="flex gap-1">
+                          <div className="w-6 h-4 bg-muted rounded-sm" />
+                          <div className="w-6 h-4 bg-muted rounded-sm" />
+                          <div className="w-6 h-4 bg-muted rounded-sm" />
+                        </div>
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="cvv">CVV</Label>
-                        <Input id="cvv" placeholder="123" required className="h-12 rounded-xl border-2" />
+                        <Label htmlFor="card-number" className="text-[10px] font-black uppercase tracking-widest">Card Information</Label>
+                        <div className="relative">
+                          <Input id="card-number" placeholder="1234 5678 1234 5678" required className="h-12 rounded-xl border-2 pl-12 font-mono" />
+                          <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
+                          <Input id="expiry" placeholder="MM / YY" required className="h-12 rounded-xl border-2 font-mono" />
+                          <Input id="cvc" placeholder="CVC" required className="h-12 rounded-xl border-2 font-mono" />
+                        </div>
                       </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="country" className="text-[10px] font-black uppercase tracking-widest">Country or Region</Label>
+                        <select id="country" className="w-full h-12 rounded-xl border-2 px-4 bg-white font-bold text-sm">
+                          <option>United States</option>
+                          <option>Canada</option>
+                          <option>United Kingdom</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground justify-center">
+                      <Lock size={12} />
+                      Payments are secure and encrypted by Stripe
                     </div>
                   </div>
                 ) : (

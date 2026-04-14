@@ -47,7 +47,7 @@ const Footer = () => {
         <div className="pt-8 border-t border-white/10 space-y-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <p className="text-[10px] font-black uppercase tracking-widest text-white/40">
-              © 2024 SCENEY. ALL RIGHTS RESERVED.
+              © 2026 SCENEY. ALL RIGHTS RESERVED.
             </p>
             <div className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full">
               <Shield size={14} className="text-accent" />
