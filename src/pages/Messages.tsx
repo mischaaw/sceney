@@ -14,25 +14,16 @@ const Messages = () => {
     {
       id: 1,
       user: 'Anonymous Seller #4821',
-      event: 'Midnight Jazz Festival',
+      event: 'Old City Beer Garden',
       lastMessage: 'They are digital. I can transfer them via the official app...',
       time: '2m ago',
       unread: true,
       status: 'Active'
     },
     {
-      id: 2,
-      user: 'Anonymous Buyer #9912',
-      event: 'Tech Vision Summit 2024',
-      lastMessage: 'Is the price negotiable for 3 tickets?',
-      time: '1h ago',
-      unread: false,
-      status: 'Pending'
-    },
-    {
       id: 3,
       user: 'Anonymous Seller #1023',
-      event: 'Championship Finals',
+      event: 'Tropics',
       lastMessage: 'Payment confirmed. Transferring now.',
       time: 'Yesterday',
       unread: false,
