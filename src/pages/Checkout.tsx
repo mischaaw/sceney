@@ -33,10 +33,11 @@ const Checkout = () => {
     setStep(2);
     showSuccess("Payment successful! Check your email for receipt.");
     
-    // Simulate sending receipts
+    // Placeholder email receipts for buyer and seller
     setTimeout(() => {
-      showSuccess("Receipt sent to buyer and seller!");
-    }, 2000);
+      showSuccess(`Receipt emailed to buyer (${email})`);
+      showSuccess(`Receipt emailed to seller (seller@example.com)`);
+    }, 1500);
   };
 
   if (step === 2) {
