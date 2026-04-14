@@ -7,6 +7,9 @@ import Index from "./pages/Index";
 import Chat from "./pages/Chat";
 import Admin from "./pages/Admin";
 import Sell from "./pages/Sell";
+import TicketDetails from "./pages/TicketDetails";
+import Checkout from "./pages/Checkout";
+import Messages from "./pages/Messages";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -19,7 +22,10 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/messages" element={<Chat />} />
+          <Route path="/ticket/:id" element={<TicketDetails />} />
+          <Route path="/checkout/:id" element={<Checkout />} />
+          <Route path="/messages" element={<Messages />} />
+          <Route path="/messages/chat" element={<Chat />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/sell" element={<Sell />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

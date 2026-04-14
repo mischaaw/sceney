@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Calendar, MapPin, ArrowRight } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -18,6 +19,7 @@ interface TicketProps {
 }
 
 const TicketCard = ({ ticket }: { ticket: TicketProps }) => {
+  const navigate = useNavigate();
   const commission = ticket.price * 0.05;
   const totalPrice = ticket.price + commission;
 
@@ -25,8 +27,10 @@ const TicketCard = ({ ticket }: { ticket: TicketProps }) => {
     <motion.div
       whileHover={{ y: -5 }}
       transition={{ duration: 0.2 }}
+      onClick={() => navigate(`/ticket/${ticket.id}`)}
+      className="cursor-pointer"
     >
-      <Card className="overflow-hidden border-2 shadow-lg bg-white rounded-3xl">
+      <Card className="overflow-hidden border-2 shadow-lg bg-white rounded-3xl h-full flex flex-col">
         <div className="relative h-48 overflow-hidden">
           <img 
             src={ticket.image} 
@@ -40,7 +44,7 @@ const TicketCard = ({ ticket }: { ticket: TicketProps }) => {
         <CardHeader className="p-5 pb-2">
           <h3 className="text-xl font-black leading-tight text-primary">{ticket.title}</h3>
         </CardHeader>
-        <CardContent className="p-5 pt-0 space-y-3">
+        <CardContent className="p-5 pt-0 space-y-3 flex-1">
           <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
             <Calendar size={16} className="text-accent" />
             <span>{ticket.date}</span>
