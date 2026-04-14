@@ -28,6 +28,14 @@ const MOCK_EVENTS = [
     location: 'Funtown Beach',
     image: '/src/assets/tropics.png',
     category: 'Social'
+  },
+  {
+    id: 'magic-gardens',
+    title: 'Magic Gardens',
+    date: 'Apr 17, 2026 • 9:00 PM',
+    location: '5142 Warren street',
+    image: '/src/assets/magic.jpg',
+    category: 'Music'
   }
 ];
 

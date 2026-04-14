@@ -32,6 +32,16 @@ const MOCK_TICKETS = [
     image: "/src/assets/tropics.png",
     category: "Social",
     likes: 128,
+  },
+  {
+    id: "magic-gardens",
+    title: "Magic Gardens",
+    date: "Apr 17, 2026 • 9:00 PM",
+    location: "5142 Warren street",
+    price: 50,
+    image: "/src/assets/magic.jpg",
+    category: "Music",
+    likes: 64,
   }
 ];
 

@@ -72,6 +72,24 @@ const TicketDetails = () => {
         { date: 'Oct 23', low: 75, high: 100 },
         { date: 'Oct 24', low: 80, high: 110 },
       ],
+    },
+    "magic-gardens": {
+      id: "magic-gardens",
+      title: 'Magic Gardens',
+      date: 'Apr 17, 2026 • 9:00 PM',
+      location: '5142 Warren street',
+      image: '/src/assets/magic.jpg',
+      category: 'Music',
+      description: 'Experience the magic at Magic Gardens. Join us for an unforgettable night of music and atmosphere.',
+      priceHistory: [
+        { date: 'Oct 18', low: 45, high: 55 },
+        { date: 'Oct 19', low: 46, high: 58 },
+        { date: 'Oct 20', low: 44, high: 60 },
+        { date: 'Oct 21', low: 48, high: 65 },
+        { date: 'Oct 22', low: 50, high: 70 },
+        { date: 'Oct 23', low: 52, high: 75 },
+        { date: 'Oct 24', low: 55, high: 80 },
+      ],
     }
   };
 
