@@ -49,7 +49,7 @@ const Footer = () => {
         <div className="border-t border-white/10 pt-10 space-y-8">
           <div className="bg-white/5 rounded-[2rem] p-8 border border-white/10">
             <div className="flex items-start gap-4 mb-4">
-              <Info className="text-accent shrink-0" size={20} />
+              <Info className="text-background shrink-0" size={20} />
               <h5 className="font-black text-sm uppercase tracking-widest">Terms & Conditions Summary</h5>
             </div>
             <p className="text-xs text-white/40 leading-relaxed font-medium">
