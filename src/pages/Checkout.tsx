@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ShieldCheck, Lock, CreditCard, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, Lock, CreditCard, ArrowLeft, CheckCircle2, Mail, Zap } from 'lucide-react';
 import { showSuccess } from '@/utils/toast';
 
 const Checkout = () => {
@@ -18,7 +18,7 @@ const Checkout = () => {
   const handlePayment = (e: React.FormEvent) => {
     e.preventDefault();
     setStep(2);
-    showSuccess("Payment secured in escrow!");
+    showSuccess("Payment successful! Check your email.");
   };
 
   if (step === 2) {
@@ -26,28 +26,53 @@ const Checkout = () => {
       <div className="min-h-screen bg-background flex flex-col">
         <Navbar />
         <main className="flex-1 flex items-center justify-center p-4">
-          <Card className="max-w-md w-full border-2 shadow-2xl rounded-[2.5rem] text-center p-10 space-y-6">
-            <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle2 size={48} />
+          <Card className="max-w-md w-full border-2 shadow-2xl rounded-[3rem] text-center p-12 space-y-8">
+            <div className="relative mx-auto w-24 h-24">
+              <div className="w-24 h-24 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
+                <CheckCircle2 size={56} />
+              </div>
+              <div className="absolute -bottom-2 -right-2 bg-accent text-white p-2 rounded-xl shadow-lg">
+                <Zap size={20} fill="currentColor" />
+              </div>
             </div>
-            <h1 className="text-3xl font-black text-primary tracking-tighter">Payment Secured</h1>
-            <p className="text-muted-foreground font-medium">
-              Your funds are now held in Sceney's secure escrow. The seller has been notified to transfer your tickets.
-            </p>
-            <div className="bg-muted/30 p-6 rounded-2xl text-left space-y-4">
+            
+            <div className="space-y-2">
+              <h1 className="text-4xl font-black text-primary tracking-tighter">Tickets Sent!</h1>
+              <p className="text-muted-foreground font-medium">
+                We've just emailed your tickets to <span className="text-primary font-bold">alex@example.com</span>.
+              </p>
+            </div>
+
+            <div className="bg-muted/30 p-6 rounded-2xl text-left space-y-4 border-2 border-primary/5">
               <div className="flex gap-3">
-                <ShieldCheck className="text-accent shrink-0" size={20} />
+                <Mail className="text-accent shrink-0" size={20} />
                 <p className="text-xs font-bold text-primary leading-relaxed">
-                  The seller will NOT receive payment until you confirm entry or 24 hours after the event ends.
+                  The seller has also been notified that their ticket has sold.
+                </p>
+              </div>
+              <div className="flex gap-3">
+                <ShieldCheck className="text-green-600 shrink-0" size={20} />
+                <p className="text-xs font-bold text-primary leading-relaxed">
+                  Your payment is held in escrow until 24h after the event for your protection.
                 </p>
               </div>
             </div>
-            <Button 
-              className="w-full h-14 rounded-2xl font-black"
-              onClick={() => navigate('/messages')}
-            >
-              Go to Chat with Seller
-            </Button>
+
+            <div className="space-y-3">
+              <Button 
+                className="w-full h-14 rounded-2xl font-black text-lg shadow-xl shadow-primary/20"
+                onClick={() => navigate('/dashboard')}
+              >
+                View in Dashboard
+              </Button>
+              <Button 
+                variant="ghost"
+                className="w-full font-bold text-muted-foreground"
+                onClick={() => navigate('/')}
+              >
+                Back to Marketplace
+              </Button>
+            </div>
           </Card>
         </main>
       </div>
@@ -64,7 +89,7 @@ const Checkout = () => {
           className="mb-8 gap-2 font-bold text-muted-foreground hover:text-primary"
         >
           <ArrowLeft size={16} />
-          Back to Details
+          Back to Listings
         </Button>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -98,11 +123,11 @@ const Checkout = () => {
 
               <div className="bg-primary/5 p-6 rounded-2xl border-2 border-primary/10 space-y-4">
                 <div className="flex items-center gap-3 text-primary">
-                  <Lock size={18} />
-                  <span className="font-black text-xs uppercase tracking-widest">Secure Escrow Payment</span>
+                  <Zap size={18} className="text-accent" fill="currentColor" />
+                  <span className="font-black text-xs uppercase tracking-widest">Instant Delivery Enabled</span>
                 </div>
                 <p className="text-xs font-medium text-muted-foreground leading-relaxed">
-                  By clicking "Pay Now", you agree to Sceney's escrow terms. Your payment is held securely and only released to the seller after the event.
+                  Tickets will be emailed immediately after payment. Your funds are protected by our escrow system.
                 </p>
               </div>
 
@@ -124,13 +149,14 @@ const Checkout = () => {
                   </div>
                   <div>
                     <h3 className="font-bold text-primary">Midnight Jazz Festival</h3>
-                    <p className="text-xs text-muted-foreground font-medium">Oct 24, 2024 • 2 Tickets</p>
+                    <p className="text-xs text-muted-foreground font-medium">Oct 24, 2024 • 1 Ticket</p>
+                    <p className="text-[10px] font-black text-accent uppercase tracking-widest mt-1">Seller: JazzLover99</p>
                   </div>
                 </div>
                 
                 <div className="space-y-3 pt-4 border-t">
                   <div className="flex justify-between text-sm font-medium">
-                    <span className="text-muted-foreground">Subtotal</span>
+                    <span className="text-muted-foreground">Ticket Price</span>
                     <span>$120.00</span>
                   </div>
                   <div className="flex justify-between text-sm font-medium">
