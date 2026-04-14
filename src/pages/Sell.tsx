@@ -18,7 +18,7 @@ const MOCK_EVENTS = [
     title: 'Beer Garden',
     date: 'Apr 25, 2026 • 2:00 PM',
     location: 'The Emerald Terrace',
-    image: '/src/assets/beer-garden-sign.png',
+    image: '/beer-garden-sign.png',
     category: 'Social'
   },
   {
@@ -26,7 +26,7 @@ const MOCK_EVENTS = [
     title: 'Tropics',
     date: 'May 08, 2026 • 2:30 PM',
     location: 'Funtown Beach',
-    image: '/src/assets/tropics.png',
+    image: '/tropics.png',
     category: 'Social'
   },
   {
@@ -34,7 +34,7 @@ const MOCK_EVENTS = [
     title: 'Magic Gardens',
     date: 'Apr 17, 2026 • 9:00 PM',
     location: '5142 Warren street',
-    image: '/src/assets/magic.jpg',
+    image: '/magic.jpg',
     category: 'Music'
   },
   {
@@ -42,7 +42,7 @@ const MOCK_EVENTS = [
     title: 'Battleship Brunch',
     date: 'Apr 17, 2026 • 1:00 PM',
     location: '62 Battleship Pl Camden, NJ',
-    image: '/src/assets/battleship.png',
+    image: '/battleship.png',
     category: 'Social'
   }
 ];

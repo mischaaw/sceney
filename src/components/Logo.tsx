@@ -13,7 +13,7 @@ const Logo = ({ className, size = 40 }: LogoProps) => {
     <div className={cn("flex items-center gap-3 group", className)}>
       <div className="relative">
         <img 
-          src="/src/assets/logo.png" 
+          src="/logo.png" 
           alt="Sceney Logo" 
           style={{ width: size, height: 'auto' }}
           className="transition-all duration-300 group-hover:scale-110 rounded-xl"

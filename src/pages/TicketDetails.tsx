@@ -69,7 +69,7 @@ const TicketDetails = () => {
       title: 'Old City Beer Garden',
       date: 'Apr 25, 2026 • 12:00 PM',
       location: 'Old City Beer Garden',
-      image: '/src/assets/beer-garden-sign.png',
+      image: '/beer-garden-sign.png',
       category: 'Social',
       description: '21+ | Eden had rules. We just have a bar and a band.',
       priceHistory: [
@@ -87,7 +87,7 @@ const TicketDetails = () => {
       title: 'Tropics',
       date: 'May 08, 2026 • 2:30 PM',
       location: 'Funtown Beach',
-      image: '/src/assets/tropics.png',
+      image: '/tropics.png',
       category: 'Social',
       description: 'Dive deep with us to an evening in paradise, where the isle dances aflame and laughter echoes throughout the ocean breeze. Get ready to dance the night away with infectious tunes and unforgettable company, but don’t let the tide sweep you away… Join us for TROPICS - a celebration to cap off an incredible year and begin the summer. Introducing a live band for the first time, your ticket will also include transportation to and from the beach and an open bar. 18+ to enter and 21+ to drink at our open bar. Invite only-- ticket approval is required, and no ticket transfers will be accepted.',
       priceHistory: [
@@ -105,7 +105,7 @@ const TicketDetails = () => {
       title: 'Magic Gardens',
       date: 'Apr 17, 2026 • 9:00 PM',
       location: '5142 Warren street',
-      image: '/src/assets/magic.jpg',
+      image: '/magic.jpg',
       category: 'Music',
       description: 'Experience the magic at Magic Gardens. Join us for an unforgettable night of music and atmosphere.',
       priceHistory: [
@@ -123,7 +123,7 @@ const TicketDetails = () => {
       title: 'Battleship Brunch',
       date: 'Apr 17, 2026 • 1:00 PM',
       location: '62 Battleship Pl Camden, NJ',
-      image: '/src/assets/battleship.png',
+      image: '/battleship.png',
       category: 'Social',
       description: 'Are you sinking or swimming? Join us for an exclusive brunch experience on the battleship.',
       priceHistory: [

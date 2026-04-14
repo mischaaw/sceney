@@ -51,7 +51,7 @@ const Dashboard = () => {
       status: 'In Escrow',
       price: 126.00,
       seller: 'User_4821',
-      image: '/src/assets/beer-garden-sign.png',
+      image: '/beer-garden-sign.png',
       rated: false
     }
   ];
@@ -64,7 +64,7 @@ const Dashboard = () => {
       status: 'Active',
       price: 450.00,
       views: 124,
-      image: '/src/assets/beer-garden-sign.png'
+      image: '/beer-garden-sign.png'
     }
   ];
 

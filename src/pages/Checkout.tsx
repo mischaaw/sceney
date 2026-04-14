@@ -311,7 +311,7 @@ const Checkout = () => {
               <CardContent className="p-6 space-y-6">
                 <div className="flex gap-4">
                   <div className="w-20 h-20 rounded-xl overflow-hidden shrink-0">
-                    <img src="dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png" className="w-full h-full object-cover" />
+                    <img src="/beer-garden-sign.png" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <h3 className="font-bold text-primary">Beer Garden</h3>
