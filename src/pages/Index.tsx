@@ -14,7 +14,7 @@ const MOCK_TICKETS = [
     date: "Apr 25, 2026 • 12:00 PM",
     location: "Old City Beer Garden",
     price: 45,
-    image: "dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png",
+    image: "/src/assets/beer-garden.png",
     category: "Social",
     likes: 124,
   },

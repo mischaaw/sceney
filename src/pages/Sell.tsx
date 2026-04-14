@@ -17,7 +17,7 @@ const MOCK_EVENTS = [
     title: 'Beer Garden',
     date: 'Apr 25, 2026 • 2:00 PM',
     location: 'The Emerald Terrace',
-    image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png',
+    image: '/src/assets/beer-garden.png',
     category: 'Social'
   }
 ];
@@ -111,18 +111,6 @@ const Sell = () => {
                         <Label htmlFor="description" className="font-black text-[10px] uppercase tracking-widest text-muted-foreground">Ticket Details</Label>
                         <Textarea id="description" placeholder="Section, Row, Seat details..." className="min-h-[100px] rounded-xl border-2 font-medium" required />
                       </div>
-                      <div className="pt-6 border-t space-y-4">
-                        <Label htmlFor="price" className="font-black text-[10px] uppercase tracking-widest text-primary-foreground/60">Your Asking Price ($)</Label>
-                        <Input 
-                          id="price" 
-                          type="number" 
-                          value={price}
-                          onChange={(e) => setPrice(e.target.value)}
-                          placeholder="0.00" 
-                          className="h-20 text-4xl font-black bg-white/10 border-white/20 text-white placeholder:text-white/20 rounded-2xl px-6" 
-                          required 
-                        />
-                      </div>
                     </div>
                   )}
                 </CardContent>
@@ -139,7 +127,8 @@ const Sell = () => {
                   <CardContent className="p-8 space-y-8">
                     <div className="space-y-2">
                       <Label htmlFor="price" className="font-black text-[10px] uppercase tracking-widest text-primary-foreground/60">Your Asking Price ($)</Label>
-                      <Input                         id="price" 
+                      <Input 
+                        id="price" 
                         type="number" 
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}

@@ -38,7 +38,7 @@ const TicketDetails = () => {
     title: 'Old City Beer Garden',
     date: 'Apr 25, 2026 • 12:00 PM',
     location: 'Old City Beer Garden',
-    image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png',
+    image: '/src/assets/beer-garden.png',
     category: 'Social',
     description: 'Join us for an afternoon of craft brews, live music, and great company at the Old City Beer Garden. A perfect spring celebration for the Penn community.',
     priceHistory: [

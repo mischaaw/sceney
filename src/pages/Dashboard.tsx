@@ -76,7 +76,7 @@ const Dashboard = () => {
       status: 'In Escrow',
       price: 126.00,
       seller: 'User_4821',
-      image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png'
+      image: '/src/assets/beer-garden.png'
     }
   ];
 
@@ -88,7 +88,7 @@ const Dashboard = () => {
       status: 'Active',
       price: 450.00,
       views: 124,
-      image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png'
+      image: '/src/assets/beer-garden.png'
     },
     {
       id: 'LST-102',
