@@ -24,7 +24,7 @@ const MOCK_EVENTS = [
     id: 'tropics',
     title: 'Tropics',
     date: 'May 08, 2026 • 2:30 PM',
-    location: 'The Isle',
+    location: 'Funtown Beach',
     image: '/src/assets/tropics.png',
     category: 'Social'
   }
@@ -37,8 +37,9 @@ const Sell = () => {
   const [selectedEvent, setSelectedEvent] = useState<typeof MOCK_EVENTS[0] | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const commission = 0; // No commission deduction
-  const payout = Number(price); // Full price is the payout
+  const priceNum = Number(price) || 0;
+  const commission = priceNum * 0.03; // 3% platform fee
+  const payout = priceNum - commission;
 
   const filteredEvents = MOCK_EVENTS.filter(e => 
     e.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -148,8 +149,8 @@ const Sell = () => {
 
                     <div className="grid grid-cols-2 gap-8 pt-8 border-t border-white/10">
                       <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-2">Platform Fee</p>
-                        <p className="text-3xl font-black text-primary">$0.00</p>
+                        <p className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-2">Platform Fee (3%)</p>
+                        <p className="text-3xl font-black text-primary">${commission.toFixed(2)}</p>
                       </div>
                       <div>
                         <p className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-2">Your Payout</p>

@@ -23,7 +23,7 @@ const MOCK_TICKETS = [
     id: "tropics",
     title: "Tropics",
     date: "May 08, 2026 • 2:30 PM",
-    location: "The Isle",
+    location: "Funtown Beach",
     price: 65,
     image: "/src/assets/tropics.png",
     category: "Social",

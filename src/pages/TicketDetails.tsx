@@ -18,7 +18,9 @@ import {
   Bell, 
   BellOff,
   TrendingUp,
-  ShieldAlert
+  ShieldAlert,
+  Lock,
+  Scale
 } from 'lucide-react';
 import PriceTrendChart from '@/components/PriceTrendChart';
 import { showSuccess } from '@/utils/toast';
@@ -56,7 +58,7 @@ const TicketDetails = () => {
       id: "tropics",
       title: 'Tropics',
       date: 'May 08, 2026 • 2:30 PM',
-      location: 'The Isle',
+      location: 'Funtown Beach',
       image: '/src/assets/tropics.png',
       category: 'Social',
       description: 'Dive deep with us to an evening in paradise, where the isle dances aflame and laughter echoes throughout the ocean breeze. Get ready to dance the night away with infectious tunes and unforgettable company, but don’t let the tide sweep you away… Join us for TROPICS - a celebration to cap off an incredible year and begin the summer. Introducing a live band for the first time, your ticket will also include transportation to and from the beach and an open bar. 18+ to enter and 21+ to drink at our open bar. Invite only-- ticket approval is required, and no ticket transfers will be accepted.',
@@ -251,6 +253,24 @@ const TicketDetails = () => {
                     <div>
                       <p className="font-black text-sm">Instant Transfer</p>
                       <p className="text-xs opacity-60">Digital tickets sent immediately.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
+                      <Lock size={20} className="text-accent" />
+                    </div>
+                    <div>
+                      <p className="font-black text-sm">Escrow Protection</p>
+                      <p className="text-xs opacity-60">Funds held until event entry.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
+                      <Scale size={20} className="text-accent" />
+                    </div>
+                    <div>
+                      <p className="font-black text-sm">Fair Pricing</p>
+                      <p className="text-xs opacity-60">Anti-scalping measures active.</p>
                     </div>
                   </div>
                 </div>
