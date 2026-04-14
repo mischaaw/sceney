@@ -19,6 +19,14 @@ const MOCK_EVENTS = [
     location: 'The Emerald Terrace',
     image: '/src/assets/beer-garden.png',
     category: 'Social'
+  },
+  {
+    id: 'tropics',
+    title: 'Tropics',
+    date: 'May 08, 2026 • 2:30 PM',
+    location: 'The Isle',
+    image: '/src/assets/tropics.png',
+    category: 'Social'
   }
 ];
 

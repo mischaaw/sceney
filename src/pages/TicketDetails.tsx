@@ -33,24 +33,46 @@ const TicketDetails = () => {
     { id: 'L3', seller: 'PennFan2024', price: 48, section: 'VIP Deck', verified: true, instant: true, likes: 5, notified: false },
   ]);
 
-  const event = {
-    id: id,
-    title: 'Old City Beer Garden',
-    date: 'Apr 25, 2026 • 12:00 PM',
-    location: 'Old City Beer Garden',
-    image: '/src/assets/beer-garden.png',
-    category: 'Social',
-    description: '21+ | Eden had rules. We just have a bar and a band.',
-    priceHistory: [
-      { date: 'Mon', low: 40, high: 60 },
-      { date: 'Tue', low: 42, high: 62 },
-      { date: 'Wed', low: 38, high: 58 },
-      { date: 'Thu', low: 45, high: 65 },
-      { date: 'Fri', low: 48, high: 70 },
-      { date: 'Sat', low: 50, high: 75 },
-      { date: 'Sun', low: 52, high: 80 },
-    ],
+  const events: Record<string, any> = {
+    "1": {
+      id: "1",
+      title: 'Old City Beer Garden',
+      date: 'Apr 25, 2026 • 12:00 PM',
+      location: 'Old City Beer Garden',
+      image: '/src/assets/beer-garden.png',
+      category: 'Social',
+      description: '21+ | Eden had rules. We just have a bar and a band.',
+      priceHistory: [
+        { date: 'Mon', low: 40, high: 60 },
+        { date: 'Tue', low: 42, high: 62 },
+        { date: 'Wed', low: 38, high: 58 },
+        { date: 'Thu', low: 45, high: 65 },
+        { date: 'Fri', low: 48, high: 70 },
+        { date: 'Sat', low: 50, high: 75 },
+        { date: 'Sun', low: 52, high: 80 },
+      ],
+    },
+    "tropics": {
+      id: "tropics",
+      title: 'Tropics',
+      date: 'May 08, 2026 • 2:30 PM',
+      location: 'The Isle',
+      image: '/src/assets/tropics.png',
+      category: 'Social',
+      description: 'Dive deep with us to an evening in paradise, where the isle dances aflame and laughter echoes throughout the ocean breeze. Get ready to dance the night away with infectious tunes and unforgettable company, but don’t let the tide sweep you away… Join us for TROPICS - a celebration to cap off an incredible year and begin the summer. Introducing a live band for the first time, your ticket will also include transportation to and from the beach and an open bar. 18+ to enter and 21+ to drink at our open bar. Invite only-- ticket approval is required, and no ticket transfers will be accepted.',
+      priceHistory: [
+        { date: 'Mon', low: 60, high: 80 },
+        { date: 'Tue', low: 62, high: 82 },
+        { date: 'Wed', low: 65, high: 85 },
+        { date: 'Thu', low: 68, high: 90 },
+        { date: 'Fri', low: 70, high: 95 },
+        { date: 'Sat', low: 75, high: 100 },
+        { date: 'Sun', low: 80, high: 110 },
+      ],
+    }
   };
+
+  const event = events[id || "1"] || events["1"];
 
   const toggleLike = (listingId: string) => {
     setListings(prev => prev.map(l => 
@@ -100,7 +122,7 @@ const TicketDetails = () => {
 
             <div className="space-y-6">
               <h3 className="text-xs font-black text-primary uppercase tracking-[0.3em]">About the Event</h3>
-              <p className="text-2xl text-primary leading-relaxed font-black italic">
+              <p className="text-lg text-primary leading-relaxed font-medium">
                 {event.description}
               </p>
             </div>

@@ -20,14 +20,14 @@ const MOCK_TICKETS = [
     likes: 124,
   },
   {
-    id: "4",
-    title: "Ivy League Gala",
-    date: "Jun 15, 2026 • 8:00 PM",
-    location: "The Bellevue Hotel",
-    price: 150,
-    image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=800",
+    id: "tropics",
+    title: "Tropics",
+    date: "May 08, 2026 • 2:30 PM",
+    location: "The Isle",
+    price: 65,
+    image: "/src/assets/tropics.png",
     category: "Social",
-    likes: 210,
+    likes: 342,
   }
 ];
 
