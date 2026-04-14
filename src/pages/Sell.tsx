@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,6 +12,7 @@ import { Info, DollarSign, ShieldCheck, UploadCloud, CheckCircle2 } from 'lucide
 import { showSuccess } from '@/utils/toast';
 
 const Sell = () => {
+  const navigate = useNavigate();
   const [price, setPrice] = useState<string>('');
   const [step, setStep] = useState(1);
   const commission = Number(price) * 0.05;
@@ -22,7 +24,8 @@ const Sell = () => {
       setStep(2);
       window.scrollTo(0, 0);
     } else {
-      showSuccess("Listing created! It will be visible after verification.");
+      showSuccess("Listing submitted for verification!");
+      navigate('/sell/success');
     }
   };
 

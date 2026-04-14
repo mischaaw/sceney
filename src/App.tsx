@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Chat from "./pages/Chat";
 import Admin from "./pages/Admin";
 import Sell from "./pages/Sell";
+import SellSuccess from "./pages/SellSuccess";
 import TicketDetails from "./pages/TicketDetails";
 import Checkout from "./pages/Checkout";
 import Messages from "./pages/Messages";
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/messages/chat" element={<Chat />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/sell" element={<Sell />} />
+          <Route path="/sell/success" element={<SellSuccess />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/verification" element={<Verification />} />

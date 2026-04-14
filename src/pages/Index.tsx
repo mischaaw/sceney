@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Navbar from '@/components/Navbar';
 import TicketCard from '@/components/TicketCard';
 import { Input } from '@/components/ui/input';
@@ -45,6 +45,24 @@ const MOCK_TICKETS = [
     price: 299,
     image: 'https://images.unsplash.com/photo-1504450758481-7338eba7524a?auto=format&fit=crop&q=80&w=800',
     category: 'Sports'
+  },
+  {
+    id: '5',
+    title: 'Broadway: The Lion King',
+    date: 'Nov 05, 2024 • 7:00 PM',
+    location: 'Minskoff Theatre, NYC',
+    price: 180,
+    image: 'https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&q=80&w=800',
+    category: 'Theater'
+  },
+  {
+    id: '6',
+    title: 'Indie Rock Night',
+    date: 'Oct 28, 2024 • 9:00 PM',
+    location: 'The Garage, London',
+    price: 45,
+    image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=800',
+    category: 'Music'
   }
 ];
 
@@ -52,6 +70,16 @@ const CATEGORIES = ['All', 'Music', 'Sports', 'Conference', 'Exhibition', 'Theat
 
 const Index = () => {
   const [activeCategory, setActiveCategory] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredTickets = useMemo(() => {
+    return MOCK_TICKETS.filter(ticket => {
+      const matchesCategory = activeCategory === 'All' || ticket.category === activeCategory;
+      const matchesSearch = ticket.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                           ticket.location.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+  }, [activeCategory, searchQuery]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -83,6 +111,8 @@ const Index = () => {
               <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5" />
               <Input 
                 placeholder="Search events, artists, or venues..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-14 h-16 rounded-[1.5rem] border-2 focus-visible:ring-primary text-lg font-medium shadow-sm"
               />
             </div>
@@ -110,11 +140,26 @@ const Index = () => {
         </div>
 
         {/* Marketplace Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-24">
-          {MOCK_TICKETS.map(ticket => (
-            <TicketCard key={ticket.id} ticket={ticket} />
-          ))}
-        </div>
+        {filteredTickets.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-24">
+            {filteredTickets.map(ticket => (
+              <TicketCard key={ticket.id} ticket={ticket} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-32 bg-white/50 rounded-[3rem] border-2 border-dashed border-primary/10 mb-24">
+            <Search className="mx-auto text-muted-foreground mb-4" size={48} />
+            <h3 className="text-2xl font-black text-primary">No scenes found</h3>
+            <p className="text-muted-foreground mt-2 font-medium">Try adjusting your search or filters.</p>
+            <Button 
+              variant="link" 
+              className="mt-4 font-black text-accent uppercase tracking-widest text-xs"
+              onClick={() => {setSearchQuery(''); setActiveCategory('All');}}
+            >
+              Clear all filters
+            </Button>
+          </div>
+        )}
 
         {/* How it Works Section */}
         <section className="bg-white rounded-[3rem] p-12 md:p-20 border-2 border-primary/5 shadow-2xl mb-24">
