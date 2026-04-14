@@ -5,7 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { 
   Calendar, 
   MapPin, 
@@ -13,20 +13,16 @@ import {
   User, 
   ArrowLeft, 
   ChevronRight, 
-  Zap,
-  Smartphone,
-  Globe,
-  Send
+  Zap
 } from 'lucide-react';
-import { showSuccess } from '@/utils/toast';
-import { cn } from '@/lib/utils';
 import PriceTrendChart from '@/components/PriceTrendChart';
 
 const TicketDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // Mock event data updated to Beer Garden with new image  const event = {
+  // Mock event data updated to Beer Garden with new image
+  const event = {
     id: id,
     title: 'Beer Garden',
     date: 'Apr 25, 2026 • 2:00 PM',
@@ -44,7 +40,8 @@ const TicketDetails = () => {
     ],
   };
 
-  // Mock listings for this event  const listings = [
+  // Mock listings for this event
+  const listings = [
     { id: 'L1', seller: 'BrewMaster', price: 45, section: 'General Admission', verified: true, instant: true },
     { id: 'L2', seller: 'SunnyDays', price: 42, section: 'General Admission', verified: true, instant: true },
   ];
@@ -104,7 +101,6 @@ const TicketDetails = () => {
                       className={`border-2 transition-all cursor-pointer hover:shadow-xl hover:-translate-y-1 rounded-[2rem] overflow-hidden ${
                         listing.verified ? 'border-primary shadow-lg' : 'border-primary/5'
                       }`}
-                      onClick={() => navigate('/dashboard')}
                     >
                       <CardContent className="p-6 flex items-center justify-between gap-6">
                         <div className="flex items-center gap-4">
@@ -196,10 +192,10 @@ const TicketDetails = () => {
           </div>
         </div>
 
-        {/* Price Trend Chart */}
         <div className="mt-12 bg-white/50 p-6 rounded-2xl border-2 border-primary/10 text-center">
           <PriceTrendChart 
-            data={event.priceHistory}             category={event.title} 
+            data={event.priceHistory} 
+            category={event.title} 
           />
         </div>
       </main>

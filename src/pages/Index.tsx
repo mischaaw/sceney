@@ -3,11 +3,9 @@
 import React from "react";
 import Navbar from "@/components/Navbar";
 import TicketCard from "@/components/TicketCard";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import PriceTrendChart from "@/components/PriceTrendChart";
-import { cn } from "@/lib/utils";
 
 const MOCK_TICKETS = [
   {
@@ -31,7 +29,7 @@ const MOCK_TICKETS = [
 ];
 
 const Index = () => {
-  const [searchQuery, setSearchQuery] = React.useState("");
+  const [searchQuery] = React.useState("");
 
   const filteredTickets = searchQuery
     ? MOCK_TICKETS.filter((ticket) =>
@@ -44,7 +42,6 @@ const Index = () => {
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
       
-      {/* Hero Section */}
       <section className="flex-1 bg-gradient-to-br from-primary/10 to-accent/10 min-h-[60vh] flex items-center justify-center px-4">
         <div className="max-w-2xl text-center">
           <h1 className="text-6xl font-black text-primary tracking-tighter mb-2">
@@ -53,9 +50,9 @@ const Index = () => {
           <p className="text-3xl text-muted-foreground mb-6">
             Discover, buy, and sell verified tickets for the events you love.
           </p>
-          <div className="flex gap-4">
+          <div className="flex gap-4 justify-center">
             <Button
-              variant="solid"
+              variant="default"
               className="rounded-full font-black text-lg px-8 py-3 shadow-lg shadow-primary/20"
               onClick={() => window.location.href = "/marketplace"}
             >
@@ -68,7 +65,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Marketplace Overview */}
       <main className="container mx-auto px-4 py-12 max-w-5xl flex flex-col">
         <div className="mb-10">
           <div className="flex items-center gap-4 mb-2">
@@ -87,7 +83,6 @@ const Index = () => {
             <TicketCard key={ticket.id} ticket={ticket} />
           ))}
 
-          {/* Example trend chart for demonstration */}
           {filteredTickets.length > 0 && (
             <div className="bg-white/50 p-6 rounded-2xl border-2 border-primary/10 text-center">
               <PriceTrendChart 
