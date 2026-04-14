@@ -105,7 +105,7 @@ const Checkout = () => {
         <Button 
           variant="ghost" 
           onClick={() => navigate(-1)} 
-          className="mb-8 gap-2 font-black text-xs uppercase tracking-widest text-muted-foreground hover:text-primary"
+          className="mb-8 gap-2 font-bold text-muted-foreground hover:text-primary"
         >
           <ArrowLeft size={16} />
           Back to Listings
@@ -199,7 +199,7 @@ const Checkout = () => {
                 </div>
 
                 <Button type="submit" className="w-full h-16 text-lg font-black rounded-2xl shadow-xl shadow-primary/20">
-                  {paymentMethod === 'card' ? 'Pay $123.60 Now' : `Pay with ${paymentMethod === 'apple' ? 'Apple Pay' : 'Google Pay'}`}
+                  {paymentMethod === 'card' ? 'Pay $126.00 Now' : `Pay with ${paymentMethod === 'apple' ? 'Apple Pay' : 'Google Pay'}`}
                 </Button>
               </form>
             </div>
@@ -213,7 +213,7 @@ const Checkout = () => {
               <CardContent className="p-6 space-y-6">
                 <div className="flex gap-4">
                   <div className="w-20 h-20 rounded-xl overflow-hidden shrink-0">
-                    <img src="/src/assets/beer-garden.png" className="w-full h-full object-cover" />
+                    <img src="dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <h3 className="font-bold text-primary">Beer Garden</h3>
@@ -228,12 +228,12 @@ const Checkout = () => {
                     <span>$120.00</span>
                   </div>
                   <div className="flex justify-between text-sm font-medium">
-                    <span className="text-muted-foreground">Sceney Fee (3%)</span>
-                    <span className="text-accent">$3.60</span>
+                    <span className="text-muted-foreground">Sceney Fee (5%)</span>
+                    <span className="text-accent">$6.00</span>
                   </div>
                   <div className="flex justify-between items-center pt-3 border-t">
                     <span className="font-black text-primary uppercase tracking-widest text-xs">Total</span>
-                    <span className="font-black text-2xl text-primary tracking-tighter">$123.60</span>
+                    <span className="font-black text-2xl text-primary tracking-tighter">$126.00</span>
                   </div>
                 </div>
 

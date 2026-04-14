@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import TicketCard from "@/components/TicketCard";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Filter } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import PriceTrendChart from "@/components/PriceTrendChart";
 import { cn } from "@/lib/utils";
 
 const MOCK_TICKETS = [
@@ -15,109 +16,88 @@ const MOCK_TICKETS = [
     date: "Apr 25, 2026 • 12:00 PM",
     location: "Old City Beer Garden",
     price: 45,
-    image: "/src/assets/beer-garden.png",
+    image: "dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png",
     category: "Social",
-    likes: 124,
+    likes: 0,
+    priceHistory: [
+      { date: "Jan", low: 40, high: 65 },
+      { date: "Feb", low: 42, high: 70 },
+      { date: "Mar", low: 38, high: 68 },
+      { date: "Apr", low: 45, high: 75 },
+      { date: "May", low: 48, high: 80 },
+      { date: "Jun", low: 52, high: 85 },
+    ],
   },
-  {
-    id: "tropics",
-    title: "Tropics",
-    date: "May 08, 2026 • 2:30 PM",
-    location: "Funtown Beach",
-    price: 65,
-    image: "/src/assets/tropics.png",
-    category: "Social",
-    likes: 342,
-  }
 ];
 
-const CATEGORIES = ["All", "Social", "Sports", "Arts", "Professional"];
-
 const Index = () => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = React.useState("");
 
-  const filteredTickets = selectedCategory === "All" 
-    ? MOCK_TICKETS 
-    : MOCK_TICKETS.filter(t => t.category === selectedCategory);
+  const filteredTickets = searchQuery
+    ? MOCK_TICKETS.filter((ticket) =>
+        ticket.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        ticket.location.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : MOCK_TICKETS;
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
       
-      <section className="relative overflow-hidden bg-primary py-24 px-4">
-        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-accent rounded-full blur-[120px]" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-accent rounded-full blur-[120px]" />
-        </div>
-
-        <div className="container mx-auto max-w-4xl text-center relative z-10">
-          <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 px-4 py-2 rounded-full mb-8">
-            <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">The Scene is Waiting</span>
-          </div>
-          
-          <h1 className="text-7xl md:text-8xl font-black text-white tracking-tighter mb-6 leading-[0.9]">
-            GET IN THE <span className="text-accent italic">SCENE.</span>
+      {/* Hero Section */}
+      <section className="flex-1 bg-gradient-to-br from-primary/10 to-accent/10 min-h-[60vh] flex items-center justify-center px-4">
+        <div className="max-w-2xl text-center">
+          <h1 className="text-6xl font-black text-primary tracking-tighter mb-2">
+            Welcome to Sceney
           </h1>
-          
-          <p className="text-xl md:text-2xl text-white/70 mb-10 font-medium max-w-2xl mx-auto leading-relaxed">
-            The most secure, anonymous marketplace for verified Penn event tickets. No scams, just vibes.
+          <p className="text-3xl text-muted-foreground mb-6">
+            Discover, buy, and sell verified tickets for the events you love.
           </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex gap-4">
             <Button
-              className="rounded-full font-black text-xl px-10 h-20 shadow-2xl shadow-accent/20 bg-accent hover:bg-accent/90 text-white border-none"
-              onClick={() => document.getElementById('marketplace')?.scrollIntoView({ behavior: 'smooth' })}
+              variant="solid"
+              className="rounded-full font-black text-lg px-8 py-3 shadow-lg shadow-primary/20"
+              onClick={() => window.location.href = "/marketplace"}
             >
-              Browse Marketplace
-              <ArrowRight className="ml-2" size={24} />
+              Browse Events
             </Button>
+            <Badge className="bg-white/20 text-primary border-primary/30 px-4 py-1.5 rounded-full font-black text-[10px] uppercase tracking-widest">
+              Free Trial
+            </Badge>
           </div>
         </div>
       </section>
 
-      <main id="marketplace" className="container mx-auto px-4 py-20 max-w-5xl flex flex-col">
-        <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
-          <div>
-            <div className="flex items-center gap-3 mb-2">
-              <div className="h-3 w-12 bg-accent rounded-full" />
-              <h2 className="text-4xl font-black text-primary tracking-tight">Live Listings</h2>
+      {/* Marketplace Overview */}
+      <main className="container mx-auto px-4 py-12 max-w-5xl flex flex-col">
+        <div className="mb-10">
+          <div className="flex items-center gap-4 mb-2">
+            <h1 className="text-4xl font-black text-primary">Marketplace</h1>
+            <div className="flex gap-1">
+              {[1, 2].map((i) => (
+                <div key={i} className={`h-2 w-8 rounded-full transition-colors ${i === 1 ? 'bg-accent' : 'bg-primary/10'}`} />
+              ))}
             </div>
-            <p className="text-lg text-muted-foreground font-medium">Verified tickets available right now.</p>
           </div>
-
-          <div className="flex flex-wrap gap-2">
-            {CATEGORIES.map((cat) => (
-              <Button
-                key={cat}
-                variant={selectedCategory === cat ? "default" : "outline"}
-                onClick={() => setSelectedCategory(cat)}
-                className={cn(
-                  "rounded-full font-black text-[10px] uppercase tracking-widest px-6 h-10 border-2",
-                  selectedCategory === cat ? "bg-primary text-white border-primary" : "border-primary/10 text-primary/60 hover:border-primary/30"
-                )}
-              >
-                {cat}
-              </Button>
-            ))}
-          </div>
+          <p className="text-lg text-muted-foreground">Browse events by category or search.</p>
         </div>
 
-        <div className="grid grid-cols-1 gap-8">
-          {filteredTickets.length > 0 ? (
-            filteredTickets.map((ticket) => (
-              <TicketCard key={ticket.id} ticket={ticket} />
-            ))
-          ) : (
-            <div className="py-20 text-center bg-muted/20 rounded-[3rem] border-2 border-dashed border-primary/10">
-              <Filter className="mx-auto text-muted-foreground mb-4" size={48} />
-              <h3 className="text-2xl font-black text-primary">No listings found</h3>
-              <p className="text-muted-foreground font-medium">Try selecting a different category.</p>
+        <div className="space-y-8">
+          {filteredTickets.map((ticket) => (
+            <TicketCard key={ticket.id} ticket={ticket} />
+          ))}
+
+          {/* Example trend chart for demonstration */}
+          {filteredTickets.length > 0 && (
+            <div className="bg-white/50 p-6 rounded-2xl border-2 border-primary/10 text-center">
+              <PriceTrendChart 
+                data={filteredTickets[0].priceHistory} 
+                category="Price Trend" 
+              />
             </div>
           )}
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 };

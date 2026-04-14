@@ -17,15 +17,7 @@ const MOCK_EVENTS = [
     title: 'Beer Garden',
     date: 'Apr 25, 2026 • 2:00 PM',
     location: 'The Emerald Terrace',
-    image: '/src/assets/beer-garden.png',
-    category: 'Social'
-  },
-  {
-    id: 'tropics',
-    title: 'Tropics',
-    date: 'May 08, 2026 • 2:30 PM',
-    location: 'Funtown Beach',
-    image: '/src/assets/tropics.png',
+    image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png',
     category: 'Social'
   }
 ];
@@ -37,9 +29,8 @@ const Sell = () => {
   const [selectedEvent, setSelectedEvent] = useState<typeof MOCK_EVENTS[0] | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const priceNum = Number(price) || 0;
-  const commission = priceNum * 0.03; // 3% platform fee
-  const payout = priceNum - commission;
+  const commission = 0; // No commission deduction
+  const payout = Number(price); // Full price is the payout
 
   const filteredEvents = MOCK_EVENTS.filter(e => 
     e.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -120,6 +111,18 @@ const Sell = () => {
                         <Label htmlFor="description" className="font-black text-[10px] uppercase tracking-widest text-muted-foreground">Ticket Details</Label>
                         <Textarea id="description" placeholder="Section, Row, Seat details..." className="min-h-[100px] rounded-xl border-2 font-medium" required />
                       </div>
+                      <div className="pt-6 border-t space-y-4">
+                        <Label htmlFor="price" className="font-black text-[10px] uppercase tracking-widest text-primary-foreground/60">Your Asking Price ($)</Label>
+                        <Input 
+                          id="price" 
+                          type="number" 
+                          value={price}
+                          onChange={(e) => setPrice(e.target.value)}
+                          placeholder="0.00" 
+                          className="h-20 text-4xl font-black bg-white/10 border-white/20 text-white placeholder:text-white/20 rounded-2xl px-6" 
+                          required 
+                        />
+                      </div>
                     </div>
                   )}
                 </CardContent>
@@ -136,8 +139,7 @@ const Sell = () => {
                   <CardContent className="p-8 space-y-8">
                     <div className="space-y-2">
                       <Label htmlFor="price" className="font-black text-[10px] uppercase tracking-widest text-primary-foreground/60">Your Asking Price ($)</Label>
-                      <Input 
-                        id="price" 
+                      <Input                         id="price" 
                         type="number" 
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
@@ -149,8 +151,8 @@ const Sell = () => {
 
                     <div className="grid grid-cols-2 gap-8 pt-8 border-t border-white/10">
                       <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-2">Platform Fee (3%)</p>
-                        <p className="text-3xl font-black text-primary">${commission.toFixed(2)}</p>
+                        <p className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-2">Platform Fee</p>
+                        <p className="text-3xl font-black text-primary">$0.00</p>
                       </div>
                       <div>
                         <p className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-2">Your Payout</p>
