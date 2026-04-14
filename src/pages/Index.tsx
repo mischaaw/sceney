@@ -41,7 +41,7 @@ const Index = () => {
           </h1>
           
           <p className="text-xl md:text-2xl text-white/70 mb-10 font-medium max-w-2xl mx-auto leading-relaxed">
-            The most secure, anonymous marketplace for verified event tickets. No scams, just vibes.
+            The most secure, anonymous marketplace for verified Penn event tickets. No scams, just vibes.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
