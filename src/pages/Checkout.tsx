@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -18,10 +18,140 @@ import {
   Smartphone,
   Globe,
   Send,
-  Lock
+  Lock,
+  Loader2
 } from 'lucide-react';
-import { showSuccess } from '@/utils/toast';
+import { showSuccess, showError } from '@/utils/toast';
 import { cn } from '@/lib/utils';
+
+// Stripe Imports
+import { loadStripe } from '@stripe/stripe-js';
+import {
+  Elements,
+  CardElement,
+  useStripe,
+  useElements,
+} from '@stripe/react-stripe-js';
+
+// Initialize Stripe with a placeholder key
+// In a real app, this would be your Stripe Publishable Key
+const stripePromise = loadStripe('pk_test_51PzXpP2N8vXvXvXvXvXvXvXvXvXvXvXvXvXvXvXvXvXvXvXvXvXvXvXvXvXvXvXv00XvXvXvXv');
+
+const StripeCheckoutForm = ({ amount, email, onSuccess }: { amount: number, email: string, onSuccess: () => void }) => {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    if (!stripe || !elements) {
+      return;
+    }
+
+    setIsProcessing(true);
+
+    const cardElement = elements.getElement(CardElement);
+
+    if (!cardElement) {
+      setIsProcessing(false);
+      return;
+    }
+
+    // Use Stripe to create a payment method - this validates the card info
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: 'card',
+      card: cardElement,
+      billing_details: {
+        email: email,
+      },
+    });
+
+    if (error) {
+      showError(error.message || "An error occurred with your card.");
+      setIsProcessing(false);
+    } else {
+      console.log('[PaymentMethod]', paymentMethod);
+      // In a real app, you would send paymentMethod.id to your server here
+      onSuccess();
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
+        <div className="p-6 bg-white border-2 rounded-2xl space-y-4 shadow-sm">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-black uppercase tracking-widest text-muted-foreground">Stripe Secure Payment</span>
+            <div className="flex gap-1">
+              <div className="w-6 h-4 bg-muted rounded-sm" />
+              <div className="w-6 h-4 bg-muted rounded-sm" />
+              <div className="w-6 h-4 bg-muted rounded-sm" />
+            </div>
+          </div>
+          
+          <div className="space-y-2">
+            <Label className="text-[10px] font-black uppercase tracking-widest">Card Information</Label>
+            <div className="p-4 border-2 rounded-xl bg-white">
+              <CardElement 
+                options={{
+                  style: {
+                    base: {
+                      fontSize: '16px',
+                      color: '#1a2634',
+                      '::placeholder': {
+                        color: '#aab7c4',
+                      },
+                    },
+                    invalid: {
+                      color: '#ef4444',
+                    },
+                  },
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="country" className="text-[10px] font-black uppercase tracking-widest">Country or Region</Label>
+            <select id="country" className="w-full h-12 rounded-xl border-2 px-4 bg-white font-bold text-sm">
+              <option>United States</option>
+              <option>Canada</option>
+              <option>United Kingdom</option>
+            </select>
+          </div>
+        </div>
+        
+        <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground justify-center">
+          <Lock size={12} />
+          Payments are secure and encrypted by Stripe
+        </div>
+      </div>
+
+      <div className="bg-primary/5 p-6 rounded-2xl border-2 border-primary/10 space-y-4">
+        <div className="flex items-center gap-3 text-primary">
+          <Zap size={18} className="text-accent" fill="currentColor" />
+          <span className="font-black text-xs uppercase tracking-widest">Instant Delivery Enabled</span>
+        </div>
+        <p className="text-xs font-medium text-muted-foreground leading-relaxed">
+          Tickets will be emailed immediately after payment. Your funds are protected by our escrow system.
+        </p>
+      </div>
+
+      <Button 
+        type="submit" 
+        disabled={!stripe || isProcessing}
+        className="w-full h-16 text-lg font-black rounded-2xl shadow-xl shadow-primary/20"
+      >
+        {isProcessing ? (
+          <Loader2 className="animate-spin" />
+        ) : (
+          `Pay $${amount.toFixed(2)} Now`
+        )}
+      </Button>
+    </form>
+  );
+};
 
 const Checkout = () => {
   const { id } = useParams();
@@ -30,8 +160,7 @@ const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'apple' | 'google'>('card');
   const [email, setEmail] = useState('alex@example.com');
 
-  const handlePayment = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSuccess = () => {
     setStep(2);
     showSuccess("Payment successful! Check your email for receipt.");
     
@@ -154,68 +283,23 @@ const Checkout = () => {
                 </div>
               </div>
 
-              <form onSubmit={handlePayment} className="space-y-6">
-                {paymentMethod === 'card' ? (
-                  <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
-                    <div className="p-6 bg-white border-2 rounded-2xl space-y-4 shadow-sm">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-black uppercase tracking-widest text-muted-foreground">Stripe Secure Payment</span>
-                        <div className="flex gap-1">
-                          <div className="w-6 h-4 bg-muted rounded-sm" />
-                          <div className="w-6 h-4 bg-muted rounded-sm" />
-                          <div className="w-6 h-4 bg-muted rounded-sm" />
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="card-number" className="text-[10px] font-black uppercase tracking-widest">Card Information</Label>
-                        <div className="relative">
-                          <Input id="card-number" placeholder="1234 5678 1234 5678" required className="h-12 rounded-xl border-2 pl-12 font-mono" />
-                          <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
-                        </div>
-                        <div className="grid grid-cols-2 gap-2">
-                          <Input id="expiry" placeholder="MM / YY" required className="h-12 rounded-xl border-2 font-mono" />
-                          <Input id="cvc" placeholder="CVC" required className="h-12 rounded-xl border-2 font-mono" />
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="country" className="text-[10px] font-black uppercase tracking-widest">Country or Region</Label>
-                        <select id="country" className="w-full h-12 rounded-xl border-2 px-4 bg-white font-bold text-sm">
-                          <option>United States</option>
-                          <option>Canada</option>
-                          <option>United Kingdom</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground justify-center">
-                      <Lock size={12} />
-                      Payments are secure and encrypted by Stripe
-                    </div>
+              {paymentMethod === 'card' ? (
+                <Elements stripe={stripePromise}>
+                  <StripeCheckoutForm amount={126.00} email={email} onSuccess={handleSuccess} />
+                </Elements>
+              ) : (
+                <div className="p-8 bg-muted/20 rounded-[2rem] border-2 border-dashed border-primary/10 text-center space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm">
+                    {paymentMethod === 'apple' ? <Smartphone className="text-primary" /> : <Globe className="text-primary" />}
                   </div>
-                ) : (
-                  <div className="p-8 bg-muted/20 rounded-[2rem] border-2 border-dashed border-primary/10 text-center space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
-                    <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm">
-                      {paymentMethod === 'apple' ? <Smartphone className="text-primary" /> : <Globe className="text-primary" />}
-                    </div>
-                    <p className="text-sm font-medium text-muted-foreground">
-                      You will be redirected to {paymentMethod === 'apple' ? 'Apple Pay' : 'Google Pay'} to complete your purchase securely.
-                    </p>
-                  </div>
-                )}
-
-                <div className="bg-primary/5 p-6 rounded-2xl border-2 border-primary/10 space-y-4">
-                  <div className="flex items-center gap-3 text-primary">
-                    <Zap size={18} className="text-accent" fill="currentColor" />
-                    <span className="font-black text-xs uppercase tracking-widest">Instant Delivery Enabled</span>
-                  </div>
-                  <p className="text-xs font-medium text-muted-foreground leading-relaxed">
-                    Tickets will be emailed immediately after payment. Your funds are protected by our escrow system.
+                  <p className="text-sm font-medium text-muted-foreground">
+                    You will be redirected to {paymentMethod === 'apple' ? 'Apple Pay' : 'Google Pay'} to complete your purchase securely.
                   </p>
+                  <Button onClick={handleSuccess} className="w-full h-16 text-lg font-black rounded-2xl shadow-xl shadow-primary/20">
+                    Pay with {paymentMethod === 'apple' ? 'Apple Pay' : 'Google Pay'}
+                  </Button>
                 </div>
-
-                <Button type="submit" className="w-full h-16 text-lg font-black rounded-2xl shadow-xl shadow-primary/20">
-                  {paymentMethod === 'card' ? 'Pay $126.00 Now' : `Pay with ${paymentMethod === 'apple' ? 'Apple Pay' : 'Google Pay'}`}
-                </Button>
-              </form>
+              )}
             </div>
           </div>
 
