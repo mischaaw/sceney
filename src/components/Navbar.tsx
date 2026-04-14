@@ -1,13 +1,14 @@
 "use client";
 
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { MessageSquare, ShieldCheck, PlusCircle, LayoutDashboard, UserCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 const Navbar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   
   const navLinks = [
     { name: 'Marketplace', path: '/' },
@@ -55,7 +56,11 @@ const Navbar = () => {
             </Button>
           </Link>
           <div className="h-8 w-[1px] bg-border mx-2 hidden sm:block" />
-          <Button variant="ghost" className="rounded-full font-bold gap-2 hidden sm:flex">
+          <Button 
+            variant="ghost" 
+            className="rounded-full font-bold gap-2 hidden sm:flex"
+            onClick={() => navigate('/profile')}
+          >
             <UserCircle size={20} />
             Profile
           </Button>
