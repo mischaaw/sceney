@@ -4,6 +4,7 @@ import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import TicketCard from "@/components/TicketCard";
+import LiveActivityTicker from "@/components/LiveActivityTicker";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, Zap, ShieldCheck, Search, FilterX } from "lucide-react";
@@ -102,6 +103,8 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      <LiveActivityTicker />
 
       <main id="marketplace" className="container mx-auto px-4 py-20 max-w-6xl flex flex-col">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">

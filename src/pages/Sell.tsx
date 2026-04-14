@@ -28,10 +28,10 @@ const Sell = () => {
   const [price, setPrice] = useState<string>('');
   const [step, setStep] = useState(1);
   const [selectedEvent, setSelectedEvent] = useState<typeof MOCK_EVENTS[0] | null>(null);
-  const [searchQuery, setSearchQuery] = setSearchQuery('');
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const commission = 0; // No commission deduction
-  const payout = Number(price); // Full price is the payout
+  const commission = 0; 
+  const payout = Number(price); 
 
   const filteredEvents = MOCK_EVENTS.filter(e => 
     e.title.toLowerCase().includes(searchQuery.toLowerCase())
