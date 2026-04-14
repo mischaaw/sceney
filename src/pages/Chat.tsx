@@ -31,35 +31,32 @@ const Chat = () => {
 
   const handleSend = () => {
     if (!input.trim()) return;
-    setMessages(prev => [
-      ...prev,
-      {
-        id: Date.now(),
-        sender: isSeller ? 'Seller' : 'Buyer',
-        text: input,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        type: 'text'
-      },
-    ]);
+    const newMessage: Message = {
+      id: Date.now(),
+      sender: isSeller ? 'Seller' : 'Buyer',
+      text: input,
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      type: 'text'
+    };
+    setMessages(prev => [...prev, newMessage]);
     setInput('');
   };
 
   const makeOffer = () => {
-    const price = prompt("Enter your offer price ($):");
-    if (!price || isNaN(Number(price))) return;
+    const priceStr = prompt("Enter your offer price ($):");
+    if (!priceStr || isNaN(Number(priceStr))) return;
 
-    setMessages(prev => [
-      ...prev,
-      {
-        id: Date.now(),
-        sender: 'Seller',
-        text: `OFFER: $${price}`,
-        price: Number(price),
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        type: 'offer',
-        status: 'pending'
-      },
-    ]);
+    const price = Number(priceStr);
+    const newOffer: Message = {
+      id: Date.now(),
+      sender: 'Seller',
+      text: `OFFER: $${price}`,
+      price: price,
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      type: 'offer',
+      status: 'pending'
+    };
+    setMessages(prev => [...prev, newOffer]);
     showSuccess(`Offer of $${price} sent!`);
   };
 
@@ -158,7 +155,7 @@ const Chat = () => {
                         {msg.status === 'pending' ? (
                           <div className="flex gap-2">
                             <Button 
-                              onClick={() => handleAcceptOffer(msg.id, msg.price!)}
+                              onClick={() => handleAcceptOffer(msg.id, msg.price || 0)}
                               className="flex-1 bg-white text-accent hover:bg-white/90 font-black rounded-xl h-12"
                             >
                               <Check size={18} className="mr-2" />
