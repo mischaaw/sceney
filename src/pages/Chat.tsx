@@ -32,10 +32,10 @@ const Chat = () => {
   const makeOffer = (buyerId: string) => {
     const newPrice = prompt('Enter your offer price:');
     if (!newPrice || isNaN(parseFloat(newPrice))) return;
+        const offerPrice = parseFloat(newPrice);
     
-    // In a real app, this would update the listing price
-    const offerPrice = parseFloat(newPrice);
-    setOffers(prev => { ...prev, [buyerId]: offerPrice });
+    // Update offers state with proper object return
+    setOffers(prev => ({ ...prev, [buyerId]: offerPrice }));
     
     // Notify buyer about price drop    setMessages(prev => [
       ...prev,
