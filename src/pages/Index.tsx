@@ -4,11 +4,18 @@ import React, { useState, useMemo } from 'react';
 import Navbar from '@/components/Navbar';
 import TicketCard from '@/components/TicketCard';
 import { Input } from '@/components/ui/input';
-import { Search, Filter, ShieldCheck, Zap, Lock, MessageSquare } from 'lucide-react';
+import { Search, Filter, ShieldCheck, Zap, Lock, MessageSquare, ChevronDown } from 'lucide-react';
 import { MadeWithDyad } from "@/components/made-with-dyad";
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Logo from '@/components/Logo';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const MOCK_TICKETS = [
   {
@@ -72,15 +79,27 @@ const CATEGORIES = ['All', 'Music', 'Sports', 'Conference', 'Exhibition', 'Theat
 const Index = () => {
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState('recency');
 
   const filteredTickets = useMemo(() => {
-    return MOCK_TICKETS.filter(ticket => {
+    let result = MOCK_TICKETS.filter(ticket => {
       const matchesCategory = activeCategory === 'All' || ticket.category === activeCategory;
       const matchesSearch = ticket.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                            ticket.location.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCategory && matchesSearch;
     });
-  }, [activeCategory, searchQuery]);
+
+    // Sorting logic
+    if (sortBy === 'price-low') {
+      result.sort((a, b) => a.price - b.price);
+    } else if (sortBy === 'price-high') {
+      result.sort((a, b) => b.price - a.price);
+    } else if (sortBy === 'date-soonest') {
+      result.sort((a, b) => new Date(a.date.split(' • ')[0]).getTime() - new Date(b.date.split(' • ')[0]).getTime());
+    }
+    
+    return result;
+  }, [activeCategory, searchQuery, sortBy]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -117,10 +136,21 @@ const Index = () => {
                 className="pl-14 h-16 rounded-[1.5rem] border-2 focus-visible:ring-primary text-lg font-medium shadow-sm"
               />
             </div>
-            <Button variant="outline" className="h-16 px-8 rounded-[1.5rem] border-2 font-black gap-3 text-primary">
-              <Filter size={20} />
-              Filters
-            </Button>
+            
+            <Select value={sortBy} onValueChange={setSortBy}>
+              <SelectTrigger className="h-16 px-8 rounded-[1.5rem] border-2 font-black gap-3 text-primary w-full md:w-[240px] bg-white">
+                <div className="flex items-center gap-2">
+                  <Filter size={20} className="text-accent" />
+                  <SelectValue placeholder="Sort By" />
+                </div>
+              </SelectTrigger>
+              <SelectContent className="rounded-2xl border-2">
+                <SelectItem value="recency" className="font-bold py-3">Recently Added</SelectItem>
+                <SelectItem value="price-low" className="font-bold py-3">Price: Low to High</SelectItem>
+                <SelectItem value="price-high" className="font-bold py-3">Price: High to Low</SelectItem>
+                <SelectItem value="date-soonest" className="font-bold py-3">Event Date: Soonest</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
@@ -155,7 +185,7 @@ const Index = () => {
             <Button 
               variant="link" 
               className="mt-4 font-black text-accent uppercase tracking-widest text-xs"
-              onClick={() => {setSearchQuery(''); setActiveCategory('All');}}
+              onClick={() => {setSearchQuery(''); setActiveCategory('All'); setSortBy('recency');}}
             >
               Clear all filters
             </Button>
