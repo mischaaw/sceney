@@ -2,11 +2,12 @@
 
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
-import { Send, Shield, UserCircle, Lock } from 'lucide-react';
+import { Send, Shield, UserCircle, Lock, ShieldCheck, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const Chat = () => {
   const [messages, setMessages] = useState([
@@ -48,6 +49,23 @@ const Chat = () => {
               <Shield size={14} className="text-accent" />
               Monitored
             </Badge>
+          </div>
+
+          {/* Escrow Status Banner */}
+          <div className="px-8 py-4 bg-accent/5 border-b flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center">
+                <ShieldCheck size={16} />
+              </div>
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-widest text-primary">Escrow Status</p>
+                <p className="text-xs font-bold text-accent">Payment Secured • Awaiting Ticket Transfer</p>
+              </div>
+            </div>
+            <Button variant="ghost" size="sm" className="text-[10px] font-black uppercase tracking-widest gap-2">
+              <Info size={14} />
+              How it works
+            </Button>
           </div>
 
           {/* Messages Area */}
