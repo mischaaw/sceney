@@ -12,23 +12,21 @@ const TicketDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // Mock event data
+  // Mock event data updated to Beer Garden
   const event = {
     id: id,
-    title: 'Midnight Jazz Festival',
-    date: 'Oct 24, 2024 • 8:00 PM',
-    location: 'Blue Note Lounge, NYC',
-    image: 'https://images.unsplash.com/photo-1514525253361-bee8718a7439?auto=format&fit=crop&q=80&w=800',
-    category: 'Music',
-    description: 'Experience the finest jazz musicians in the heart of New York City. A night of soul, rhythm, and improvisation.'
+    title: 'Beer Garden',
+    date: 'Apr 25, 2026 • 2:00 PM',
+    location: 'The Emerald Terrace',
+    image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/3632faf7816b80941677a14be7c7913a.png',
+    category: 'Social',
+    description: 'Join us for an afternoon of craft brews, live music, and great company at the Emerald Terrace. A perfect spring celebration.'
   };
 
   // Mock listings for this event
   const listings = [
-    { id: 'L1', seller: 'JazzLover99', price: 120, section: 'Front Row', verified: true, instant: true },
-    { id: 'L2', seller: 'MusicFan_NYC', price: 115, section: 'Mezzanine', verified: true, instant: true },
-    { id: 'L3', seller: 'TicketMaster_Resale', price: 145, section: 'VIP Table', verified: true, instant: true },
-    { id: 'L4', seller: 'Alex_R', price: 110, section: 'General Admission', verified: false, instant: true },
+    { id: 'L1', seller: 'BrewMaster', price: 45, section: 'General Admission', verified: true, instant: true },
+    { id: 'L2', seller: 'SunnyDays', price: 42, section: 'General Admission', verified: true, instant: true },
   ];
 
   return (

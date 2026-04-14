@@ -20,61 +20,16 @@ import {
 const MOCK_TICKETS = [
   {
     id: '1',
-    title: 'Midnight Jazz Festival',
-    date: 'Oct 24, 2024 • 8:00 PM',
-    location: 'Blue Note Lounge, NYC',
-    price: 120,
-    image: 'https://images.unsplash.com/photo-1514525253361-bee8718a7439?auto=format&fit=crop&q=80&w=800',
-    category: 'Music'
-  },
-  {
-    id: '2',
-    title: 'Tech Vision Summit 2024',
-    date: 'Nov 12, 2024 • 9:00 AM',
-    location: 'Convention Center, SF',
-    price: 450,
-    image: 'https://images.unsplash.com/photo-1540575861501-7cf05a4b125a?auto=format&fit=crop&q=80&w=800',
-    category: 'Conference'
-  },
-  {
-    id: '3',
-    title: 'The Art of Motion',
-    date: 'Oct 30, 2024 • 7:30 PM',
-    location: 'Modern Art Museum, CHI',
-    price: 85,
-    image: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800',
-    category: 'Exhibition'
-  },
-  {
-    id: '4',
-    title: 'Championship Finals',
-    date: 'Dec 05, 2024 • 6:00 PM',
-    location: 'Madison Square Garden',
-    price: 299,
-    image: 'https://images.unsplash.com/photo-1504450758481-7338eba7524a?auto=format&fit=crop&q=80&w=800',
-    category: 'Sports'
-  },
-  {
-    id: '5',
-    title: 'Broadway: The Lion King',
-    date: 'Nov 05, 2024 • 7:00 PM',
-    location: 'Minskoff Theatre, NYC',
-    price: 180,
-    image: 'https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&q=80&w=800',
-    category: 'Theater'
-  },
-  {
-    id: '6',
-    title: 'Indie Rock Night',
-    date: 'Oct 28, 2024 • 9:00 PM',
-    location: 'The Garage, London',
+    title: 'Beer Garden',
+    date: 'Apr 25, 2026 • 2:00 PM',
+    location: 'The Emerald Terrace',
     price: 45,
-    image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=800',
-    category: 'Music'
+    image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/3632faf7816b80941677a14be7c7913a.png',
+    category: 'Social'
   }
 ];
 
-const CATEGORIES = ['All', 'Music', 'Sports', 'Conference', 'Exhibition', 'Theater'];
+const CATEGORIES = ['All', 'Social', 'Music', 'Sports', 'Conference', 'Exhibition', 'Theater'];
 
 const Index = () => {
   const [activeCategory, setActiveCategory] = useState('All');
