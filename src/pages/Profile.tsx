@@ -120,7 +120,8 @@ const Profile = () => {
                   key={item.label}
                   onClick={() => setActiveTab(item.label)}
                   className={`
-                    w-full flex items-center justify-between p-4 rounded-2xl font-black text-xs uppercase tracking-widest                    transition-all
+                    w-full flex items-center justify-between p-4 rounded-2xl font-black text-xs uppercase tracking-widest
+                    transition-all
                     ${activeTab === item.label ? "bg-primary text-white shadow-lg shadow-primary/20" : "bg-white text-primary/60 hover:bg-primary/5"}
                   `}
                 >
@@ -137,7 +138,8 @@ const Profile = () => {
               className="w-full justify-start gap-3 p-4 rounded-2xl font-black text-xs uppercase tracking-widest text-destructive hover:text-destructive hover:bg-destructive/5"
             >
               <LogOut size={18} />
-              Sign Out            </Button>
+              Sign Out
+            </Button>
           </div>
 
           {/* Tab Content */}
@@ -169,8 +171,7 @@ const Profile = () => {
                       <Input defaultValue="+1 (555) 123-4567" className="h-12 rounded-xl border-2 font-bold" />
                     </div>
                     <Button type="submit" className="w-full h-14 rounded-2xl font-black text-lg shadow-xl shadow-primary/20">
-                      Save Changes
-                    </Button>
+                      Save Changes                    </Button>
                   </form>
                 </CardContent>
               </Card>
@@ -200,8 +201,7 @@ const Profile = () => {
                       className="rounded-full font-black text-[10px] uppercase tracking-widest px-4"
                       onClick={handleUpdatePayment}
                     >
-                      Update
-                    </Button>
+                      Update                    </Button>
 
                     <div className="space-y-2">
                       <div className="flex justify-between items-center">
