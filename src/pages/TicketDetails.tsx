@@ -239,7 +239,7 @@ const TicketDetails = () => {
                 <div className="space-y-4">
                   <div className="flex gap-4">
                     <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
-                      <ShieldCheck size={20} className="text-accent" />
+                      <ShieldCheck size={20} className="text-[#fdf5e6]" />
                     </div>
                     <div>
                       <p className="font-black text-sm">Verified Sellers</p>
@@ -248,7 +248,7 @@ const TicketDetails = () => {
                   </div>
                   <div className="flex gap-4">
                     <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
-                      <Zap size={20} className="text-accent" />
+                      <Zap size={20} className="text-[#fdf5e6]" />
                     </div>
                     <div>
                       <p className="font-black text-sm">Instant Transfer</p>
@@ -257,7 +257,7 @@ const TicketDetails = () => {
                   </div>
                   <div className="flex gap-4">
                     <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
-                      <Lock size={20} className="text-accent" />
+                      <Lock size={20} className="text-[#fdf5e6]" />
                     </div>
                     <div>
                       <p className="font-black text-sm">Escrow Protection</p>
@@ -266,7 +266,7 @@ const TicketDetails = () => {
                   </div>
                   <div className="flex gap-4">
                     <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
-                      <Scale size={20} className="text-accent" />
+                      <Scale size={20} className="text-[#fdf5e6]" />
                     </div>
                     <div>
                       <p className="font-black text-sm">Fair Pricing</p>

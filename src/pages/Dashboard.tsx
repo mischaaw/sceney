@@ -10,17 +10,11 @@ import {
   Ticket, 
   ShoppingBag, 
   Clock, 
-  CheckCircle2,   ExternalLink, 
   MessageSquare, 
   DollarSign, 
   TrendingUp, 
-  AlertCircle,
-  ChevronRight,
   LineChart,
-  TrendingDown,
   Banknote,
-  Receipt,
-  CalendarCheck,
   Heart
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -31,7 +25,6 @@ const Dashboard = () => {
   const [priceData, setPriceData] = useState<any[]>([]);
 
   useEffect(() => {
-    // Mock daily price data
     const mockData = [
       { date: 'Mon', low: 40, high: 60 },
       { date: 'Tue', low: 42, high: 62 },
@@ -46,7 +39,7 @@ const Dashboard = () => {
 
   const stats = {
     totalSales: 1240.50,
-    activeListings: 3,
+    activeListings: 1,
     pendingPayouts: 450.00,
     totalPurchases: 1
   };
@@ -59,7 +52,7 @@ const Dashboard = () => {
   const purchases = [
     {
       id: '1',
-      event: 'Beer Garden',
+      event: 'Old City Beer Garden',
       date: 'Oct 24, 2024',
       status: 'In Escrow',
       price: 126.00,
@@ -71,23 +64,13 @@ const Dashboard = () => {
   const listings = [
     {
       id: '1',
-      event: 'Beer Garden',
+      event: 'Old City Beer Garden',
       date: 'Nov 12, 2024',
       status: 'Active',
       price: 450.00,
       views: 124,
       likes: 42,
       image: '/src/assets/beer-garden.png'
-    },
-    {
-      id: 'LST-102',
-      event: 'Tech Vision Summit',
-      date: 'Dec 05, 2024',
-      status: 'Sold',
-      price: 299.00,
-      views: 89,
-      likes: 12,
-      image: 'https://images.unsplash.com/photo-1540575861501-7338eba7524a?auto=format&fit=crop&q=80&w=200'
     }
   ];
 
@@ -197,6 +180,13 @@ const Dashboard = () => {
                 </div>
               ))}
             </div>
+            <Button 
+              variant="outline" 
+              className="w-full mt-4 rounded-xl border-2 font-bold"
+              onClick={() => navigate('/dashboard/payouts')}
+            >
+              View All Payouts
+            </Button>
           </CardContent>
         </Card>
 
@@ -316,7 +306,6 @@ const Dashboard = () => {
                       </Button>
                       <Button variant="outline" className="rounded-xl border-2 font-bold h-12 px-6 gap-2" onClick={() => navigate(`/ticket/${item.id}`)}>
                         View Ticket
-                        <ExternalLink size={16} />
                       </Button>
                     </div>
                   </div>

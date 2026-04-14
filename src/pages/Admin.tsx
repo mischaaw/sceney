@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
-import { ShieldAlert, Eye, CheckCircle2, Clock, TrendingUp, Users, MessageSquare, ArrowRight, ExternalLink } from 'lucide-react';
+import { ShieldAlert, Eye, CheckCircle2, Clock, TrendingUp, MessageSquare, ArrowRight } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -14,14 +14,12 @@ const Admin = () => {
   const navigate = useNavigate();
 
   const transactions = [
-    { id: 'TX-901', buyer: 'User_88', seller: 'User_12', event: 'Beer Garden', date: 'Apr 25, 2026', amount: 123.60, commission: 3.60, status: 'Escrow' },
-    { id: 'TX-902', buyer: 'User_45', seller: 'User_09', event: 'Tech Vision Summit', date: 'Dec 05, 2024', amount: 463.50, commission: 13.50, status: 'Completed' },
-    { id: 'TX-903', buyer: 'User_21', seller: 'User_33', event: 'Championship Finals', date: 'Yesterday', amount: 87.55, commission: 2.55, status: 'Pending Verification' },
+    { id: 'TX-901', buyer: 'User_88', seller: 'User_12', event: 'Old City Beer Garden', date: 'Apr 25, 2026', amount: 123.60, commission: 3.60, status: 'Escrow' },
+    { id: 'TX-903', buyer: 'User_21', seller: 'User_33', event: 'Tropics', date: 'Yesterday', amount: 87.55, commission: 2.55, status: 'Pending Verification' },
   ];
 
   const chats = [
-    { id: 'Chat-8821', buyer: 'User_88', seller: 'User_12', event: 'Beer Garden', lastMessage: "They are digital. I can transfer them via the official app...", time: '2m ago', status: 'Active' },
-    { id: 'Chat-8822', buyer: 'User_45', seller: 'User_09', event: 'Tech Vision Summit', lastMessage: "Is the price negotiable for 3 tickets?", time: '1h ago', status: 'Active' }
+    { id: 'Chat-8821', buyer: 'User_88', seller: 'User_12', event: 'Old City Beer Garden', lastMessage: "They are digital. I can transfer them via the official app...", time: '2m ago', status: 'Active' }
   ];
 
   const handleMonitorChat = (chatId: string) => {
@@ -121,7 +119,7 @@ const Admin = () => {
                   <MessageSquare className="text-accent" size={24} />
                   Active Chats
                 </h2>
-                <Badge className="bg-primary text-white rounded-full px-2 py-0.5 text-[10px]">3</Badge>
+                <Badge className="bg-primary text-white rounded-full px-2 py-0.5 text-[10px]">1</Badge>
               </div>
               <div className="divide-y-2 divide-muted/10">
                 {chats.map((chat) => (
