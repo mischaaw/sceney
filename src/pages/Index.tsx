@@ -68,51 +68,51 @@ const Index = () => {
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
       
-      {/* Hero Section */}
-      <section className="relative pt-20 pb-32 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,107,0,0.05),transparent_50%)]" />
+      {/* Hero Section - Inverted Colors */}
+      <section className="relative pt-24 pb-40 overflow-hidden bg-primary text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,107,0,0.15),transparent_50%)]" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center space-y-8">
-            <Badge className="bg-accent/10 text-accent border-none px-6 py-2 rounded-full font-black text-[10px] uppercase tracking-[0.3em] animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <Badge className="bg-accent text-white border-none px-6 py-2 rounded-full font-black text-[10px] uppercase tracking-[0.3em] animate-in fade-in slide-in-from-bottom-4 duration-700">
               The Scene Starts Here
             </Badge>
             
-            <h1 className="text-7xl md:text-8xl font-black text-primary tracking-tighter leading-[0.9] animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100">
-              Secure the <span className="text-accent italic">scene.</span>
+            <h1 className="text-7xl md:text-9xl font-black tracking-tighter leading-[0.85] animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100">
+              Join the <span className="text-accent italic">scene.</span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-muted-foreground font-medium max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
+            <p className="text-xl md:text-2xl text-white/70 font-medium max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
               The most secure, anonymous marketplace for verified event tickets. No scams, just scenes.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 animate-in fade-in slide-in-from-bottom-10 duration-700 delay-300">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8 animate-in fade-in slide-in-from-bottom-10 duration-700 delay-300">
               <div className="relative w-full max-w-md group">
-                <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors" size={20} />
+                <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-accent transition-colors" size={20} />
                 <Input 
                   placeholder="Search events, venues, or scenes..." 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="h-16 pl-14 pr-6 rounded-2xl border-2 border-primary/5 bg-white shadow-xl shadow-primary/5 focus-visible:ring-accent focus-visible:border-accent font-bold text-lg"
+                  className="h-16 pl-14 pr-6 rounded-2xl border-2 border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl focus-visible:ring-accent focus-visible:border-accent font-bold text-lg text-white placeholder:text-white/30"
                 />
               </div>
               <Button 
-                className="h-16 px-10 rounded-2xl font-black text-lg shadow-xl shadow-primary/20 hover:scale-105 transition-transform"
+                className="h-16 px-10 rounded-2xl font-black text-lg bg-accent hover:bg-accent/90 text-white shadow-xl shadow-accent/20 hover:scale-105 transition-transform border-none"
                 onClick={() => document.getElementById('marketplace')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 Explore Now
               </Button>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-8 pt-12 animate-in fade-in duration-1000 delay-500">
-              <div className="flex items-center gap-3 text-primary/60 font-black text-[10px] uppercase tracking-widest">
+            <div className="flex flex-wrap justify-center gap-8 pt-16 animate-in fade-in duration-1000 delay-500">
+              <div className="flex items-center gap-3 text-white/40 font-black text-[10px] uppercase tracking-widest">
                 <ShieldCheck className="text-accent" size={18} />
                 Escrow Protected
               </div>
-              <div className="flex items-center gap-3 text-primary/60 font-black text-[10px] uppercase tracking-widest">
+              <div className="flex items-center gap-3 text-white/40 font-black text-[10px] uppercase tracking-widest">
                 <Zap className="text-accent" size={18} />
                 Instant Delivery
               </div>
-              <div className="flex items-center gap-3 text-primary/60 font-black text-[10px] uppercase tracking-widest">
+              <div className="flex items-center gap-3 text-white/40 font-black text-[10px] uppercase tracking-widest">
                 <TrendingUp className="text-accent" size={18} />
                 Verified Only
               </div>
