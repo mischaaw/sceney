@@ -152,6 +152,7 @@ const TicketDetails = () => {
                         <div className="text-right">
                           <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1">Price</p>
                           <p className="text-4xl font-black text-primary tracking-tighter">${listing.price}</p>
+                          <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">+ 3% Sceney Fee</p>
                         </div>
                         
                         <div className="flex flex-col gap-2">

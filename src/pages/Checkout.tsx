@@ -199,7 +199,7 @@ const Checkout = () => {
                 </div>
 
                 <Button type="submit" className="w-full h-16 text-lg font-black rounded-2xl shadow-xl shadow-primary/20">
-                  {paymentMethod === 'card' ? 'Pay $126.00 Now' : `Pay with ${paymentMethod === 'apple' ? 'Apple Pay' : 'Google Pay'}`}
+                  {paymentMethod === 'card' ? 'Pay $123.60 Now' : `Pay with ${paymentMethod === 'apple' ? 'Apple Pay' : 'Google Pay'}`}
                 </Button>
               </form>
             </div>
@@ -228,12 +228,12 @@ const Checkout = () => {
                     <span>$120.00</span>
                   </div>
                   <div className="flex justify-between text-sm font-medium">
-                    <span className="text-muted-foreground">Sceney Fee (5%)</span>
-                    <span className="text-accent">$6.00</span>
+                    <span className="text-muted-foreground">Sceney Fee (3%)</span>
+                    <span className="text-accent">$3.60</span>
                   </div>
                   <div className="flex justify-between items-center pt-3 border-t">
                     <span className="font-black text-primary uppercase tracking-widest text-xs">Total</span>
-                    <span className="font-black text-2xl text-primary tracking-tighter">$126.00</span>
+                    <span className="font-black text-2xl text-primary tracking-tighter">$123.60</span>
                   </div>
                 </div>
 
