@@ -24,7 +24,7 @@ const MOCK_TICKETS = [
     date: 'Apr 25, 2026 • 2:00 PM',
     location: 'The Emerald Terrace',
     price: 45,
-    image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/3632faf7816b80941677a14be7c7913a.png',
+    image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png',
     category: 'Social'
   }
 ];
@@ -44,7 +44,6 @@ const Index = () => {
       return matchesCategory && matchesSearch;
     });
 
-    // Sorting logic
     if (sortBy === 'price-low') {
       result.sort((a, b) => a.price - b.price);
     } else if (sortBy === 'price-high') {
@@ -71,7 +70,7 @@ const Index = () => {
           </h1>
           <p className="text-xl text-muted-foreground max-w-xl leading-relaxed font-medium">
             The secure marketplace for verified ticket reselling. 
-            Anonymous chatting, 5% flat commission, and guaranteed payouts.
+            Anonymous chatting, flat commission, and guaranteed payouts.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
             <Button className="rounded-full px-10 h-14 font-black text-lg shadow-2xl shadow-primary/20">Explore Events</Button>
@@ -177,9 +176,9 @@ const Index = () => {
               <div className="w-16 h-16 bg-green-50 rounded-2xl flex items-center justify-center text-green-600 mx-auto md:mx-0">
                 <Zap size={32} />
               </div>
-              <h3 className="text-2xl font-black text-primary tracking-tight">Flat 5% Fee</h3>
+              <h3 className="text-2xl font-black text-primary tracking-tight">Flat Commission</h3>
               <p className="text-muted-foreground font-medium leading-relaxed">
-                No hidden charges. We take a flat 5% commission to cover secure processing and platform maintenance.
+                No hidden charges. A simple flat commission covers secure processing and platform maintenance.
               </p>
             </div>
           </div>

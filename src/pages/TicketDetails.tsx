@@ -12,13 +12,13 @@ const TicketDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // Mock event data updated to Beer Garden
+  // Mock event data updated to Beer Garden with new image
   const event = {
     id: id,
     title: 'Beer Garden',
     date: 'Apr 25, 2026 • 2:00 PM',
     location: 'The Emerald Terrace',
-    image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/3632faf7816b80941677a14be7c7913a.png',
+    image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png',
     category: 'Social',
     description: 'Join us for an afternoon of craft brews, live music, and great company at the Emerald Terrace. A perfect spring celebration.'
   };
@@ -152,8 +152,8 @@ const TicketDetails = () => {
                   </div>
                 </div>
 
-                <div className="pt-6 border-t border-white/10">
-                  <p className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-4">Trusted by 10k+ fans</p>
+                <div className="pt-6 border-t">
+                  <p className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-4">Trusted by Penn students</p>
                   <div className="flex -space-x-3">
                     {[1, 2, 3, 4].map((i) => (
                       <div key={i} className="w-10 h-10 rounded-full border-2 border-primary bg-secondary flex items-center justify-center">

@@ -25,7 +25,7 @@ const HowItWorks = () => {
     },
     {
       icon: MessageSquare,
-      title: "SMS-Linked Chat",
+      title: "SMS‑Linked Chat",
       description: "Chat anonymously with buyers/sellers. Messages are forwarded to your phone so you never miss a beat."
     }
   ];
@@ -67,7 +67,7 @@ const HowItWorks = () => {
         <div className="bg-primary text-white rounded-[3rem] p-12 md:p-20 text-center space-y-8">
           <h2 className="text-4xl font-black tracking-tighter">Ready to join the scene?</h2>
           <p className="text-lg opacity-80 max-w-xl mx-auto font-medium">
-            Verify your account today to start buying and selling with total peace of mind.
+           Verify your account today to start buying and selling with total peace of mind.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Badge className="bg-white/10 text-white border-white/20 px-6 py-2 rounded-full font-bold">

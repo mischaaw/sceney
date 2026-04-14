@@ -13,7 +13,7 @@ const Logo = ({ className, size = 40 }: LogoProps) => {
     <div className={cn("flex items-center gap-3 group", className)}>
       <div className="relative">
         <img 
-          src="dyad-media://media/emerald-manatee-scurry/.dyad/media/0d199e86fa0ff84f8527dd858b886357.png" 
+          src="dyad-media://media/emerald-manatee-scurry/.dyad/media/0932189f7025b488aab17d972e08a851.png" 
           alt="Sceney Logo" 
           style={{ width: size, height: 'auto' }}
           className="transition-all duration-300 group-hover:scale-110"

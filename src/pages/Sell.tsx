@@ -17,7 +17,7 @@ const MOCK_EVENTS = [
     title: 'Beer Garden',
     date: 'Apr 25, 2026 • 2:00 PM',
     location: 'The Emerald Terrace',
-    image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/3632faf7816b80941677a14be7c7913a.png',
+    image: 'dyad-media://media/emerald-manatee-scurry/.dyad/media/f808b8759f5aa66325dcfa7b2978c5b1.png',
     category: 'Social'
   }
 ];
