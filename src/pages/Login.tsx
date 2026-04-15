@@ -44,8 +44,8 @@ const Login = () => {
                       brandAccent: 'hsl(var(--accent))',
                     },
                     radii: {
-                      buttonRadius: '1rem',
-                      inputRadius: '1rem',
+                      borderRadiusButton: '1rem', // Fixed property name
+                      inputBorderRadius: '1rem', // Fixed property name
                     }
                   }
                 }
