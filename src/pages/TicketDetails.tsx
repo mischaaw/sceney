@@ -35,6 +35,8 @@ import PriceTrendChart from "@/components/PriceTrendChart";
 import { showSuccess, showError } from "@/utils/toast";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 const TicketDetails = () => {
   const { id } = useParams();
