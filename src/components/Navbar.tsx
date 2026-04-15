@@ -1,42 +1,52 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { MessageSquare, ShieldCheck, PlusCircle, LayoutDashboard, UserCircle, Info, LogOut } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import Logo from './Logo';
-import NotificationsDropdown from './NotificationsDropdown';
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  MessageSquare,
+  ShieldCheck,
+  PlusCircle,
+  LayoutDashboard,
+  UserCircle,
+  Info,
+  LogOut,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import Logo from "./Logo";
+import NotificationsDropdown from "./NotificationsDropdown";
 import { supabase } from "@/integrations/supabase/client";
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [session, setSession] = useState<any>(null);
-  
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setSession(session);
+      }
+    );
 
     return () => subscription.unsubscribe();
   }, []);
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    navigate('/');
+    navigate("/");
   };
-  
+
   const navLinks = [
-    { name: 'Marketplace', path: '/' },
-    { name: 'How it Works', path: '/how-it-works', icon: Info },
-    { name: 'Sell', path: '/sell', icon: PlusCircle },
-    { name: 'Inbox', path: '/messages', icon: MessageSquare },
-    { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
+    { name: "Marketplace", path: "/" },
+    { name: "How it Works", path: "/how-it-works", icon: Info },
+    { name: "Sell", path: "/sell", icon: PlusCircle },
+    { name: "Inbox", path: "/messages", icon: MessageSquare },
+    { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
   ];
 
   return (
@@ -48,13 +58,13 @@ const Navbar = () => {
 
         <div className="hidden lg:flex items-center gap-4">
           {navLinks.map((link) => (
-            <Link 
+            <Link
               key={link.path}
-              to={link.path} 
+              to={link.path}
               className={cn(
                 "text-[10px] font-black uppercase tracking-[0.2em] transition-all flex items-center gap-2 py-2 px-4 rounded-full",
-                location.pathname === link.path 
-                  ? "bg-primary text-white" 
+                location.pathname === link.path
+                  ? "bg-primary text-white"
                   : "text-primary/60 hover:text-primary hover:bg-primary/5"
               )}
             >
@@ -67,24 +77,29 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           <NotificationsDropdown />
           <Link to="/admin">
-            <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/5" title="Admin Monitor">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full hover:bg-primary/5"
+              title="Admin Monitor"
+            >
               <ShieldCheck className="w-5 h-5 text-primary/60" />
             </Button>
           </Link>
           <div className="h-8 w-[1px] bg-border mx-2 hidden sm:block" />
-          
+
           {session ? (
             <div className="flex items-center gap-2">
-              <Button 
-                variant="ghost" 
+              <Button
+                variant="ghost"
                 className="rounded-full font-bold gap-2 hidden sm:flex"
-                onClick={() => navigate('/profile')}
+                onClick={() => navigate("/profile")}
               >
                 <UserCircle size={20} />
                 Profile
               </Button>
-              <Button 
-                variant="ghost" 
+              <Button
+                variant="ghost"
                 size="icon"
                 className="rounded-full text-destructive hover:bg-destructive/5"
                 onClick={handleSignOut}
@@ -93,11 +108,11 @@ const Navbar = () => {
               </Button>
             </div>
           ) : (
-            <Button 
+            <Button
               className="rounded-full px-6 font-bold shadow-lg shadow-primary/20"
-              onClick={() => navigate('/login')}
+              onClick={() => navigate("/signup")}
             >
-              Sign In
+              Sign Up
             </Button>
           )}
         </div>

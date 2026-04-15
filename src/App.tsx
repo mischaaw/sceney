@@ -20,6 +20,7 @@ import Profile from "./pages/Profile";
 import Verification from "./pages/Verification";
 import HowItWorks from "./pages/HowItWorks";
 import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -52,6 +53,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/login" element={!session ? <Login /> : <Navigate to="/" />} />
+            <Route path="/signup" element={!session ? <SignUp /> : <Navigate to="/" />} />
             <Route path="/ticket/:id" element={<TicketDetails />} />
             <Route path="/checkout/:id" element={session ? <Checkout /> : <Navigate to="/login" />} />
             <Route path="/messages" element={session ? <Messages /> : <Navigate to="/login" />} />
