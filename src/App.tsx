@@ -54,8 +54,8 @@ const App = () => {
             <Route path="/" element={<Index />} />
             <Route path="/login" element={!session ? <Login /> : <Navigate to="/" />} />
             <Route path="/signup" element={!session ? <SignUp /> : <Navigate to="/" />} />
-            <Route path="/ticket/:id" element={<TicketDetails />} />
-            <Route path="/checkout/:id" element={session ? <Checkout /> : <Navigate to="/login" />} />
+            <Route path="/ticket/:id" element={session ? <TicketDetails /> : <Navigate to="/login" />} />
+            <Route path="/checkout" element={session ? <Checkout /> : <Navigate to="/login" />} />
             <Route path="/messages" element={session ? <Messages /> : <Navigate to="/login" />} />
             <Route path="/messages/chat" element={session ? <Chat /> : <Navigate to="/login" />} />
             <Route path="/admin" element={session ? <Admin /> : <Navigate to="/login" />} />
