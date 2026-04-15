@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
+import { useParams, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
-import { loadStripe } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement } from "@stripe/react-stripe-js";
 
 const Checkout = () => {
@@ -13,6 +13,7 @@ const Checkout = () => {
   const clientSecret = params.get("clientSecret");
   const amountParam = params.get("amount");
   const amount = amountParam ? parseFloat(amountParam).toFixed(2) : "0";
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
 
@@ -41,7 +42,7 @@ const Checkout = () => {
       alert(`Payment failed: ${error.message}`);
     } else {
       alert("Payment successful! Tickets will be sent to you.");
-      navigate("/dashboard"); // Now works with useNavigate
+      navigate("/dashboard");
     }
   };
 
