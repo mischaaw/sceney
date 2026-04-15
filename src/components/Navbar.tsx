@@ -1,16 +1,35 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { MessageSquare, ShieldCheck, PlusCircle, LayoutDashboard, UserCircle, Info } from 'lucide-react';
+import { MessageSquare, ShieldCheck, PlusCircle, LayoutDashboard, UserCircle, Info, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import Logo from './Logo';
 import NotificationsDropdown from './NotificationsDropdown';
+import { supabase } from "@/integrations/supabase/client";
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [session, setSession] = useState<any>(null);
+  
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    navigate('/');
+  };
   
   const navLinks = [
     { name: 'Marketplace', path: '/' },
@@ -53,17 +72,34 @@ const Navbar = () => {
             </Button>
           </Link>
           <div className="h-8 w-[1px] bg-border mx-2 hidden sm:block" />
-          <Button 
-            variant="ghost" 
-            className="rounded-full font-bold gap-2 hidden sm:flex"
-            onClick={() => navigate('/profile')}
-          >
-            <UserCircle size={20} />
-            Profile
-          </Button>
-          <Button className="rounded-full px-6 font-bold shadow-lg shadow-primary/20 sm:hidden">
-            Sign In
-          </Button>
+          
+          {session ? (
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="ghost" 
+                className="rounded-full font-bold gap-2 hidden sm:flex"
+                onClick={() => navigate('/profile')}
+              >
+                <UserCircle size={20} />
+                Profile
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="icon"
+                className="rounded-full text-destructive hover:bg-destructive/5"
+                onClick={handleSignOut}
+              >
+                <LogOut size={20} />
+              </Button>
+            </div>
+          ) : (
+            <Button 
+              className="rounded-full px-6 font-bold shadow-lg shadow-primary/20"
+              onClick={() => navigate('/login')}
+            >
+              Sign In
+            </Button>
+          )}
         </div>
       </div>
     </nav>
