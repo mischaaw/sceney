@@ -13,13 +13,12 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        if (event === "SIGNED_IN") {
-          navigate("/");
-        }
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_IN") {
+        navigate("/");
       }
-    );
+    });
+
     return () => subscription.unsubscribe();
   }, [navigate]);
 
@@ -29,12 +28,8 @@ const SignUp = () => {
       <main className="flex-1 flex items-center justify-center p-4 py-20">
         <Card className="max-w-md w-full border-2 shadow-2xl rounded-[3rem] overflow-hidden">
           <CardHeader className="p-10 pb-0 text-center">
-            <CardTitle className="text-4xl font-black text-primary tracking-tighter">
-              Create Your <span className="text-accent italic">Sceney</span> Account
-            </CardTitle>
-            <p className="text-muted-foreground mt-2 font-medium">
-              Sign up with email, phone, and password.
-            </p>
+            <CardTitle className="text-4xl font-black text-primary tracking-tighter">Welcome to <span className="text-accent italic">Sceney</span></CardTitle>
+            <p className="text-muted-foreground mt-2 font-medium">Sign up with email, phone, and password.</p>
           </CardHeader>
           <CardContent className="p-10">
             <Auth
@@ -49,14 +44,13 @@ const SignUp = () => {
                       brandAccent: "hsl(var(--accent))",
                     },
                     radii: {
-                      buttonRadius: "1rem",
-                      inputRadius: "1rem",
-                    },
-                  },
-                },
+                      borderRadiusButton: "1rem", // Fixed property name
+                      inputBorderRadius: "1rem", // Fixed property name
+                    }
+                  }
+                }
               }}
               theme="light"
-              view="sign_up"
               additionalData={{
                 first_name: "",
                 last_name: "",
